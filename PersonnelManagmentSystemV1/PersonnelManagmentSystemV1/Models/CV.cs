@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PersonnelManagmentSystemV1.Models
 {
-    public class TextFile
+    public class CV
     {
         [Key]
         public int ID { get; set; }
@@ -25,20 +25,10 @@ namespace PersonnelManagmentSystemV1.Models
         public string Content { get; set; }
 
         [Required]
-        [Display(Name = "Category type of document")]
-        public DocType Type { get; set; }
-
-        [Required]
         public HttpPostedFileBase File { get; set; }
 
         [ForeignKey("Uploader")]
         public string UploaderID { get; set; }
         public virtual ApplicationUser Uploader { get; set; }
-
-        public enum DocType
-        { 
-            CV,
-            General
-        }
     }
 }
