@@ -258,11 +258,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Jobs\Create.cshtml" />
-    <Content Include="Views\Jobs\Delete.cshtml" />
-    <Content Include="Views\Jobs\Details.cshtml" />
-    <Content Include="Views\Jobs\Edit.cshtml" />
-    <Content Include="Views\Jobs\Index.cshtml" />
+    <Content Include="Views\JobOpenings\Create.cshtml" />
+    <Content Include="Views\JobOpenings\Delete.cshtml" />
+    <Content Include="Views\JobOpenings\Details.cshtml" />
+    <Content Include="Views\JobOpenings\Edit.cshtml" />
+    <Content Include="Views\JobOpenings\Index.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
