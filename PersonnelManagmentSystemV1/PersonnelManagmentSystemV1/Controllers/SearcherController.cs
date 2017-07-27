@@ -8,18 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.Repositories;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
     [Authorize(Roles="Searcher")]
     public class SearcherController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private JobsRepository db = new JobsRepository();
 
         // GET: Searcher
         public ActionResult Index()
         {
-            return View(db.Jobs.ToList());
+            return View(db.Jobs().ToList());
         }
 
         // GET: Searcher/Details/5
@@ -29,7 +30,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening jobOpening = db.Jobs.Find(id);
+            JobOpening jobOpening = db.Job(id);
             if (jobOpening == null)
             {
                 return HttpNotFound();
