@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PersonnelManagmentSystemV1.Models;
+using System.Web.Security;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -140,6 +141,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         public ActionResult Register()
         {
             return View();
+            
         }
 
         //
@@ -155,6 +157,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "Searcher");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
