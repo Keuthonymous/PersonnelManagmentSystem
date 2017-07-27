@@ -9,13 +9,30 @@ using System.Web.Mvc;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        private ApplicationUserManager _userManager;
         private AdminRepository db = new AdminRepository();
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         // GET: Admin
         public ActionResult Index()
@@ -61,6 +78,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin/Create
         public ActionResult Create()
         {
+            IEnumerable<string> roleName = db.GetRoles();
+            ViewBag.userRole = new SelectList(roleName);
             return View();
         }
 
@@ -69,15 +88,23 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public async Task<ActionResult> Create(RegisterViewModel registerUser, string userRole)
         {
+            IEnumerable<string> roleName = db.GetRoles();
+            ViewBag.userRole = new SelectList(roleName);
+            
             if (ModelState.IsValid)
             {
-                db.AddUser(applicationUser);
-                return RedirectToAction("Index");
-            }
+                var user = new ApplicationUser { UserName = registerUser.Email, Email = registerUser.Email };
+                var result = await UserManager.CreateAsync(user, registerUser.Password);
 
-            return View(applicationUser);
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, userRole);
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(registerUser);
         }
 
         // GET: Admin/CreateDepartment
@@ -118,17 +145,17 @@ namespace PersonnelManagmentSystemV1.Controllers
         // POST: Admin/EditUser/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditUser([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
-        {
-            if (ModelState.IsValid)
-            {
-                db.EditUser(applicationUser);
-                return RedirectToAction("Index");
-            }
-            return View(applicationUser);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditUser([Bind(Include = "Email,Password,UserName")] RegisterViewModel Register)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.EditUser(Register);
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(Register);
+        //}
 
         // GET: Admin/EditDepartment/5
         public ActionResult EditDepartment(int? id)

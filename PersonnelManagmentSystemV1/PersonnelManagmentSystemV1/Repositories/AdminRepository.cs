@@ -1,4 +1,5 @@
-﻿using PersonnelManagmentSystemV1.DataAccess;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,19 @@ namespace PersonnelManagmentSystemV1.Repositories
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
             return db.Users;
+        }
+
+        public IEnumerable<string> GetRoles()
+        {
+            List<IdentityRole> roles = db.Roles.ToList();
+            List<string> roleNames = new List<string>();
+
+            foreach (var i in roles)
+            {
+                roleNames.Add(i.Name);
+            }
+
+            return roleNames;
         }
 
         public ApplicationUser FindUser(string id)
