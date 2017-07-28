@@ -141,7 +141,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            EditUserViewModel editUser = new EditUserViewModel { ID = applicationUser.Id, Email = applicationUser.Email, Password = null };
+            EditUserViewModel editUser = new EditUserViewModel { ID = applicationUser.Id, Email = null, Password = null };
             return View(editUser);
         }
 
@@ -157,10 +157,13 @@ namespace PersonnelManagmentSystemV1.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = db.FindUser(editUser.ID);
+                
                 db.EditUser(user, editUser);
                 if (userRole != null)
                 {
-                    UserManager.AddToRole(user.Id, userRole);
+                    string currentRole = user.Roles.ToString();
+                    db.RemoveUserFromRole(user, currentRole);
+                    db.AddUserToRole(user, userRole);
                 }
                 return RedirectToAction("Index");
             }

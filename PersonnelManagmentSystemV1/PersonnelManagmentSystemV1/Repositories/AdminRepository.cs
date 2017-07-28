@@ -33,6 +33,18 @@ namespace PersonnelManagmentSystemV1.Repositories
             return roleNames;
         }
 
+        public void RemoveUserFromRole(ApplicationUser user, string currentRole)
+        {
+            userManager.RemoveFromRole(user.Id, currentRole);
+            db.SaveChanges();
+        }
+
+        public void AddUserToRole(ApplicationUser user, string userRole)
+        {
+            userManager.AddToRole(user.Id, userRole);
+            db.SaveChanges();
+        }
+
         public IEnumerable<string> GetUserIds()
         {
             List<string> userIds = new List<string>();
@@ -85,6 +97,7 @@ namespace PersonnelManagmentSystemV1.Repositories
                 userManager.RemovePassword(applicationUser.Id);
                 userManager.AddPassword(applicationUser.Id, editUser.Password);
             }
+            db.SaveChanges();
         }
 
         public void EditDepartment(Department department)
