@@ -88,19 +88,19 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RegisterViewModel registerUser, string userRole)
+        public ActionResult Create(RegisterViewModel registerUser, string userRole)
         {
             IEnumerable<string> roleName = db.GetRoles();
             ViewBag.userRole = new SelectList(roleName);
-            
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = registerUser.Email, Email = registerUser.Email };
-                var result = await UserManager.CreateAsync(user, registerUser.Password);
+                var result = UserManager.Create(user, registerUser.Password);
 
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, userRole);
+                    UserManager.AddToRole(user.Id, userRole);
                     return RedirectToAction("Index");
                 }
             }
@@ -130,6 +130,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin/EditUser/5
         public ActionResult EditUser(string id)
         {
+            IEnumerable<string> roleName = db.GetRoles();
+            ViewBag.userRole = new SelectList(roleName);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -139,23 +141,31 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+            EditUserViewModel editUser = new EditUserViewModel { ID = applicationUser.Id, Email = applicationUser.Email, Password = null };
+            return View(editUser);
         }
 
-        // POST: Admin/EditUser/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditUser([Bind(Include = "Email,Password,UserName")] RegisterViewModel Register)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.EditUser(Register);
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(Register);
-        //}
+        //POST: Admin/EditUser/5
+        //To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(EditUserViewModel editUser, string userRole)
+        {
+            IEnumerable<string> roleName = db.GetRoles();
+            ViewBag.userRole = new SelectList(roleName);
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = db.FindUser(editUser.ID);
+                db.EditUser(user, editUser);
+                if (userRole != null)
+                {
+                    UserManager.AddToRole(user.Id, userRole);
+                }
+                return RedirectToAction("Index");
+            }
+            return View(editUser);
+        }
 
         // GET: Admin/EditDepartment/5
         public ActionResult EditDepartment(int? id)

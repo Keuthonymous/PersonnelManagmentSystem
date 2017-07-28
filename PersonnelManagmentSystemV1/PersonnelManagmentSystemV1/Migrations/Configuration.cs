@@ -75,7 +75,7 @@ namespace PersonnelManagmentSystemV1.Migrations
                 var userManager = new UserManager<ApplicationUser>(store);
 
                 var user = new ApplicationUser { UserName = "admin@mail.com", Email = "admin@mail.com" };
-                userManager.Create(user, "Password");
+                userManager.Create(user, "Password1!");
 
                 userManager.AddToRole(user.Id, "Admin");
             }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using System;
@@ -12,6 +13,7 @@ namespace PersonnelManagmentSystemV1.Repositories
     public class AdminRepository
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
 
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
@@ -29,6 +31,19 @@ namespace PersonnelManagmentSystemV1.Repositories
             }
 
             return roleNames;
+        }
+
+        public IEnumerable<string> GetUserIds()
+        {
+            List<string> userIds = new List<string>();
+            List<ApplicationUser> users = new List<ApplicationUser>();
+
+            foreach (var i in users)
+            {
+                userIds.Add(i.Id);
+            }
+
+            return userIds;
         }
 
         public ApplicationUser FindUser(string id)
@@ -58,10 +73,18 @@ namespace PersonnelManagmentSystemV1.Repositories
             db.SaveChanges();
         }
 
-        public void EditUser(ApplicationUser applicationUser)
+        public void EditUser(ApplicationUser applicationUser, EditUserViewModel editUser)
         {
-            db.Entry(applicationUser).State = EntityState.Modified;
-            db.SaveChanges();
+            if (editUser.Email != null)
+            { 
+                applicationUser.Email = editUser.Email;
+            }
+
+            if(editUser.Password != null)
+            {
+                userManager.RemovePassword(applicationUser.Id);
+                userManager.AddPassword(applicationUser.Id, editUser.Password);
+            }
         }
 
         public void EditDepartment(Department department)
