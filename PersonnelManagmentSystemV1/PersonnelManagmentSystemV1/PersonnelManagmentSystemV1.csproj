@@ -163,7 +163,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobOpeningsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SearcherController.cs" />
     <Compile Include="DataAccess\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,9 +179,9 @@
     <Compile Include="Migrations\201707261139220_ModelAdjustment.Designer.cs">
       <DependentUpon>201707261139220_ModelAdjustment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707270816412_testMigration.cs" />
-    <Compile Include="Migrations\201707270816412_testMigration.Designer.cs">
-      <DependentUpon>201707270816412_testMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201707271207308_BecauseItSaysTo.cs" />
+    <Compile Include="Migrations\201707271207308_BecauseItSaysTo.Designer.cs">
+      <DependentUpon>201707271207308_BecauseItSaysTo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -258,18 +257,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\JobOpenings\Create.cshtml" />
-    <Content Include="Views\JobOpenings\Delete.cshtml" />
-    <Content Include="Views\JobOpenings\Details.cshtml" />
-    <Content Include="Views\JobOpenings\Edit.cshtml" />
-    <Content Include="Views\JobOpenings\Index.cshtml" />
+    <Content Include="Views\Jobs\Create.cshtml" />
+    <Content Include="Views\Jobs\Delete.cshtml" />
+    <Content Include="Views\Jobs\Details.cshtml" />
+    <Content Include="Views\Jobs\Edit.cshtml" />
+    <Content Include="Views\Jobs\Index.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
     <Content Include="Views\Admin\Details.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Searcher\Details.cshtml" />
-    <Content Include="Views\Searcher\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -289,8 +286,8 @@
     <EmbeddedResource Include="Migrations\201707261139220_ModelAdjustment.resx">
       <DependentUpon>201707261139220_ModelAdjustment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707270816412_testMigration.resx">
-      <DependentUpon>201707270816412_testMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707271207308_BecauseItSaysTo.resx">
+      <DependentUpon>201707271207308_BecauseItSaysTo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
