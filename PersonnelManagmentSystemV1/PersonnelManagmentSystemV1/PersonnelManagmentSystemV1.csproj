@@ -165,6 +165,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobOpeningsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SearcherController.cs" />
     <Compile Include="DataAccess\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -263,7 +264,6 @@
     <Content Include="Views\JobOpenings\Create.cshtml" />
     <Content Include="Views\JobOpenings\Delete.cshtml" />
     <Content Include="Views\JobOpenings\Details.cshtml" />
-    <Content Include="Views\JobOpenings\Edit.cshtml" />
     <Content Include="Views\JobOpenings\Index.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
@@ -274,6 +274,7 @@
     <Content Include="Views\Boss\Index.cshtml" />
     <Content Include="Views\Searcher\Details.cshtml" />
     <Content Include="Views\Searcher\Index.cshtml" />
+    <Content Include="Views\JobOpenings\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -311,7 +312,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50341</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
