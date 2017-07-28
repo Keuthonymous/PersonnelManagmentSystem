@@ -80,24 +80,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    if (User.IsInRole("Searcher"))
-                    {
-                        return RedirectToAction("Searcher", "Index");
-                    }
-                    if (User.IsInRole("Worker"))
-                    {
-                        return RedirectToAction("Worker", "Index");
-                    }
-                    if (User.IsInRole("Boss"))
-                    {
-                        return RedirectToAction("Boss", "Index");
-                    }
-                    if (User.IsInRole("Admin"))
-                    {
-                        return RedirectToAction("Admin", "Index");
-                    }
-                    else return HttpNotFound();
-
+                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
