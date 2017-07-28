@@ -161,8 +161,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BossController.cs" />
-    <Compile Include="Controllers\DepartmentsRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\JobOpeningsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SearcherController.cs" />
@@ -189,6 +189,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
     <Compile Include="Models\JobOpening.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AdminRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
+    <Compile Include="Repositories\InformationRepository.cs" />
     <Compile Include="Repositories\JobsRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -275,6 +277,11 @@
     <Content Include="Views\Searcher\Details.cshtml" />
     <Content Include="Views\Searcher\Index.cshtml" />
     <Content Include="Views\JobOpenings\Edit.cshtml" />
+    <Content Include="Views\Information\Create.cshtml" />
+    <Content Include="Views\Information\Delete.cshtml" />
+    <Content Include="Views\Information\Details.cshtml" />
+    <Content Include="Views\Information\Edit.cshtml" />
+    <Content Include="Views\Information\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -6,112 +6,124 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
-    [Authorize(Roles = "Boss")]
-    public class JobOpeningsController : Controller
+    [Authorize(Roles="Boss, Worker")]
+    public class InformationController : Controller
     {
-        private JobsRepository db = new JobsRepository();
+        private InformationRepository db = new InformationRepository();
 
-        // GET: Jobs
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult PublicInfo()
         {
-            return View(db.Jobs().ToList());
+            return View("Index", db.Informations(true));
         }
 
-        // GET: Jobs/Details/5
+        // GET: Information
+        public ActionResult Index()
+        {
+            return View(db.Informations());
+        }
+
+        // GET: Information/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening job = db.Job(id);
-            if (job == null)
+            Information information = db.Information(id.Value);
+            if (information == null)
             {
                 return HttpNotFound();
             }
-            return View(job);
+            return View(information);
         }
 
-        // GET: Jobs/Create
+        [Authorize(Roles="Boss")]
+        // GET: Information/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Jobs/Create
+        // POST: Information/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Boss")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,JobType")] JobOpening job)
+        public ActionResult Create([Bind(Include = "ID,Title,Contents,IsPublic,UploadTime")] Information information)
         {
             if (ModelState.IsValid)
             {
-                db.Add(job);
+                db.AddInformation(information);
                 return RedirectToAction("Index");
             }
 
-            return View(job);
+            return View(information);
         }
 
-        // GET: Jobs/Edit/5
+
+        // GET: Information/Edit/5
+        [Authorize(Roles = "Boss")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening job = db.Job(id);
-            if (job == null)
+            Information information = db.Information(id.Value);
+            if (information == null)
             {
                 return HttpNotFound();
             }
-            return View(job);
+            return View(information);
         }
 
-        // POST: Jobs/Edit/5
+        // POST: Information/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Boss")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,JobType")] JobOpening job)
+        public ActionResult Edit([Bind(Include = "ID,Title,Contents,IsPublic,UploadTime")] Information information)
         {
             if (ModelState.IsValid)
             {
-                db.Edit(job);
+                db.EditInformation(information);
                 return RedirectToAction("Index");
             }
-            return View(job);
+            return View(information);
         }
 
-        // GET: Jobs/Delete/5
+        // GET: Information/Delete/5
+        [Authorize(Roles = "Boss")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening job = db.Job(id);
-            if (job == null)
+            Information information = db.Information(id.Value);
+            if (information == null)
             {
                 return HttpNotFound();
             }
-            return View(job);
+            return View(information);
         }
 
-        // POST: Jobs/Delete/5
+        // POST: Information/Delete/5
+        [Authorize(Roles = "Boss")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            JobOpening job = db.Job(id);
-            db.Remove(job);
+            db.DeleteInformation(id);
             return RedirectToAction("Index");
         }
 
