@@ -46,7 +46,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UploadTime, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UploadTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.UploadTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.UploadTime)
                 @Html.ValidationMessageFor(model => model.UploadTime, "", new { @class = "text-danger" })
             </div>
         </div>
