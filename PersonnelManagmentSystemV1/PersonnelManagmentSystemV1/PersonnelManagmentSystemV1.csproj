@@ -272,6 +272,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Boss\Details.cshtml" />
     <Content Include="Views\Boss\Index.cshtml" />
+    <Content Include="Views\Searcher\Details.cshtml" />
+    <Content Include="Views\Searcher\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
