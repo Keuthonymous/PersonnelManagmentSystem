@@ -102,7 +102,7 @@ namespace PersonnelManagmentSystemV1.Migrations
                 userManager.AddToRole(user.Id, "Worker");
             }
 
-            if (!context.Users.Any(u => u.UserName == "some@mail.com"))
+            if (!context.Users.Any(u => u.UserName == "searcher@mail.com"))
             {
                 var store = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(store);
