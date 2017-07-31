@@ -57,8 +57,9 @@ namespace PersonnelManagmentSystemV1.Controllers
         [Authorize(Roles = "Boss")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Contents,IsPublic,UploadTime")] Information information)
+        public ActionResult Create([Bind(Include = "ID,Title,Contents,IsPublic")] Information information)
         {
+            information.UploadTime = DateTime.Now;
             if (ModelState.IsValid)
             {
                 db.AddInformation(information);
