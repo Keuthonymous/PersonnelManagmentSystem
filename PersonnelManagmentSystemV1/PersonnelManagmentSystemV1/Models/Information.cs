@@ -27,5 +27,6 @@ namespace PersonnelManagmentSystemV1.Models
         [DataType(DataType.DateTime)]
         [Display(Name = "Posted Time")]
         public DateTime UploadTime { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

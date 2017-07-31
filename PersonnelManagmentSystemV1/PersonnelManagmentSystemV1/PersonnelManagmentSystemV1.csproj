@@ -170,21 +170,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707211214378_Initial.cs" />
-    <Compile Include="Migrations\201707211214378_Initial.Designer.cs">
-      <DependentUpon>201707211214378_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707211346388_201707211214378_Initial.cs" />
-    <Compile Include="Migrations\201707211346388_201707211214378_Initial.Designer.cs">
-      <DependentUpon>201707211346388_201707211214378_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707261139220_ModelAdjustment.cs" />
-    <Compile Include="Migrations\201707261139220_ModelAdjustment.Designer.cs">
-      <DependentUpon>201707261139220_ModelAdjustment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707271207308_BecauseItSaysTo.cs" />
-    <Compile Include="Migrations\201707271207308_BecauseItSaysTo.Designer.cs">
-      <DependentUpon>201707271207308_BecauseItSaysTo.cs</DependentUpon>
+    <Compile Include="Migrations\201707311320261_complete.cs" />
+    <Compile Include="Migrations\201707311320261_complete.Designer.cs">
+      <DependentUpon>201707311320261_complete.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -293,17 +281,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707211214378_Initial.resx">
-      <DependentUpon>201707211214378_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707211346388_201707211214378_Initial.resx">
-      <DependentUpon>201707211346388_201707211214378_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707261139220_ModelAdjustment.resx">
-      <DependentUpon>201707261139220_ModelAdjustment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707271207308_BecauseItSaysTo.resx">
-      <DependentUpon>201707271207308_BecauseItSaysTo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707311320261_complete.resx">
+      <DependentUpon>201707311320261_complete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

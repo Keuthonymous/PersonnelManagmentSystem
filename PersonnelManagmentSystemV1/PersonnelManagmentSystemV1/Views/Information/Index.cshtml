@@ -47,11 +47,16 @@
         <td>
             @if (User.IsInRole("Boss"))
             {
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            }
-        </td>
+                <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
+
+                <div class="btn">@Html.ActionLink("Details", "Details", new { id=item.ID })</div>
+                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id=item.ID })</div>
+                }
+                else
+                {
+                <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+                }
+</td>
     </tr>
 }
 

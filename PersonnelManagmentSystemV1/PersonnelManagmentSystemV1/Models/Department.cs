@@ -18,10 +18,14 @@ namespace PersonnelManagmentSystemV1.Models
 
         [ForeignKey("Manager")]
         public string ManagerID { get; set; }
+        [InverseProperty("ManagedDepartments")]
         public virtual ApplicationUser Manager { get; set; }
 
+        [InverseProperty("Department")]
         public virtual ICollection<ApplicationUser> Employees { get; set; }
+        [InverseProperty("Department")]
         public virtual ICollection<JobOpening> JobOpenings { get; set; }
+        [InverseProperty("Department")]
         public virtual ICollection<Information> Informations { get; set; }
     }
 

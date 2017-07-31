@@ -13,26 +13,11 @@ namespace PersonnelManagmentSystemV1.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ApplicationDbContext context)
         {
-            #region ExampleSeed
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-            #endregion
-
             #region SeedingRoles
             if (!context.Roles.Any(r => r.Name == "Admin"))
             {
@@ -112,6 +97,18 @@ namespace PersonnelManagmentSystemV1.Migrations
 
                 userManager.AddToRole(user.Id, "Searcher");
             }
+            context.SaveChanges();
+            #endregion
+
+            #region Departments
+            if (!context.Departments.Any())
+            {
+                ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "boss@mail.com");
+                Department dep1 = new Department() { ID = 1, Name = "Test department", Manager = manager };
+                context.Departments.AddOrUpdate(dep1);
+            }
+            
+
             #endregion
         }
     }
