@@ -23,6 +23,14 @@ namespace PersonnelManagmentSystemV1.Models
         [Display(Name = "Job Type")]
         public string JobType { get; set; }
 
-        public virtual ICollection<ApplicationUser> Applicants { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
+        public IEnumerable<ApplicationUser> GetAllApplicants()
+        {
+            return  Messages
+                .Where(m => m.IsFirstMessage)
+                .Select(m => m.Sender)
+                .Distinct();
+        }
     }
 }

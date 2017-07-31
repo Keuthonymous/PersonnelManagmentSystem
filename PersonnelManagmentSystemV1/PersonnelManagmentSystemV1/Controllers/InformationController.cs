@@ -17,12 +17,6 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private InformationRepository db = new InformationRepository();
 
-        [AllowAnonymous]
-        public ActionResult PublicInfo()
-        {
-            return View("Index", db.Informations(true));
-        }
-
         // GET: Information
         public ActionResult Index()
         {

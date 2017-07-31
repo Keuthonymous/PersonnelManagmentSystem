@@ -170,13 +170,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707311320261_complete.cs" />
+    <Compile Include="Migrations\201707311320261_complete.Designer.cs">
+      <DependentUpon>201707311320261_complete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdminIndexListViewModel.cs" />
     <Compile Include="Models\AdminIndexUserViewModel.cs" />
-    <Compile Include="Models\CreateDepartmentViewModel.cs" />
     <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\EditDepartmentViewModel.cs" />
     <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
@@ -251,8 +252,11 @@
     <Content Include="Views\JobOpenings\Delete.cshtml" />
     <Content Include="Views\JobOpenings\Details.cshtml" />
     <Content Include="Views\JobOpenings\Index.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
-    <Content Include="Views\Admin\DetailsUser.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Boss\Details.cshtml" />
     <Content Include="Views\Boss\Index.cshtml" />
     <Content Include="Views\Searcher\Details.cshtml" />
@@ -265,13 +269,6 @@
     <Content Include="Views\Information\Index.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\_IndexUsers.cshtml" />
-    <Content Include="Views\Admin\_IndexDepartments.cshtml" />
-    <Content Include="Views\Admin\CreateDepartment.cshtml" />
-    <Content Include="Views\Admin\EditDepartment.cshtml" />
-    <Content Include="Views\Admin\DetailsDepartment.cshtml" />
-    <Content Include="Views\Admin\DeleteDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -282,6 +279,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707311320261_complete.resx">
+      <DependentUpon>201707311320261_complete.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

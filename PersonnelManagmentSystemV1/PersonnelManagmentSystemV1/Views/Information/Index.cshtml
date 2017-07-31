@@ -1,14 +1,17 @@
 ﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Information>
-
-@{
+@if (ViewBag.Title == null || ViewBag.Title == "")
+{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
+<h2>@ViewBag.Title</h2>
+@if (User.IsInRole("Boss"))
+{
+ <p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>   
+}
+
 <table class="table">
     <tr>
         <th>
@@ -26,7 +29,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model) 
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -41,10 +45,18 @@
             @Html.DisplayFor(modelItem => item.UploadTime)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
+            @if (User.IsInRole("Boss"))
+            {
+                <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
+
+                <div class="btn">@Html.ActionLink("Details", "Details", new { id=item.ID })</div>
+                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id=item.ID })</div>
+                }
+                else
+                {
+                <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+                }
+</td>
     </tr>
 }
 

@@ -11,6 +11,8 @@ namespace PersonnelManagmentSystemV1.Models
     {
         [Key]
         public int ID { get; set; }
+
+        public Message FirstMessageInThread { get; set; }
         
         [Required]
         [Display(Name = "Subject")]
@@ -25,11 +27,13 @@ namespace PersonnelManagmentSystemV1.Models
         [DataType(DataType.DateTime)]
         [Display(Name = "Time Sent")]
         public DateTime SendTime { get; set; }
-    
-        [ForeignKey("Sender")]
-        public string SenderID { get; set; }
-        public virtual ApplicationUser Sender { get; set; }
 
-        public virtual ICollection<ApplicationUser> Recipiants { get; set; }
+        public bool IsFirstMessage { get { return FirstMessageInThread == this; } }
+
+        public virtual JobOpening JobOpening { get; set; }
+        [InverseProperty("ReceivedMessages")]
+        public virtual ApplicationUser Sender { get; set; }
+        [InverseProperty("SentMessages")]
+        public virtual ApplicationUser Recipient { get; set; }
     }
 }

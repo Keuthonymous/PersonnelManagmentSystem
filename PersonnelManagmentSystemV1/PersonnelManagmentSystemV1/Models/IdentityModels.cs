@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,12 @@ namespace PersonnelManagmentSystemV1.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public Department Department { get; set; }
+        public virtual ICollection<Department> ManagedDepartments { get; set; }
+        public virtual ICollection<CV> CVs { get; set; }
+        public virtual ICollection<Message> ReceivedMessages { get; set; }
+
+        public virtual ICollection<Message> SentMessages { get; set; }
     }
 
     
