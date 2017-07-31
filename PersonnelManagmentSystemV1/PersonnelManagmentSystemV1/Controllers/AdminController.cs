@@ -37,6 +37,14 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin
         public ActionResult Index()
         {
+            List<ApplicationUser> users = db.GetAllUsers().ToList();
+            List<AdminIndexUserViewModel> usersIndex = new List<AdminIndexUserViewModel>();
+            List<string> roles = db.GetRoles().ToList();
+            foreach (var i in users)
+            {
+                usersIndex.Add(new AdminIndexUserViewModel { Email = i.Email, UserName = i.UserName });
+            }
+
             return View(db.GetAllUsers().ToList());
         }
 

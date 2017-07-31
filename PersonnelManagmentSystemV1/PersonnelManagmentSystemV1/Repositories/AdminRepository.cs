@@ -20,6 +20,25 @@ namespace PersonnelManagmentSystemV1.Repositories
             return db.Users;
         }
 
+        public IEnumerable<AdminIndexUserViewModel> GetIndexList()
+        {
+            List<ApplicationUser> users = db.Users.ToList();
+            List<AdminIndexUserViewModel> indexList = new List<AdminIndexUserViewModel>();
+            List<IdentityRole> roles = db.Roles.ToList();
+  
+            foreach (var i in users)
+            {
+                indexList.Add(new AdminIndexUserViewModel { Email = i.Email, UserName = i.UserName });
+            }
+            foreach (var i in indexList)
+            {
+                i.RoleName = (from t in roles
+                              where t.Id == i.Role
+                              select t.Name).First();
+            }
+            return indexList;
+        }
+
         public IEnumerable<string> GetRoles()
         {
             List<IdentityRole> roles = db.Roles.ToList();
@@ -88,11 +107,11 @@ namespace PersonnelManagmentSystemV1.Repositories
         public void EditUser(ApplicationUser applicationUser, EditUserViewModel editUser)
         {
             if (editUser.Email != null)
-            { 
+            {
                 applicationUser.Email = editUser.Email;
             }
 
-            if(editUser.Password != null)
+            if (editUser.Password != null)
             {
                 userManager.RemovePassword(applicationUser.Id);
                 userManager.AddPassword(applicationUser.Id, editUser.Password);
