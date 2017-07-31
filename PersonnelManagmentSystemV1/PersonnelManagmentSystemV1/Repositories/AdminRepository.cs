@@ -25,16 +25,16 @@ namespace PersonnelManagmentSystemV1.Repositories
             List<ApplicationUser> users = db.Users.ToList();
             List<AdminIndexUserViewModel> indexList = new List<AdminIndexUserViewModel>();
             List<IdentityRole> roles = db.Roles.ToList();
-  
+
             foreach (var i in users)
             {
-                indexList.Add(new AdminIndexUserViewModel { Email = i.Email, UserName = i.UserName });
+                indexList.Add(new AdminIndexUserViewModel { ID = i.Id, Email = i.Email, UserName = i.UserName, Role = i.Roles.First() });
             }
             foreach (var i in indexList)
             {
                 i.RoleName = (from t in roles
-                              where t.Id == i.Role
-                              select t.Name).First();
+                              where t.Id == i.Role.RoleId
+                              select t.Name).FirstOrDefault();
             }
             return indexList;
         }
@@ -75,6 +75,19 @@ namespace PersonnelManagmentSystemV1.Repositories
             }
 
             return userIds;
+        }
+
+        public IEnumerable<string> GetAllUserNames()
+        {
+            List<ApplicationUser> users = GetAllUsers().ToList();
+            List<string> userNames = new List<string>();
+
+            foreach (var u in users)
+            {
+                userNames.Add(u.UserName);
+            }
+
+            return userNames;
         }
 
         public ApplicationUser FindUser(string id)
