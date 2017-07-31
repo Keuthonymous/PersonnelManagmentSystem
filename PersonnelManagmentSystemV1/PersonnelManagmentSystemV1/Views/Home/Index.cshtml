@@ -1,11 +1,9 @@
-﻿@{
+﻿@using PersonnelManagmentSystemV1.Models;
+@model IEnumerable<Information>
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Latest information</h1>
-</div>
-
 <div class="row">
-    @Html.Action("PublicInfo", "Information")
+    @Html.Partial("../Information/Index", Model)
 </div>
