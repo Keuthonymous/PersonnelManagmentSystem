@@ -20,7 +20,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Boss
         public ActionResult Index()
         {
-            return View(db.Departments());
+             return View(db.Departments());
         }
 
         // GET: Boss/Details/5

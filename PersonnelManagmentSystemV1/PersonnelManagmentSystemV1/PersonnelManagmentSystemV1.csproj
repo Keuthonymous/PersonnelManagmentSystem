@@ -272,6 +272,14 @@
     <Content Include="Views\Information\Index.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\CreateDepartment.cshtml" />
+    <Content Include="Views\Admin\DeleteDepartment.cshtml" />
+    <Content Include="Views\Admin\DetailsDepartment.cshtml" />
+    <Content Include="Views\Admin\DetailsUser.cshtml" />
+    <Content Include="Views\Admin\EditDepartment.cshtml" />
+    <Content Include="Views\Admin\_IndexDepartments.cshtml" />
+    <Content Include="Views\Admin\_IndexUsers.cshtml" />
+    <Content Include="Views\Information\PublicNews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

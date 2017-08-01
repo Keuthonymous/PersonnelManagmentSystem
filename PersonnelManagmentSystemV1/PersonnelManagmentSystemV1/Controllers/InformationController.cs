@@ -23,6 +23,11 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(db.Informations());
         }
 
+        [AllowAnonymous]
+        public ActionResult PublicNews()
+        {
+            return PartialView(db.Informations(true));
+        }
         // GET: Information/Details/5
         public ActionResult Details(int? id)
         {
