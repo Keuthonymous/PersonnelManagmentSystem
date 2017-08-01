@@ -176,8 +176,11 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminIndexListViewModel.cs" />
     <Compile Include="Models\AdminIndexUserViewModel.cs" />
+    <Compile Include="Models\CreateDepartmentViewModel.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\EditDepartmentViewModel.cs" />
     <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
