@@ -14,7 +14,18 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public IEnumerable<JobOpening> Jobs()
         {
-            return db.Jobs;
+            return db.Jobs.Include(j => j.Department);
+        }
+
+        public IEnumerable<Department> Departments()
+        {
+            return db.Departments
+                .Include(d => d.Manager); //Include manager, because it is required in views and lazy loading does not work because only one reader action can be used simultaneously.
+        }
+
+        public Department Department(int id)
+        {
+            return db.Departments.SingleOrDefault(d => d.ID == id);
         }
 
         public JobOpening Job(int? id)
