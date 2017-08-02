@@ -40,5 +40,7 @@ namespace PersonnelManagmentSystemV1.DataAccess
         public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Department> Departments { get; set; }
 
         public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Information> Information { get; set; }
+
+        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Message> Messages { get; set; }
     }
 }
