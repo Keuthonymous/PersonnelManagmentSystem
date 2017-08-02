@@ -20,7 +20,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Message
         public ActionResult Index()
         {
-            return View(repo.GetMessagesForUser(User.Identity.Name));
+            return View(repo.GetMessagesForUser(User.Identity.Name).OrderByDescending(m => m.SendTime));
         }
 
         // GET: Message/Details/5
