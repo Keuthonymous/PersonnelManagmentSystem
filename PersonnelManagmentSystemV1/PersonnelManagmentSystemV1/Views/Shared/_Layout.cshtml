@@ -26,12 +26,15 @@
                     @if (User.IsInRole("Searcher"))
                     {
                         <li>@Html.ActionLink("Job Openings", "Index", "Searcher")</li>
+                        <li>@Html.ActionLink("Messages", "Index", "Message")</li>
                     }
                     @if (User.IsInRole("Boss"))
                     {
                         <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
                         <li>@Html.ActionLink("Departments", "Index", "Boss")</li>
                         <li>@Html.ActionLink("News & Info", "Index", "Information")</li>
+                        <li>@Html.ActionLink("Messages", "Index", "Message")</li>
+
                     }
                     @if (User.IsInRole("Admin"))
                     {
