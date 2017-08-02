@@ -45,7 +45,7 @@
                 @{
                     IEnumerable<SelectListItem> list = ViewBag.Departments;
                 }
-                @Html.DropDownList("DepartmentId", list)  
+                @Html.DropDownList("DepartmentID", list)  
                 @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
             </div>
         </div>

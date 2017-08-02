@@ -186,6 +186,10 @@
     <Compile Include="Migrations\201708011349090_JobOpVM2.Designer.cs">
       <DependentUpon>201708011349090_JobOpVM2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708021235505_InfoDep.cs" />
+    <Compile Include="Migrations\201708021235505_InfoDep.Designer.cs">
+      <DependentUpon>201708021235505_InfoDep.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminIndexListViewModel.cs" />
@@ -196,6 +200,7 @@
     <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
+    <Compile Include="Models\InformationViewModel.cs" />
     <Compile Include="Models\JobOpening.cs" />
     <Compile Include="Models\JobOpeningViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -317,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708011349090_JobOpVM2.resx">
       <DependentUpon>201708011349090_JobOpVM2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708021235505_InfoDep.resx">
+      <DependentUpon>201708021235505_InfoDep.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
