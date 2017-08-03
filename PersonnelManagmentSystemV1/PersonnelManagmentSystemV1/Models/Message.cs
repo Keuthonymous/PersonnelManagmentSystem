@@ -9,10 +9,25 @@ namespace PersonnelManagmentSystemV1.Models
 {
     public class Message
     {
+        private int firstMessageInThread = 0;
         [Key]
         public int ID { get; set; }
 
-        public Message FirstMessageInThread { get; set; }
+        public int FirstMessageInThreadID
+        { 
+            get 
+            { 
+                if (firstMessageInThread == 0) 
+                {
+                    return ID;
+                } 
+                return firstMessageInThread;
+            } 
+            set
+            { 
+                firstMessageInThread = value;
+            } 
+        } 
         
         [Required]
         [Display(Name = "Subject")]
@@ -28,7 +43,7 @@ namespace PersonnelManagmentSystemV1.Models
         [Display(Name = "Time Sent")]
         public DateTime SendTime { get; set; }
 
-        public bool IsFirstMessage { get { return FirstMessageInThread == this; } }
+        public bool IsFirstMessage { get { return FirstMessageInThreadID == ID; } }
 
         public virtual JobOpening JobOpening { get; set; }
         [InverseProperty("ReceivedMessages")]

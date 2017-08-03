@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+    bool editable = User.IsInRole("Boss");
 }
 
 <h2>Details</h2>
@@ -25,13 +26,18 @@
         <dd>
             @Html.DisplayFor(model => model.Contents)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsPublic)
-        </dt>
-
+        @if (editable)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.IsPublic)
+            </dt>
+        }
         <dd>
             @Html.DisplayFor(model => model.IsPublic)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Department.Name)
         </dd>
 
         <dt>
@@ -45,6 +51,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (editable)
+    {
+        <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </div>
+    }
+    <div class="btn">@Html.ActionLink("Back to List", "Index")</div>
 </p>

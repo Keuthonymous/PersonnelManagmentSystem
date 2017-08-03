@@ -16,9 +16,28 @@ namespace PersonnelManagmentSystemV1.Repositories
         {
             if (publicOnly)
             {
-                return db.Information.Where(i => i.IsPublic);
+                return db.Information
+                        .Include(i => i.Department)
+                        .Where(i => i.IsPublic);
             }
-            return db.Information;
+            return db.Information
+                .Include(i => i.Department);
+        }
+
+        public IEnumerable<Information> Information()
+        {
+            return db.Information.Include(i => i.Department);
+        }
+
+        public Department Department(int id)
+        {
+            return db.Departments.SingleOrDefault(d => d.ID == id);
+        }
+
+        public IEnumerable<Department> Departments()
+        {
+            return db.Departments
+                .Include(d => d.Manager); //Include manager, because it is required in views and lazy loading does not work because only one reader action can be used simultaneously.
         }
 
         public Information Information(int id)
@@ -28,6 +47,7 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public void AddInformation(Information info)
         {
+            info.UploadTime = DateTime.Now;
             db.Information.Add(info);
             db.SaveChanges();
         }

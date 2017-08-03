@@ -5,5 +5,8 @@
 }
 
 <div class="row">
-    @Html.Partial("../Information/Index", Model)
+    <div class="col-md-8">
+        @Html.Action("PublicNews", "Information")
+    </div>
+   
 </div>

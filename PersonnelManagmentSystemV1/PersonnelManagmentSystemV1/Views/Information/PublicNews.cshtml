@@ -1,0 +1,40 @@
+﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Information>
+
+@{
+    ViewBag.Title = "Information";
+}
+
+<h2>Information</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contents)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UploadTime)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadTime)
+            </td>
+            <td>
+                <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+            </td>
+        </tr>
+    }
+
+</table>

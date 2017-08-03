@@ -7,9 +7,9 @@
 <h2>@ViewBag.Title</h2>
 @if (User.IsInRole("Boss"))
 {
- <p>
-    @Html.ActionLink("Create New", "Create")
-</p>   
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 }
 
 <table class="table">
@@ -24,40 +24,46 @@
             @Html.DisplayNameFor(model => model.IsPublic)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.UploadTime)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) 
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contents)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsPublic)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadTime)
-        </td>
-        <td>
-            @if (User.IsInRole("Boss"))
-            {
-                <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPublic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UploadTime)
+            </td>
+            <td>
+                @if (User.IsInRole("Boss"))
+                {
+                    <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
 
-                <div class="btn">@Html.ActionLink("Details", "Details", new { id=item.ID })</div>
-                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id=item.ID })</div>
+                    <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+                    <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
                 }
                 else
                 {
-                <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+                    <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
                 }
-</td>
-    </tr>
-}
+            </td>
+        </tr>
+    }
 
 </table>

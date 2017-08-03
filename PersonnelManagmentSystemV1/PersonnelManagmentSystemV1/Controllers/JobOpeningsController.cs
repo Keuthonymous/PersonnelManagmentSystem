@@ -41,6 +41,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Jobs/Create
         public ActionResult Create()
         {
+            ViewBag.Departments = db.Departments().Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
             return View();
         }
 
@@ -49,15 +50,16 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,JobType")] JobOpening job)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,JobType,DepartmentID")] JobOpeningViewModel jobVM)
         {
             if (ModelState.IsValid)
             {
+                JobOpening job = new JobOpening() { Title = jobVM.Title, ID = jobVM.ID, Description = jobVM.Description, JobType = jobVM.JobType, Department = db.Department(jobVM.DepartmentID) };
                 db.Add(job);
                 return RedirectToAction("Index");
             }
 
-            return View(job);
+            return View(jobVM);
         }
 
         // GET: Jobs/Edit/5

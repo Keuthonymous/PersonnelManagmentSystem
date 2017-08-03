@@ -37,6 +37,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { jobOpeningID = Model.ID }, new { })</div>
+    <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</div>
+    <div class="btn">@Html.ActionLink("Back to List", "Index")</div> 
 </p>

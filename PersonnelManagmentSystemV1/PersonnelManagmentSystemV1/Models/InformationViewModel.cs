@@ -6,10 +6,13 @@ using System.Web;
 
 namespace PersonnelManagmentSystemV1.Models
 {
-    public class Information
+    public class InformationViewModel
     {
         [Key]
         public int ID { get; set; }
+
+        [Key]
+        public int DepartmentID { get; set; }
 
         [Required]
         [Display(Name = "Title")]
@@ -17,21 +20,15 @@ namespace PersonnelManagmentSystemV1.Models
 
         [Required]
         [Display(Name = "Content")]
-        public string Contents { get; set; }
+        public string Content { get; set; }
 
         [Required]
         [Display(Name = "Public Information")]
         public bool IsPublic { get; set; }
 
-        public Information()
-        {
-            Department = new Department();
-        }
-
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Posted Time")]
         public DateTime UploadTime { get; set; }
-        public virtual Department Department { get; set; }
     }
 }

@@ -14,7 +14,8 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public IEnumerable<Department> Departments()
         {
-            return db.Departments;
+            return db.Departments
+                .Include(d => d.Manager); //Include manager, because it is required in views and lazy loading does not work because only one reader action can be used simultaneously.
         }
 
         public Department Department(int id)

@@ -1,0 +1,43 @@
+﻿@model PersonnelManagmentSystemV1.Models.Message
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Message</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BodyContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BodyContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SendTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SendTime)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <div class="btn">@Html.ActionLink("Reply", "Reply", new { Id = Model.ID })</div>
+    <div class="btn">@Html.ActionLink("Back to List", "Index")</div>
+    
+</p>

@@ -9,12 +9,9 @@ namespace PersonnelManagmentSystemV1.Controllers
 {
     public class HomeController : Controller
     {
-        private InformationRepository repo = new InformationRepository();
-
-        [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(repo.Informations(true));
+            return View();
         }
     }
 }

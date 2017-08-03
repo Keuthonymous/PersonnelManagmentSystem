@@ -23,6 +23,12 @@ namespace PersonnelManagmentSystemV1.Models
         [Display(Name = "Job Type")]
         public string JobType { get; set; }
 
+        public JobOpening()
+        {
+            Messages = new List<Message>();
+            Department = new Department();
+
+        }
         public virtual Department Department { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         public IEnumerable<ApplicationUser> GetAllApplicants()
