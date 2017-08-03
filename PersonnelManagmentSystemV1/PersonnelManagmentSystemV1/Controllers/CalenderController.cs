@@ -16,6 +16,7 @@ namespace PersonnelManagmentSystemV1.Controllers
 
 
         // GET: Calender
+        [Authorize(Roles="Boss")]
         [HttpGet]
         public ActionResult Index()
         {
@@ -34,6 +35,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(calenderVM);
         }
 
+        [Authorize(Roles = "Boss")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index([Bind(Include = "ID,StartDate,StartTime,EndDate,EndTime,DepartmentID,CalTitle,CalContent,")] CalenderVM calevntVM)
@@ -51,6 +53,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(calevntVM);
         }
 
+        [Authorize(Roles="User")]
         public ActionResult Events()
         {
             return View(calrepo.GetAllCalenderTasks());

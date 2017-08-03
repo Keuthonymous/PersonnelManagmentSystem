@@ -4,10 +4,14 @@
     ViewBag.Title = "Events";
 }
 
-<h2>Events</h2>
+<h2>Calender Events</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (ViewContext.HttpContext.User.IsInRole("Boss"))
+    {
+        @Html.ActionLink("Create New", "Index")
+    }
+   
 </p>
 <table class="table">
     <tr>
@@ -34,7 +38,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Department.Name)
-
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CalenderStart)
@@ -48,12 +51,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.CalContent)
         </td>
-
+@if (ViewContext.HttpContext.User.IsInRole("Boss")) { 
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
+
+        </td>}
     </tr>
 }
 

@@ -19,13 +19,18 @@ namespace PersonnelManagmentSystemV1.Models
         public virtual Department Department { get; set; }
 
         [StringLength(25)]
+        [Display(Name = "Title")]
         public string CalTitle { get; set; }
 
+
         [StringLength(200)]
+        [Display(Name = "Content")]
         public string CalContent { get; set; }
 
+        [Display(Name = "Event Start")]
         public DateTime CalenderStart { get; set; }
 
+        [Display(Name = "Event End")]
         public DateTime CalenderEnd { get; set; }
 
 
