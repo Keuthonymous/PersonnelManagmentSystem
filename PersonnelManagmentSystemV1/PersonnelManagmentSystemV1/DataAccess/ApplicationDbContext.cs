@@ -21,26 +21,26 @@ namespace PersonnelManagmentSystemV1.DataAccess
             return new ApplicationDbContext();
         }
 
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Department>().HasRequired<ApplicationUser>(d => d.Manager).WithMany(m => m.ManagedDepartments);
-        //    modelBuilder.Entity<Department>().HasMany(d => d.Employees).WithOptional(e => e.Department);
-        //   // modelBuilder.Entity<ApplicationUser>().HasOptional(u => u.Department).WithMany(d => d.Employees);
-        //    modelBuilder.Entity<CV>().HasRequired(c => c.Uploader).WithMany(u => u.CVs);
-        //    modelBuilder.Entity<Information>().HasRequired(i => i.Department).WithMany(d => d.Informations);
-        //    modelBuilder.Entity<JobOpening>().HasRequired(j => j.Department).WithMany(d => d.JobOpenings);
-        //    modelBuilder.Entity<Message>().HasRequired(m => m.JobOpening).WithMany(j => j.Messages);
-        //    //modelBuilder.Entity<Message>().HasOptional(m => m.FirstMessageInThread).WithRequired(m => m);
-        //    modelBuilder.Entity<Message>().HasRequired(m => m.Sender).WithMany(u => u.SentMessages);
-        //    modelBuilder.Entity<Message>().HasRequired(m => m.Recipient).WithMany(u => u.ReceivedMessages);
-        //}
-
         public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.JobOpening> Jobs { get; set; }
 
         public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Department> Departments { get; set; }
 
         public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Information> Information { get; set; }
 
-        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Message> Messages { get; set; }
+        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Calender> CalenderTask { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+             modelBuilder.Entity<Calender>()
+            .Property(f => f.CalenderStart)
+            .HasColumnType("datetime2");
+
+             modelBuilder.Entity<Calender>()
+            .Property(f => f.CalenderEnd)
+            .HasColumnType("datetime2");
+
+             base.OnModelCreating(modelBuilder);
+        }
+
     }
 }
