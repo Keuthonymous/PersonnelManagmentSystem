@@ -17,7 +17,7 @@ namespace PersonnelManagmentSystemV1.Models
 
         [Required]
         [Display(Name = "Content")]
-        public string Content { get; set; }
+        public string Contents { get; set; }
 
         [Required]
         [Display(Name = "Public Information")]

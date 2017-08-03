@@ -31,7 +31,8 @@
             @Html.DisplayFor(modelItem => item.JobType)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID })
+            <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div> 
+            <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { jobOpeningID = item.ID }, new { })</div> 
         </td>
     </tr>
 }

@@ -185,6 +185,7 @@
     <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
+    <Compile Include="Models\InformationViewModel.cs" />
     <Compile Include="Models\JobOpening.cs" />
     <Compile Include="Models\JobOpeningViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
