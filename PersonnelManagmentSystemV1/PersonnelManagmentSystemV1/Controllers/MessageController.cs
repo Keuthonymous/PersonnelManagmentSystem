@@ -17,6 +17,24 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private MessageRepository repo = new MessageRepository();
 
+        private MessageViewModel MapMessageToMessageVM(Message message)
+        {
+            return new MessageViewModel()
+            {
+                ID = message.ID,
+                Title = message.Title,
+                BodyContent = message.BodyContent,
+                JobOpeningID = message.JobOpening.ID,
+                SenderID = message.Sender.Id,
+                RecipientID = message.Recipient.Id,
+                SendTime = message.SendTime,
+                FirstMessageinThreadID = message.FirstMessageInThreadID,
+                RecipientName = message.Recipient.UserName,
+                JobOpeningName = message.JobOpening.Title,
+                SenderName = message.Sender.UserName
+            };
+        }
+
         // GET: Message
         public ActionResult Index()
         {
@@ -37,6 +55,8 @@ namespace PersonnelManagmentSystemV1.Controllers
             }
             return View(message);
         }
+
+
 
         // GET: Message/Create: Reacting to a job opening
         public ActionResult Create(int jobOpeningID)
@@ -59,6 +79,50 @@ namespace PersonnelManagmentSystemV1.Controllers
             message.Sender = repo.GetUserByname(User.Identity.Name);
             message.JobOpening = repo.GetJobopeningByID(messageViewModel.JobOpeningID);
             message.Recipient = message.JobOpening.Department.Manager;
+            if (ModelState.IsValid)
+            {
+                repo.SendMessage(message); //Method sets the date / time sent
+                return RedirectToAction("Index");
+            }
+
+            return View(messageViewModel);
+        }
+
+        // GET: Message/Reply: Replying to message
+        public ActionResult Reply(int Id)
+        {
+            Message previousMessage = repo.GetMessageById(Id);
+            MessageViewModel messageViewModel = new MessageViewModel() { 
+                PreviousMessageID = Id, 
+                FirstMessageinThreadID = previousMessage.FirstMessageInThreadID,
+                Title = "Re:" + previousMessage.Title, 
+                JobOpeningID = previousMessage.JobOpening.ID,
+                RecipientID = previousMessage.Sender.Id,
+                RecipientName = previousMessage.Sender.UserName,
+                JobOpeningName = previousMessage.JobOpening.Title
+            };
+            messageViewModel.MessagesInThread = new List<MessageViewModel>() { MapMessageToMessageVM(previousMessage) };
+
+
+            return View(messageViewModel);
+        }
+
+        // POST: Message/Reply: Replying to message
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reply([Bind(Include = "ID,Title,BodyContent,PreviousMessageID")] MessageViewModel messageViewModel)
+        {
+            Message previousMessage = repo.GetMessageById(messageViewModel.PreviousMessageID);
+            Message message = new Message() 
+                { Title = messageViewModel.Title, 
+                    BodyContent = messageViewModel.BodyContent, 
+                    Sender = repo.GetUserByname(User.Identity.Name),
+                    JobOpening = previousMessage.JobOpening,
+                    Recipient = previousMessage.Sender,
+                    FirstMessageInThreadID = previousMessage.FirstMessageInThreadID
+                };
             if (ModelState.IsValid)
             {
                 repo.SendMessage(message); //Method sets the date / time sent

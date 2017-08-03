@@ -52,6 +52,7 @@
         </td>
         <td>
             <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+            <div class="btn">@Html.ActionLink("Reply", "Reply", new { Id = item.ID })</div>
             @if (User.IsInRole("Boss"))
             {
                 <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>

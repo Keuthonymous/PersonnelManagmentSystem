@@ -58,5 +58,10 @@ namespace PersonnelManagmentSystemV1.Repositories
                 .Include(j => j.Department.Manager)
                 .SingleOrDefault(j => j.ID == jobOpeningId);
         }
+
+        public ApplicationUser GetUserById(string userID) //!!!! USER !!!!
+        {
+            return db.Users.SingleOrDefault(u => u.Id == userID);
+        }
     }
 }
