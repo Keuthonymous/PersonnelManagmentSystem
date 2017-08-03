@@ -21,13 +21,15 @@ namespace PersonnelManagmentSystemV1.DataAccess
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.JobOpening> Jobs { get; set; }
+        public DbSet<JobOpening> Jobs { get; set; }
 
-        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Department> Departments { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
-        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Information> Information { get; set; }
+        public DbSet<Information> Information { get; set; }
 
-        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.Calender> CalenderTask { get; set; }
+        public DbSet<Calender> CalenderTask { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
