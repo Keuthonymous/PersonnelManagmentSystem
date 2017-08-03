@@ -59,6 +59,81 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(applicationUser);
         }
 
+        // GET: Admin/AddUserDepartment/5
+        public ActionResult AddUserDepartment(string id)
+        {
+            AddUserToDepartmentViewModel addUser = new AddUserToDepartmentViewModel();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = db.FindUser(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            addUser.UserToAdd = user;
+            addUser.DepartmentList = db.Departments().ToList();
+            addUser.UserToAddID = user.Id;
+            return View(addUser);
+        }
+
+        // POST: Admin/AddUserDepartment/5
+        [HttpPost]
+        public ActionResult AddUserDepartment(AddUserToDepartmentViewModel addUser, string userID)
+        {
+            addUser.DepartmentList = db.Departments().ToList();
+            addUser.UserToAdd = db.FindUser(addUser.UserToAddID);
+            Department department = db.FindDepartment(addUser.SelectedDepartment);
+
+            if (ModelState.IsValid)
+            {
+                db.AddUserToDepartment(department, addUser.UserToAdd);
+                return RedirectToAction("Index");
+            }
+            return View(addUser);
+        }
+
+        // GET: Admin/DepartmentUserAdd/5
+        public ActionResult DepartmentUserAdd(int? id)
+        {
+            AddDepartmentToUserViewModel addDepartment = new AddDepartmentToUserViewModel();
+            addDepartment.UsersList = db.GetAllUsers().ToList();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Department department = db.FindDepartment(id);
+            if (department == null)
+            {
+                return HttpNotFound();
+            }
+            addDepartment.SelectDepartment = department;
+            return View(addDepartment);
+        }
+
+        // POST: Admin/DepartmentUserAdd/5
+        [HttpPost]
+        public ActionResult DepartmentUserAdd(AddDepartmentToUserViewModel addDepartment, string[] SelectedUsers)
+        {
+            addDepartment.UsersList = db.GetAllUsers().ToList();
+            addDepartment.UsersToAdd = new List<ApplicationUser>();
+            addDepartment.SelectDepartment = db.FindDepartment(addDepartment.SelectDepartment.ID);
+
+            foreach (var i in SelectedUsers)
+            {
+                addDepartment.UsersToAdd.Add(db.FindUser(i));
+            }
+            if (ModelState.IsValid)
+            {
+                foreach (var i in addDepartment.UsersToAdd)
+                {
+                    db.AddUserToDepartment(addDepartment.SelectDepartment, i);
+                }
+            }
+            return View(addDepartment);
+        }
+
         // GET: Admin/DepartmentDetails/5
         public ActionResult DetailsDepartment(int? id)
         {

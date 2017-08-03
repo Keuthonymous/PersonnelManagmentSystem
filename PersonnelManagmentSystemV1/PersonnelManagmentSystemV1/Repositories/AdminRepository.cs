@@ -138,6 +138,12 @@ namespace PersonnelManagmentSystemV1.Repositories
             db.SaveChanges();
         }
 
+        public void AddUserToDepartment(Department department, ApplicationUser user)
+        {
+            department.Employees.Add(user);
+            db.SaveChanges();
+        }
+
         public void RemoveUser(ApplicationUser user)
         {
             db.Users.Remove(user);

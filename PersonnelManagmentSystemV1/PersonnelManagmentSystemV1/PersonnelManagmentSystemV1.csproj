@@ -166,6 +166,7 @@
     <Compile Include="Controllers\JobOpeningsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SearcherController.cs" />
+    <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="DataAccess\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -176,8 +177,13 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddDepartmentToUserViewModel.cs" />
+    <Compile Include="Models\AddUserToDepartmentViewModel.cs" />
+    <Compile Include="Models\AdminIndexListViewModel.cs" />
     <Compile Include="Models\AdminIndexUserViewModel.cs" />
+    <Compile Include="Models\CreateDepartmentViewModel.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\EditDepartmentViewModel.cs" />
     <Compile Include="Models\EditUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
@@ -190,6 +196,7 @@
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\InformationRepository.cs" />
     <Compile Include="Repositories\JobsRepository.cs" />
+    <Compile Include="Repositories\WorkerRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -254,7 +261,6 @@
     <Content Include="Views\JobOpenings\Index.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
-    <Content Include="Views\Admin\Details.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Boss\Details.cshtml" />
@@ -269,9 +275,19 @@
     <Content Include="Views\Information\Index.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\CreateDepartment.cshtml" />
+    <Content Include="Views\Admin\DeleteDepartment.cshtml" />
+    <Content Include="Views\Admin\DetailsDepartment.cshtml" />
+    <Content Include="Views\Admin\DetailsUser.cshtml" />
+    <Content Include="Views\Admin\EditDepartment.cshtml" />
+    <Content Include="Views\Admin\_IndexDepartments.cshtml" />
+    <Content Include="Views\Admin\_IndexUsers.cshtml" />
+    <Content Include="Views\Admin\AddUserDepartment.cshtml" />
+    <Content Include="Views\Admin\DepartmentUserAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Worker\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

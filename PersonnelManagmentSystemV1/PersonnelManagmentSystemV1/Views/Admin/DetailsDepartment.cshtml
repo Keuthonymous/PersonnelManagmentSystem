@@ -28,7 +28,30 @@
 
     </dl>
 </div>
+@if (Model.Employees != null && Model.Employees.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.Employees.First().Email)
+            </th>
+        </tr>
+        @foreach (var i in Model.Employees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => i.Email)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{ 
+    <p>No Employees to Display</p>
+}
 <p>
     @Html.ActionLink("Edit", "EditDepartment", new { id = Model.ID }) |
+    @Html.ActionLink("Add Users To department", "DepartmentUserAdd", new { id = Model.ID}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

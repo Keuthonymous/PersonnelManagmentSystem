@@ -1,0 +1,80 @@
+﻿@model PersonnelManagmentSystemV1.Models.AddDepartmentToUserViewModel
+@{
+    ViewBag.Title = "AddToDepartment";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.SelectDepartment.ID, "selectedDepartment")
+    <h2>AddToDepartment</h2>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.SelectDepartment.Manager)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SelectDepartment.Name)
+            </dd>
+            @if (Model.SelectDepartment.Employees != null && Model.SelectDepartment.Employees.Count() > 0)
+            {
+                foreach (var t in Model.SelectDepartment.Employees)
+                {
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => t.Email)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(modelItem => t.Email)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => t.UserName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(modelItem => t.UserName)
+                    </dd>
+                }
+            }
+            else
+            {
+                <dt>
+                    No Employees to Display.
+                </dt>
+            }
+        </dl>
+    </div>
+    if (Model.UsersList != null && Model.UsersList.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.UsersList.First().Email)
+                </th>
+                <th>
+                    @Html.LabelFor(model => model.UsersList.First().UserName)
+                </th>
+                <th>@*Blank For Radio Button*@</th>
+            </tr>
+                @foreach (var item in Model.UsersList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            <input type="checkbox" name="SelectedUsers" value="@item.Id"></td>
+                    </tr>
+                }
+
+        </table>
+
+        <input type="submit" value="Add User" class="btn btn-default" />
+    }
+    else
+    {
+        <p>There are no departments to choose from!</p>
+    }
+}
+
