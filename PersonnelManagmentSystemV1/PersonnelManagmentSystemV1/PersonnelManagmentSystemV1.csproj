@@ -188,6 +188,7 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\EditDepartmentViewModel.cs" />
     <Compile Include="Models\EditUserViewModel.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
     <Compile Include="Models\InformationViewModel.cs" />

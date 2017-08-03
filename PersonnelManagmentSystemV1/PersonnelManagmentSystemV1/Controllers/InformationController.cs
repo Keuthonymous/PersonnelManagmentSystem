@@ -17,6 +17,19 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private InformationRepository db = new InformationRepository();
 
+        private InformationViewModel MapInformationToInformationViewModel(Information info)
+        {
+            return new InformationViewModel()
+            {
+                ID = info.ID,
+                DepartmentID = info.Department.ID,
+                Title = info.Title,
+                Content = info.Contents,
+                IsPublic = info.IsPublic,
+                UploadTime = info.UploadTime
+            };
+        }
+
         // GET: Information
         public ActionResult Index()
         {
@@ -82,12 +95,12 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Information information = db.Information(id.Value);
-            if (information == null)
+            InformationViewModel informationViewModel = MapInformationToInformationViewModel(db.Information(id.Value));
+            if (informationViewModel == null)
             {
                 return HttpNotFound();
             }
-            return View(information);
+            return View(informationViewModel);
         }
 
         // POST: Information/Edit/5
