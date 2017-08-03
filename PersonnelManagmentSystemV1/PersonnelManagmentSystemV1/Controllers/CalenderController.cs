@@ -21,7 +21,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         {
             DepartmentRepository depRepo = new DepartmentRepository();
 
-            ViewBag.DepartmentList = depRepo.Departments().Select(dep => new SelectListItem() { Text = dep.ID.ToString() + " | " + dep.Name, Value = dep.ID.ToString() });
+            ViewBag.DepartmentList = depRepo.Departments().Select(dep => new SelectListItem() { Text = dep.Name, Value = dep.ID.ToString() });
 
             var calenderVM = new CalenderVM
             {
@@ -49,6 +49,11 @@ namespace PersonnelManagmentSystemV1.Controllers
                 return RedirectToAction("Index");
             }
             return View(calevntVM);
+        }
+
+        public ActionResult Events()
+        {
+            return View(calrepo.GetAllCalenderTasks());
         }
 
 
