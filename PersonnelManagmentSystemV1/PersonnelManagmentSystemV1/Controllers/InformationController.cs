@@ -63,7 +63,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             
             if (ModelState.IsValid)
             {
-                Information info = new Information() { Title = information.Title, ID = information.ID, Content = information.Content, IsPublic = information.IsPublic, Department = db.Department(information.DepartmentID) };
+                Information info = new Information() { Title = information.Title, ID = information.ID, Contents = information.Content, IsPublic = information.IsPublic, Department = db.Department(information.DepartmentID) };
                 //info.UploadTime = DateTime.Now;
                 db.AddInformation(info);
                 return RedirectToAction("Index");
@@ -100,7 +100,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Information info = new Information() { Title = information.Title, ID = information.ID, Content = information.Content, IsPublic = information.IsPublic, Department = db.Department(information.DepartmentID) };
+                Information info = new Information() { Title = information.Title, ID = information.ID, Contents = information.Content, IsPublic = information.IsPublic, Department = db.Department(information.DepartmentID) };
                 db.EditInformation(info);
                 return RedirectToAction("Index");
             }

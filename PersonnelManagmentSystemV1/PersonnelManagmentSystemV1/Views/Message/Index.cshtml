@@ -51,8 +51,11 @@
             @Html.DisplayFor(modelItem => item.SendTime)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+            @if (User.IsInRole("Boss"))
+            {
+                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
+            }
         </td>
     </tr>
 }
