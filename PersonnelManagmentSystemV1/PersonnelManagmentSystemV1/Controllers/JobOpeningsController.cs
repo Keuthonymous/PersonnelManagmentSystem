@@ -50,11 +50,11 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,JobType,DepartmentId")] JobOpeningViewModel jobVM)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,JobType,DepartmentID")] JobOpeningViewModel jobVM)
         {
             if (ModelState.IsValid)
             {
-                JobOpening job = new JobOpening() { Title = jobVM.Title, ID = jobVM.ID, Description = jobVM.Description, JobType = jobVM.JobType, Department = db.Department(jobVM.DepartmentId) };
+                JobOpening job = new JobOpening() { Title = jobVM.Title, ID = jobVM.ID, Description = jobVM.Description, JobType = jobVM.JobType, Department = db.Department(jobVM.DepartmentID) };
                 db.Add(job);
                 return RedirectToAction("Index");
             }

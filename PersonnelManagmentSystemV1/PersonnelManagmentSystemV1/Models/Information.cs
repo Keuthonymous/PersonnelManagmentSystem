@@ -17,11 +17,16 @@ namespace PersonnelManagmentSystemV1.Models
 
         [Required]
         [Display(Name = "Content")]
-        public string Contents { get; set; }
+        public string Content { get; set; }
 
         [Required]
         [Display(Name = "Public Information")]
         public bool IsPublic { get; set; }
+
+        public Information()
+        {
+            Department = new Department();
+        }
 
         [Required]
         [DataType(DataType.DateTime)]
