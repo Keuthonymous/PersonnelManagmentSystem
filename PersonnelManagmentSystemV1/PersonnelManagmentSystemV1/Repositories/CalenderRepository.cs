@@ -34,7 +34,14 @@ namespace PersonnelManagmentSystemV1.Repositories
             return EndDate + new TimeSpan(EndTime.Hour, EndTime.Minute, 0);
 
         }
-        
+
+
+
+        public List<Calender> GetAllCalenderTasks()
+        {
+            return db.CalenderTask.ToList();
+        }
+
     }
 
 

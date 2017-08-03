@@ -298,6 +298,7 @@
     <Content Include="Views\Admin\Departments.cshtml" />
     <Content Include="Views\Calender\Index.cshtml" />
     <Content Include="Views\Message\Reply.cshtml" />
+    <Content Include="Views\Calender\Events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
