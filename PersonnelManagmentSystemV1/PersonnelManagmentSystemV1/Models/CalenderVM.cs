@@ -12,12 +12,12 @@ namespace PersonnelManagmentSystemV1.Models
         public int DepartmentID { get; set; }
 
         [Required]
-        [Display(Name = "Calender Title")]
+        [Display(Name = "Title")]
         [StringLength(25, ErrorMessage = "The event can not be longer then 25 carracters")]
         public string CalTitle { get; set; }
 
         [Required]
-        [Display(Name = "Calender Content")]
+        [Display(Name = "Content")]
         [StringLength(200, ErrorMessage = "The event can not be longer then 200 charhacters")]
         public string CalContent { get; set; }
 
