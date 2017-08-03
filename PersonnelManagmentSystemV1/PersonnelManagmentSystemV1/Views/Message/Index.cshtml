@@ -1,4 +1,5 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Message>
+﻿@using PersonnelManagmentSystemV1.Models
+@model IEnumerable<Message>
 
 @{
     ViewBag.Title = "Messages";
@@ -8,6 +9,15 @@
 
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Sender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recipient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobOpening)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
@@ -22,6 +32,15 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sender.UserName) 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recipient.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JobOpening.Title)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
