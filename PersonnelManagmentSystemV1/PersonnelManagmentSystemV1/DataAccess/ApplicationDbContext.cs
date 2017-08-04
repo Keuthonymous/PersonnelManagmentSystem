@@ -44,5 +44,9 @@ namespace PersonnelManagmentSystemV1.DataAccess
              base.OnModelCreating(modelBuilder);
         }
 
+        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.CV> CVs { get; set; }
+
+        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.ApplicationUser> ApplicationUsers { get; set; }
+
     }
 }

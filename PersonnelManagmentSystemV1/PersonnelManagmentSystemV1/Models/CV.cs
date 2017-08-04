@@ -24,8 +24,8 @@ namespace PersonnelManagmentSystemV1.Models
         [Required]
         public string Content { get; set; }
 
-     //   [Required]
-      //  public HttpPostedFileBase File { get; set; }
+        [Required]
+        public HttpPostedFileBase File { get; set; }
 
         [ForeignKey("Uploader")]
         public string UploaderID { get; set; }
