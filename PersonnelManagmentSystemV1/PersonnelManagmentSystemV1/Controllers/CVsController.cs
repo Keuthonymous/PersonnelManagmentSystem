@@ -18,8 +18,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: CVs
         public ActionResult Index()
         {
-            var cVs = db.CVs.Include(c => c.Uploader);
-            return View(cVs.ToList());
+            var cv = db.Cv.Include(c => c.Uploader);
+            return View(cv.ToList());
         }
 
         [HttpPost]
@@ -51,7 +51,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = db.CVs.Find(id);
+            CV cV = db.Cv.Find(id);
             if (cV == null)
             {
                 return HttpNotFound();
@@ -77,7 +77,7 @@ namespace PersonnelManagmentSystemV1.Controllers
 
             if (ModelState.IsValid)
             {
-                db.CVs.Add(cV);
+                db.Cv.Add(cV);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -93,7 +93,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = db.CVs.Find(id);
+            CV cV = db.Cv.Find(id);
             if (cV == null)
             {
                 return HttpNotFound();
@@ -126,7 +126,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = db.CVs.Find(id);
+            CV cV = db.Cv.Find(id);
             if (cV == null)
             {
                 return HttpNotFound();
@@ -139,8 +139,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CV cV = db.CVs.Find(id);
-            db.CVs.Remove(cV);
+            CV cV = db.Cv.Find(id);
+            db.Cv.Remove(cV);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
