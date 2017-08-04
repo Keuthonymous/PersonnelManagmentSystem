@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -37,11 +38,20 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            AdminIndexListViewModel indexList = new AdminIndexListViewModel();
-            indexList.IndexUsers = db.GetIndexList().ToList();
-            indexList.IndexDepartments = db.Departments().ToList();
+            AdminIndexListViewModel indexVM = new AdminIndexListViewModel();
+            //Get a list of users first, so that the readaction on the dbcontext finishes
+            List<ApplicationUser> users = db.GetAllUsers().ToList();
+            //Now convert the list using a lookup function for the role name
+            indexVM.IndexUsers = users.Select(user => 
+                new AdminIndexUserViewModel { 
+                    ID = user.Id, 
+                    Email = user.Email, 
+                    UserName = user.UserName, 
+                    Role = user.Roles.First(), 
+                    RoleName = db.GetRoleName(user.Roles.First().RoleId) }).ToList();
+            indexVM.IndexDepartments = db.Departments().ToList();
 
-            return View(indexList);
+            return View(indexVM);
         }
 
         // GET: Admin/DetailsUser/5
@@ -159,7 +169,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin/CreateUser
         public ActionResult CreateUser()
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
             return View();
         }
@@ -171,7 +181,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateUser(RegisterViewModel registerUser, string userRole)
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
 
             if (ModelState.IsValid)
@@ -221,7 +231,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin/EditUser/5
         public ActionResult EditUser(string id)
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
             if (id == null)
             {
@@ -243,7 +253,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(EditUserViewModel editUser, string userRole)
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
             if (ModelState.IsValid)
             {
