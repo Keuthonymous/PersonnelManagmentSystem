@@ -1,4 +1,4 @@
-﻿@model PersonnelManagmentSystemV1.Models.JobOpening
+﻿@model PersonnelManagmentSystemV1.Models.JobOpeningViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -42,17 +42,17 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DepartmentID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Department, new List<SelectListItem>
-                {
-                    new SelectListItem() {Text = "Department 1", Value="Department 1"},
-                    new SelectListItem() {Text = "Department 2", Value="Department 2"},
-                    new SelectListItem() {Text = "Department 3", Value="Department 3"}
-                })
-                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+                @{
+                    IEnumerable<SelectListItem> list = ViewBag.Departments;
+                }
+                @Html.DropDownList("DepartmentID", list)
+                @Html.ValidationMessageFor(model => model.DepartmentID, "", new { @class = "text-danger" })
             </div>
         </div>
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

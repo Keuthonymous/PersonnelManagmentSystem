@@ -17,18 +17,23 @@ namespace PersonnelManagmentSystemV1.Repositories
             return db.Jobs.Include(j => j.Department);
         }
 
-        public IEnumerable<Department> Departments()
+        public IEnumerable<Department> Departments() //!!!! DEPARTMENT !!!!
         {
             return db.Departments
                 .Include(d => d.Manager); //Include manager, because it is required in views and lazy loading does not work because only one reader action can be used simultaneously.
         }
 
-        public Department Department(int id)
+        public Department Department(int id) //!!!! DEPARTMENT !!!!
         {
             return db.Departments.SingleOrDefault(d => d.ID == id);
         }
 
-        public JobOpening Job(int? id)
+        public IEnumerable<Department> GetManagedDepartmentsByUserName(string userName) //!!!!! DEPARTMENT !!!!
+        {
+            return db.Users.SingleOrDefault(u => u.UserName == userName).ManagedDepartments;
+        }
+
+        public JobOpening Job(int id)
         {
             return db.Jobs.Where(j => j.ID == id).First();
         }

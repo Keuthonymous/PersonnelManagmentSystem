@@ -16,6 +16,20 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private JobsRepository db = new JobsRepository();
 
+        private JobOpeningViewModel MapJobOpeningToJobOpeningViewModel(JobOpening jobOpening)
+        {
+            if (jobOpening == null)
+                return null;
+            return new JobOpeningViewModel()
+            {
+                ID = jobOpening.ID,
+                DepartmentID = jobOpening.Department.ID,
+                Title = jobOpening.Title,
+                Description = jobOpening.Description,
+                JobType = jobOpening.JobType
+            };
+        }
+
         // GET: Jobs
         [AllowAnonymous]
         public ActionResult Index()
@@ -30,7 +44,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening job = db.Job(id);
+            JobOpening job = db.Job(id.Value);
             if (job == null)
             {
                 return HttpNotFound();
@@ -41,7 +55,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Jobs/Create
         public ActionResult Create()
         {
-            ViewBag.Departments = db.Departments().Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
+            //When creating, select only departments that user manages
+            ViewBag.Departments = db.GetManagedDepartmentsByUserName(User.Identity.Name).Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
             return View();
         }
 
@@ -69,12 +84,23 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening job = db.Job(id);
+            JobOpening job = db.Job(id.Value);
             if (job == null)
             {
                 return HttpNotFound();
             }
-            return View(job);
+            //When editing, select only departments that user manages or the current department
+            List<Department> departments = new List<Department>();
+            departments.AddRange(db.GetManagedDepartmentsByUserName(User.Identity.Name));
+            if (!departments.Contains(job.Department))
+            {
+                departments.Add(job.Department);
+            }
+            //Convert list of departents to a list of selectitem
+            ViewBag.Departments = departments.Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
+            JobOpeningViewModel jobVM = MapJobOpeningToJobOpeningViewModel(job);
+
+            return View(jobVM);
         }
 
         // POST: Jobs/Edit/5
@@ -82,14 +108,19 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,JobType")] JobOpening job)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,JobType")] JobOpeningViewModel jobVM)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //Refers to the model that has been bound by the modelbinder; in this case it is jobVM
             {
+                JobOpening job = db.Job(jobVM.ID);
+                job.JobType = jobVM.JobType;
+                job.Title = jobVM.Title;
+                job.Description = jobVM.Description;
+                job.Department = db.Department(jobVM.DepartmentID);
                 db.Edit(job);
                 return RedirectToAction("Index");
             }
-            return View(job);
+            return View(jobVM);
         }
 
         // GET: Jobs/Delete/5
@@ -99,7 +130,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening job = db.Job(id);
+            JobOpening job = db.Job(id.Value);
             if (job == null)
             {
                 return HttpNotFound();
