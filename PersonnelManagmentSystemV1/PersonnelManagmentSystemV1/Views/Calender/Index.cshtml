@@ -15,7 +15,7 @@
             @{
                 IEnumerable<SelectListItem> list = ViewBag.DepartmentList;
             }
-            @Html.DropDownList("DepartmentID", list, "Select Department")
+            @Html.DropDownList("DepartmentID", list)
 
         </div>
         <br />
@@ -77,3 +77,4 @@
         </div>
     </div>
 </form>
+@Html.ActionLink("See Event List", "Events")
