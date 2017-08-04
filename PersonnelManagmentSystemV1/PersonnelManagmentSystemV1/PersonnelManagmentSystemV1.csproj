@@ -170,6 +170,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\SearcherController.cs" />
+    <Compile Include="Controllers\WorkerController.cs" />
     <Compile Include="DataAccess\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,10 +181,12 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddDepartmentToUserViewModel.cs" />
+    <Compile Include="Models\AddUserToDepartmentViewModel.cs" />
     <Compile Include="Models\AdminIndexListViewModel.cs" />
     <Compile Include="Models\AdminIndexUserViewModel.cs" />
     <Compile Include="Models\Calender.cs" />
-    <Compile Include="Models\CalenderVM.cs" />
+    <Compile Include="ViewModels\CalenderVM.cs" />
     <Compile Include="Models\CreateDepartmentViewModel.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\EditDepartmentViewModel.cs" />
@@ -205,6 +208,7 @@
     <Compile Include="Repositories\InformationRepository.cs" />
     <Compile Include="Repositories\JobsRepository.cs" />
     <Compile Include="Repositories\MessageRepository.cs" />
+    <Compile Include="Repositories\WorkerRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
