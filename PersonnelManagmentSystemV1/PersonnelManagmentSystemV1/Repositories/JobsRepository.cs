@@ -35,7 +35,7 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public JobOpening Job(int id)
         {
-            return db.Jobs.Where(j => j.ID == id).First();
+            return Jobs().SingleOrDefault(j => j.ID == id);
         }
 
         public void Add(JobOpening job)
