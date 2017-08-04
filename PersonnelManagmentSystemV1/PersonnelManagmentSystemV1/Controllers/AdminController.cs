@@ -116,22 +116,26 @@ namespace PersonnelManagmentSystemV1.Controllers
         [HttpPost]
         public ActionResult DepartmentUserAdd(AddDepartmentToUserViewModel addDepartment, string[] SelectedUsers)
         {
+            
             addDepartment.UsersList = db.GetAllUsers().ToList();
             addDepartment.UsersToAdd = new List<ApplicationUser>();
             addDepartment.SelectDepartment = db.FindDepartment(addDepartment.SelectDepartment.ID);
+            if (SelectedUsers != null)
+            { //only if at least one user was selected
 
-            foreach (string userID in SelectedUsers)
-            {
-                addDepartment.UsersToAdd.Add(db.FindUser(userID));
-            }
-            //if (ModelState.IsValid) 
-            //ModelState.IsValid is determined by the modelbinder and on the model bound, in this case addDepartment and string[] SelectedUsers
-            // In this case the check is meaningless and will always fail, because addDepartment.SelectDepartment is recreated from scratch in the modelbinder and 
-            // does not have all properties needed at the end of modelbinding.
-            {
-                foreach (ApplicationUser user in addDepartment.UsersToAdd)
+                foreach (string userID in SelectedUsers)
                 {
-                    db.AddUserToDepartment(addDepartment.SelectDepartment, user);
+                    addDepartment.UsersToAdd.Add(db.FindUser(userID));
+                }
+                //if (ModelState.IsValid) 
+                //ModelState.IsValid is determined by the modelbinder and on the model bound, in this case addDepartment and string[] SelectedUsers
+                // In this case the check is meaningless and will always fail, because addDepartment.SelectDepartment is recreated from scratch in the modelbinder and 
+                // does not have all properties needed at the end of modelbinding.
+                {
+                    foreach (ApplicationUser user in addDepartment.UsersToAdd)
+                    {
+                        db.AddUserToDepartment(addDepartment.SelectDepartment, user);
+                    }
                 }
             }
             return View(addDepartment);
