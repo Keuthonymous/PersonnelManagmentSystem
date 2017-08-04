@@ -6,8 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.ViewModels;
 using PersonnelManagmentSystemV1.Repositories;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -244,8 +244,19 @@ namespace PersonnelManagmentSystemV1.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = db.FindUser(editUser.ID);
+                if (editUser.Email != null)
+                {
+                    user.Email = editUser.Email;
+                }
 
-                db.EditUser(user, editUser);
+                if (editUser.Password != null)
+                {
+                    UserManager.RemovePassword(user.Id);
+                    UserManager.AddPassword(user.Id, editUser.Password);
+                }
+
+                db.EditUser(user);
+
                 if (userRole != null)
                 {
                     string currentRole = user.Roles.ToString();

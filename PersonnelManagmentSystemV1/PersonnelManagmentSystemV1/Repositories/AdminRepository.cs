@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -117,18 +118,8 @@ namespace PersonnelManagmentSystemV1.Repositories
             db.SaveChanges();
         }
 
-        public void EditUser(ApplicationUser applicationUser, EditUserViewModel editUser)
+        public void EditUser(ApplicationUser applicationUser)
         {
-            if (editUser.Email != null)
-            {
-                applicationUser.Email = editUser.Email;
-            }
-
-            if (editUser.Password != null)
-            {
-                userManager.RemovePassword(applicationUser.Id);
-                userManager.AddPassword(applicationUser.Id, editUser.Password);
-            }
             db.SaveChanges();
         }
 

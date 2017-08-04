@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using PersonnelManagmentSystemV1.Models;
 using System.Linq;
 using System.Web;
 
-namespace PersonnelManagmentSystemV1.Models
+namespace PersonnelManagmentSystemV1.ViewModels
 {
     public class EditDepartmentViewModel
     {
