@@ -1,4 +1,5 @@
 ﻿using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.ViewModels;
 using PersonnelManagmentSystemV1.Repositories;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace PersonnelManagmentSystemV1.Controllers
 
             ViewBag.DepartmentList = departments;
 
-            var calenderVM = new CalenderVM
+            var calenderVM = new CalenderViewModel
             {
                 StartDate = DateTime.Today,
                 StartTime = DateTime.Now,
@@ -55,7 +56,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [Authorize(Roles = "Boss")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "ID,StartDate,StartTime,EndDate,EndTime,DepartmentID,CalTitle,CalContent,")] CalenderVM calevntVM)
+        public ActionResult Index([Bind(Include = "ID,StartDate,StartTime,EndDate,EndTime,DepartmentID,CalTitle,CalContent,")] CalenderViewModel calevntVM)
         {
             DateTime calenderstart = calrepo.CalStart(calevntVM.StartDate, calevntVM.StartTime);
             DateTime calenderend = calrepo.CalEnd(calevntVM.EndDate, calevntVM.EndTime);

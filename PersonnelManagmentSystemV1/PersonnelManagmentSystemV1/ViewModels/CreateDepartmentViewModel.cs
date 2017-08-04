@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PersonnelManagmentSystemV1.Models;
 
-namespace PersonnelManagmentSystemV1.Models
+namespace PersonnelManagmentSystemV1.ViewModels
 {
     public class CreateDepartmentViewModel
     {

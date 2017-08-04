@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
+using PersonnelManagmentSystemV1.ViewModels;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
