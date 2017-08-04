@@ -140,7 +140,8 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public void AddUserToDepartment(Department department, ApplicationUser user)
         {
-            department.Employees.Add(user);
+            user.Department = department;
+            //department.Employees.Add(user);
             db.SaveChanges();
         }
 

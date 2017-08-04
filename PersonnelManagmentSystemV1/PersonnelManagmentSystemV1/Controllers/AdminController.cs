@@ -120,15 +120,18 @@ namespace PersonnelManagmentSystemV1.Controllers
             addDepartment.UsersToAdd = new List<ApplicationUser>();
             addDepartment.SelectDepartment = db.FindDepartment(addDepartment.SelectDepartment.ID);
 
-            foreach (var i in SelectedUsers)
+            foreach (string userID in SelectedUsers)
             {
-                addDepartment.UsersToAdd.Add(db.FindUser(i));
+                addDepartment.UsersToAdd.Add(db.FindUser(userID));
             }
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid) 
+            //ModelState.IsValid is determined by the modelbinder and on the model bound, in this case addDepartment and string[] SelectedUsers
+            // In this case the check is meaningless and will always fail, because addDepartment.SelectDepartment is recreated from scratch in the modelbinder and 
+            // does not have all properties needed at the end of modelbinding.
             {
-                foreach (var i in addDepartment.UsersToAdd)
+                foreach (ApplicationUser user in addDepartment.UsersToAdd)
                 {
-                    db.AddUserToDepartment(addDepartment.SelectDepartment, i);
+                    db.AddUserToDepartment(addDepartment.SelectDepartment, user);
                 }
             }
             return View(addDepartment);
