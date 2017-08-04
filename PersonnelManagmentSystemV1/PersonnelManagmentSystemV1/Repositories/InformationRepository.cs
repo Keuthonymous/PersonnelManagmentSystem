@@ -29,12 +29,12 @@ namespace PersonnelManagmentSystemV1.Repositories
             return db.Information.Include(i => i.Department);
         }
 
-        public Department Department(int id)
+        public Department Department(int id) //!!!! DEPARTMENT !!!!
         {
             return db.Departments.SingleOrDefault(d => d.ID == id);
         }
 
-        public IEnumerable<Department> Departments()
+        public IEnumerable<Department> Departments() //!!!! DEPARTMENT !!!!
         {
             return db.Departments
                 .Include(d => d.Manager); //Include manager, because it is required in views and lazy loading does not work because only one reader action can be used simultaneously.
@@ -90,5 +90,24 @@ namespace PersonnelManagmentSystemV1.Repositories
         }
 
         #endregion
+
+        public IEnumerable<Department> GetManagedDepartmentsByUserName(string userName) //!!!!! DEPARTMENT !!!!
+        {
+            return db.Users.SingleOrDefault(u => u.UserName == userName).ManagedDepartments;
+        }
+
+        public IEnumerable<Information> InformationsForUser(string userName)
+        {
+            List<Department> departments = new List<Department>(){db.Users.SingleOrDefault(u => u.UserName == userName).Department};
+
+            return Informations().Where(info => departments.Contains(info.Department));
+        }
+
+        public IEnumerable<Information> InformationsForUsersManagedDepartments(string userName)
+        {
+            List<Department> departments = db.Users.SingleOrDefault(u => u.UserName == userName).ManagedDepartments.ToList();
+
+            return Informations().Where(info => departments.Contains(info.Department));
+        }
     }
 }

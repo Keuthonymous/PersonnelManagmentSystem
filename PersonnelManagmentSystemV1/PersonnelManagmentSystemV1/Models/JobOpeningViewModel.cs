@@ -10,8 +10,9 @@ namespace PersonnelManagmentSystemV1.Models
     {
         [Key]
         public int ID { get; set; }
-        
-        [Key]
+
+        [Required]
+        [Display(Name = "Department")]
         public int DepartmentID { get; set; }
         
         [Required]
