@@ -1,0 +1,23 @@
+﻿@model PersonnelManagmentSystemV1.Models.CV
+@{
+    ViewBag.Title = "CV";
+}
+
+<h2>CV</h2>
+
+@using (Html.BeginForm())
+{
+    <p>@Html.TextBoxFor(model => model.Title)</p>
+    <p>@Html.TextBoxFor(model => model.Description)</p>
+    <p>@Html.TextBoxFor(model => model.File, null, new { type = "file", @class = "input-file" })</p>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
