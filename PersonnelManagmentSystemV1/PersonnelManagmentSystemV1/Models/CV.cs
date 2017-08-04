@@ -17,18 +17,10 @@ namespace PersonnelManagmentSystemV1.Models
         public string Title { get; set; }
 
         [Required]
-        [Display(Name = "Description")]
-        [StringLength(100, ErrorMessage = "The description cannot be more than 100 characters")]
-        public string Description { get; set; }
-
+        public string MimeType { get; set; }
         [Required]
-        public string Content { get; set; }
-
-     //   [Required]
-      //  public HttpPostedFileBase File { get; set; }
-
-        [ForeignKey("Uploader")]
-        public string UploaderID { get; set; }
+        public byte[] Content { get; set; }
+        [Required]
         public virtual ApplicationUser Uploader { get; set; }
     }
 }

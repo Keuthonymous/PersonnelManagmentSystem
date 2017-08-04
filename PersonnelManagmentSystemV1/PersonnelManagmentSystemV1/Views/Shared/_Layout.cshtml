@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Personnel Management System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -28,6 +28,13 @@
                         <li>@Html.ActionLink("Job Openings", "Index", "Searcher")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
                     }
+                    @if (User.IsInRole("Worker"))
+                    {
+                        <li>@Html.ActionLink("News & Info", "Index", "Information")</li>
+                        <li>@Html.ActionLink("Calender", "Index", "Calender")</li>
+                        <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
+                        <li>@Html.ActionLink("Messages", "Index", "Message")</li>
+                    }
                     @if (User.IsInRole("Boss"))
                     {
                         <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
@@ -35,11 +42,10 @@
                         <li>@Html.ActionLink("News & Info", "Index", "Information")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
                         <li>@Html.ActionLink("Calender", "Index", "Calender")</li>
-
                     }
                     @if (User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
+                        <li>@Html.ActionLink("Manage", "Index", "Admin")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

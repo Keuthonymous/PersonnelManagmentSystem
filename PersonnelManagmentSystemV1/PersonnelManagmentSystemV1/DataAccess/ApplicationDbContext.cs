@@ -44,5 +44,7 @@ namespace PersonnelManagmentSystemV1.DataAccess
              base.OnModelCreating(modelBuilder);
         }
 
+        public System.Data.Entity.DbSet<PersonnelManagmentSystemV1.Models.File> Files { get; set; }
+
     }
 }

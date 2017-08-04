@@ -164,6 +164,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BossController.cs" />
     <Compile Include="Controllers\CalenderController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\JobOpeningsController.cs" />
@@ -175,11 +176,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707311320261_complete.cs" />
-    <Compile Include="Migrations\201707311320261_complete.Designer.cs">
-      <DependentUpon>201707311320261_complete.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\AddDepartmentToUserViewModel.cs" />
     <Compile Include="ViewModels\AddUserToDepartmentViewModel.cs" />
@@ -305,6 +303,11 @@
     <Content Include="Views\Admin\DepartmentUserAdd.cshtml" />
     <Content Include="Views\Calender\Delete.cshtml" />
     <Content Include="Views\Calender\Edit.cshtml" />
+    <Content Include="Views\Files\Create.cshtml" />
+    <Content Include="Views\Files\Delete.cshtml" />
+    <Content Include="Views\Files\Details.cshtml" />
+    <Content Include="Views\Files\Edit.cshtml" />
+    <Content Include="Views\Files\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -315,11 +318,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707311320261_complete.resx">
-      <DependentUpon>201707311320261_complete.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

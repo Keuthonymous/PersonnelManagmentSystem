@@ -17,12 +17,13 @@ namespace PersonnelManagmentSystemV1.Models
 
         [Required]
         [Display(Name = "Description")]
-        [StringLength(100, ErrorMessage = "The description cannot be more than 100 characters")]
         public string Description { get; set; }
 
         [Required]
-        public string Content { get; set; }
-
+        public string MimeType { get; set; }
+        [Required]
+        public byte[] Content { get; set; }
+        [Required]
         public virtual Department Department { get; set; }
     }
 }
