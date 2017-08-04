@@ -8,11 +8,11 @@ namespace PersonnelManagmentSystemV1.Models
 {
     public class InformationViewModel
     {
-        [Key]
+        
         public int ID { get; set; }
-
-        [Key]
+        [Required]
         public int DepartmentID { get; set; }
+        public string DepartmentName { get; set; }
 
         [Required]
         [Display(Name = "Title")]
@@ -30,5 +30,7 @@ namespace PersonnelManagmentSystemV1.Models
         [DataType(DataType.DateTime)]
         [Display(Name = "Posted Time")]
         public DateTime UploadTime { get; set; }
+
+        public bool IsEditable { get; set; }
     }
 }
