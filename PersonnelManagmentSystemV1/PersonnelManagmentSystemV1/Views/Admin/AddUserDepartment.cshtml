@@ -1,0 +1,65 @@
+﻿@model PersonnelManagmentSystemV1.Models.AddUserToDepartmentViewModel
+@{
+    ViewBag.Title = "AddToDepartment";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.UserToAddID, "userID")
+    <h2>AddToDepartment</h2>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.UserToAdd.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserToAdd.Email)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.UserToAdd.UserName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserToAdd.UserName)
+            </dd>
+        </dl>
+    </div>
+    if(Model.DepartmentList != null && Model.DepartmentList.Count > 0)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.LabelFor(model => model.DepartmentList.First().Manager)
+                </th>
+                <th>
+                    @Html.LabelFor(model => model.DepartmentList.First().Name)
+                </th>
+                <th>@*Blank For Radio Button*@</th>
+            </tr>
+
+            @foreach (var item in Model.DepartmentList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manager.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.RadioButtonFor(modelItem => modelItem.SelectedDepartment, item.ID)
+                    </td>
+                </tr>
+            }
+          
+        </table>
+    
+        <input type="submit" value="Add User" class="btn btn-default" />
+    }
+    else
+    { 
+        <p>There are no departments to choose from!</p>
+    }
+}
+
