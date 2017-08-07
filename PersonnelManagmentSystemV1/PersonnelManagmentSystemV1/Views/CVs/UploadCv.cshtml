@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "UploadCv";
+}
+
+<h2>UploadCv</h2>
+
+@using (Html.BeginForm("UploadCv", "CVs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{  
+      
+    <div>
+        @Html.TextBox("cv", "", new { type = "file" }) <br  />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Upload" class="btn btn-default" />
+            </div>
+        </div>
+
+        @ViewBag.Message
+
+    </div>
+      
+      
+}  

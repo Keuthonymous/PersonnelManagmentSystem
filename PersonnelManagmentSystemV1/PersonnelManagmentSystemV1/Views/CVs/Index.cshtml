@@ -6,17 +6,17 @@
 
 <h2>Index</h2>
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@*@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div>
-        @Html.LabelFor(x => x.File)
-        @Html.TextBoxFor(x => x.File, new { type = "file" })
-        @Html.ValidationMessageFor(x => x.File)
+        @Html.LabelFor(x => x.Content)
+        @Html.TextBoxFor(x => x.Content, new { type = "file" })
+        @Html.ValidationMessageFor(x => x.Content)
     </div>
-}
+}*@
 
 
-@*<p>
+<p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
@@ -28,7 +28,7 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.MimeType)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Content)
@@ -45,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.MimeType)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Content)
@@ -58,4 +58,4 @@
     </tr>
 }
 
-</table>*@
+</table>
