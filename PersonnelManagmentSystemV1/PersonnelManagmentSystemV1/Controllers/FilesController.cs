@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using PersonnelManagmentSystemV1.Repositories;
 using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.ViewModels;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -47,16 +48,24 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,MimeType,Content")] File file)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,MimeType,Content")] FileViewModel fileVM)
         {
             if (ModelState.IsValid)
             {
+                File file = new File()
+                {
+                    Title = fileVM.Title,
+                    Description = fileVM.Description,
+                    MimeType = fileVM.Contents.ContentType
+                };
+
+                fileVM.Contents.InputStream.ReadAsync()
                 repo.AddFile(file);
                 
                 return RedirectToAction("Index");
             }
 
-            return View(file);
+            return View(fileVM);
         }
 
         // GET: Files/Edit/5
