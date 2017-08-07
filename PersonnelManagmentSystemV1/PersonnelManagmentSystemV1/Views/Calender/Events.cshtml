@@ -4,63 +4,50 @@
     ViewBag.Title = "Events";
 }
 
-<h2>Calender Events</h2>
-<div ng-controller="Maincontroller">
-    <p>
-        @if (ViewContext.HttpContext.User.IsInRole("Boss"))
-        {
-            @Html.ActionLink("Create New", "Index")
-        }
 
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Department.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CalenderStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CalenderEnd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CalTitle)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CalContent)
-            </th>
 
-            <th></th>
-        </tr>
+    <h2>Calender Events</h2>
+    <div ng-app="calenderApp" ng-controller="MainController" ng-init="getData()">
+        <p>
+            @if (ViewContext.HttpContext.User.IsInRole("Boss"))
+            {
+                @Html.ActionLink("Create New", "Index")
+            }
 
-        @foreach (var item in Model)
-        {
+        </p>
+        <h1>{{1+1}}</h1>
+        {{ID}}
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Department.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalenderStart)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalenderEnd)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalTitle)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalContent)
-                </td>
-                @if (ViewContext.HttpContext.User.IsInRole("Boss"))
-                {
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-
-                    </td>}
+                <th ng-click="orderByMe('Department')">Department &#9660</th>
+                <th ng-click="orderByMe('CalenderStart')">Event Start &#9660</th>
+                <th ng-click="orderByMe('CalenderEnd')">Event End &#9660</th>
+                <th ng-click="orderByMe('CalTitle')">Event Title &#9660</th>
+                <th ng-click="orderByMe('CalContent')">Event Content &#9660</th>
+                <th></th>
             </tr>
-        }
 
-    </table>
-</div>
+            @{
+                var url1 = Url.Action("Edit", new { ID = "{{id=item.ID}}" });
+                url1 = HttpUtility.UrlDecode(url1);
+            }
+
+            @{
+                var url3 = Url.Action("Delete", new { ID = "{{id=item.ID}}" });
+                url3 = HttpUtility.UrlDecode(url3);
+            }
+
+            <tr ng-repeat="event in Events | orderBy:CalenderSort:reverse">
+                <td>{{event.Department.Name}}</td>
+                <td>{{event.CalenderStart}}</td>
+                <td>{{event.CalenderEnd}}</td>
+                <td>{{event.CalTitle}}</td>
+                <td>{{event.CalContent}}</td>
+                <td>
+                    <a data-ng-href="@url1" class="alla">Edit</a> |
+                    <a data-ng-href="@url3" class="alla">Delete</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
