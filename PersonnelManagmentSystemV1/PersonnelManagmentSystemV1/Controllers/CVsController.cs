@@ -6,43 +6,48 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.Repositories;
+using System.IO;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
     public class CVsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private CvRepository repo = new CvRepository();
 
         // GET: CVs
         public ActionResult Index()
         {
-            var cv = db.CVs.Include(c => c.Uploader);
-            return View(cv.ToList());
+            return View(repo.GetAllCVs());
         }
 
-        [HttpPost]
-        public ActionResult Index(CV cv)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(cv);
-            }
+        [HttpGet]
+        public ActionResult UploadCv()
+        {
+            return View();
+        }
 
-          //  byte[] uploadedFile = new byte[cv.File.InputStream.Length];
-          //  cv.File.InputStream.Read(uploadedFile, 0, uploadedFile.Length);
-
-            return Content("File has been uploaded");
-        }
-
-        //[HttpPost]
-        //public ActionResult CV(CV model)
-        //{
-        //    var file = model.File;
-
-        //    return View();
-        //}
+        [HttpPost]  
+        public ActionResult UploadCv(HttpPostedFileBase cv)
+        {
+            try
+            {
+                if (cv.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(cv.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles/CV"), _FileName);
+                    cv.SaveAs(_path);
+                }
+                ViewBag.Message = "CV Uploaded Successfully!!";
+                return View();
+            }
+            catch
+            {
+                ViewBag.Message = "CV upload failed!!";
+                return View();
+            }
+        }
 
         // GET: CVs/Details/5
         public ActionResult Details(int? id)
@@ -51,18 +56,18 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = db.CVs.Find(id);
-            if (cV == null)
+            CV cv = repo.GetCvById(id.Value);
+            if (cv == null)
             {
                 return HttpNotFound();
             }
-            return View(cV);
+            return View(cv);
         }
 
         // GET: CVs/Create
         public ActionResult Create()
         {
-            ViewBag.UploaderID = new SelectList(db.Users, "Id", "Email");
+            //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email");
             return View();
         }
 
@@ -71,16 +76,16 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,Content,UploaderID")] CV cV)
+        public ActionResult Create([Bind(Include = "ID,Title,Description,MimeType,Content")] CV cV)
         {
             if (ModelState.IsValid)
             {
-                db.CVs.Add(cV);
-                db.SaveChanges();
+                repo.AddCv(cV);
+                //repo.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UploaderID = new SelectList(db.Users, "Id", "Email", cV.Uploader.Id);
+            //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email", cV.Uploader.Id);
             return View(cV);
         }
 
@@ -91,12 +96,12 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = db.CVs.Find(id);
+            CV cV = repo.GetCvById(id.Value);
             if (cV == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UploaderID = new SelectList(db.Users, "Id", "Email", cV.Uploader.Id);
+            //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email", cV.Uploader.Id);
             return View(cV);
         }
 
@@ -105,15 +110,14 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,Content,UploaderID")] CV cV)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,MimeType,Content")] CV cV)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cV).State = EntityState.Modified;
-                db.SaveChanges();
+                repo.ChangeCv(cV);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.UploaderID = new SelectList(db.Users, "Id", "Email", cV.Uploader.Id);
             return View(cV);
         }
 
@@ -124,7 +128,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = db.CVs.Find(id);
+            CV cV = repo.GetCvById(id.Value);
             if (cV == null)
             {
                 return HttpNotFound();
@@ -137,19 +141,18 @@ namespace PersonnelManagmentSystemV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CV cV = db.CVs.Find(id);
-            db.CVs.Remove(cV);
-            db.SaveChanges();
+            repo.DeleteCv(id);
+
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        repo.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
