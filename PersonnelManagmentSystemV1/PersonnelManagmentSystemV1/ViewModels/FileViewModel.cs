@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace PersonnelManagmentSystemV1.Models
+namespace PersonnelManagmentSystemV1.ViewModels
 {
-    public class UserFile
+    public class FileViewModel
     {
-        [Key]
         public int ID { get; set; }
 
         [Required]
@@ -20,10 +19,11 @@ namespace PersonnelManagmentSystemV1.Models
         public string Description { get; set; }
 
         [Required]
-        public string MimeType { get; set; }
+        public HttpPostedFileBase Contents { get; set; }
+
         [Required]
-        public byte[] Content { get; set; }
-        [Required]
-        public virtual Department Department { get; set; }
+        public int DepartmentID { get; set; }
     }
+
+
 }

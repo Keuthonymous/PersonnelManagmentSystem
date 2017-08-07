@@ -12,23 +12,23 @@ namespace PersonnelManagmentSystemV1.Repositories
     {
         private ApplicationDbContext context = new ApplicationDbContext();
 
-        public IEnumerable<File> GetAllFiles()
+        public IEnumerable<UserFile> GetAllFiles()
         {
             return context.Files.Include(f => f.Department);
         }
 
-        public File GetFileById(int id)
+        public UserFile GetFileById(int id)
         {
             return GetAllFiles().SingleOrDefault(f => f.ID == id);
         }
 
-        public void AddFile(File file)
+        public void AddFile(UserFile file)
         {
             context.Files.Add(file);
             context.SaveChanges();
         }
 
-        public void ChangeFile(File file)
+        public void ChangeFile(UserFile file)
         {
             context.Entry(file).State = EntityState.Modified;
             context.SaveChanges();
@@ -38,6 +38,15 @@ namespace PersonnelManagmentSystemV1.Repositories
         {
             context.Files.Remove(GetFileById(id));
             context.SaveChanges();
+        }
+
+        public IEnumerable<Department> GetManagedDepartmentsByUserName(string userName) //!!!!! DEPARTMENT !!!!
+        {
+            return context.Users.SingleOrDefault(u => u.UserName == userName).ManagedDepartments;
+        }
+        public Department Department(int id) //!!!! DEPARTMENT !!!!
+        {
+            return context.Departments.SingleOrDefault(d => d.ID == id);
         }
     }
 }

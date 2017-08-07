@@ -194,6 +194,7 @@
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
+    <Compile Include="ViewModels\FileViewModel.cs" />
     <Compile Include="ViewModels\InformationViewModel.cs" />
     <Compile Include="Models\JobOpening.cs" />
     <Compile Include="ViewModels\JobOpeningViewModel.cs" />
