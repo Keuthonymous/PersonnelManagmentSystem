@@ -316,6 +316,7 @@
     <Content Include="Views\CVs\Edit.cshtml" />
     <Content Include="Views\CVs\Index.cshtml" />
     <Content Include="Views\CVs\CV.cshtml" />
+    <Content Include="Views\CVs\UploadCv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
