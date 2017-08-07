@@ -42,10 +42,10 @@
                 @Html.DisplayFor(modelItem => item.Department.Name)
             </td>
             <td>
-                <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { id = item.ID }, new { })</div> 
+                <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { jobOpeningID = item.ID }, new { })</div> 
                 <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
                 <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
-                <div class="btn">@Html.ActionLink("Delete", "Delete", new { jobOpeningID = item.ID })</div>
+                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
             </td>
         </tr>
     }

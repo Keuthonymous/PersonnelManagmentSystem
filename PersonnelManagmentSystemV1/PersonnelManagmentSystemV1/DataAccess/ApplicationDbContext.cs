@@ -22,14 +22,12 @@ namespace PersonnelManagmentSystemV1.DataAccess
         }
 
         public DbSet<JobOpening> Jobs { get; set; }
-
         public DbSet<Department> Departments { get; set; }
-
         public DbSet<Information> Information { get; set; }
-
         public DbSet<Calender> CalenderTask { get; set; }
-
         public DbSet<Message> Messages { get; set; }
+        public DbSet<UserFile> Files { get; set; }
+        public DbSet<CV> CVs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -43,6 +41,7 @@ namespace PersonnelManagmentSystemV1.DataAccess
 
              base.OnModelCreating(modelBuilder);
         }
+
 
     }
 }

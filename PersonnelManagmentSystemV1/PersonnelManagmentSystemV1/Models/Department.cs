@@ -28,7 +28,7 @@ namespace PersonnelManagmentSystemV1.Models
         [InverseProperty("Department")]
         public virtual ICollection<Information> Informations { get; set; }
         [InverseProperty("Department")]
-        public virtual ICollection<File> Files { get; set; }
+        public virtual ICollection<UserFile> Files { get; set; }
     }
 
 

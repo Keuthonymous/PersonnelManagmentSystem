@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PersonnelManagmentSystemV1.ViewModels
 {
-    public class CalenderVM
+    public class CalenderViewModel
     {
         [Required]
         public int DepartmentID { get; set; }
