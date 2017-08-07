@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PersonnelManagmentSystemV1.Repositories;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.ViewModels;
+using System.IO;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -29,7 +30,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            File file = repo.GetFileById(id.Value);
+            UserFile  file = repo.GetFileById(id.Value);
             if (file == null)
             {
                 return HttpNotFound();
@@ -40,6 +41,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Files/Create
         public ActionResult Create()
         {
+            ViewBag.Departments = repo.GetManagedDepartmentsByUserName(User.Identity.Name).Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
             return View();
         }
 
@@ -48,22 +50,27 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,MimeType,Content")] FileViewModel fileVM)
+        public ActionResult Create([Bind(Include = "ID,Title,DepartmentID,Description,Contents")] FileViewModel fileVM)
         {
             if (ModelState.IsValid)
             {
-                File file = new File()
+                UserFile file = new UserFile()
                 {
                     Title = fileVM.Title,
                     Description = fileVM.Description,
-                    MimeType = fileVM.Contents.ContentType
+                    MimeType = fileVM.Contents.ContentType,
+                    Department = repo.Department(fileVM.DepartmentID),
+                    Content = null
                 };
 
-                fileVM.Contents.InputStream.ReadAsync()
+		        BinaryReader binaryReader = new BinaryReader(fileVM.Contents.InputStream);
+                file.Content = binaryReader.ReadBytes(fileVM.Contents.ContentLength);
                 repo.AddFile(file);
                 
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Departments = repo.GetManagedDepartmentsByUserName(User.Identity.Name).Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
 
             return View(fileVM);
         }
@@ -75,7 +82,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            File file = repo.GetFileById(id.Value);
+            UserFile file = repo.GetFileById(id.Value);
             if (file == null)
             {
                 return HttpNotFound();
@@ -88,7 +95,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,MimeType,Content")] File file)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,MimeType,Content")] UserFile file)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +113,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            File file = repo.GetFileById(id.Value);
+            UserFile file = repo.GetFileById(id.Value);
             if (file == null)
             {
                 return HttpNotFound();

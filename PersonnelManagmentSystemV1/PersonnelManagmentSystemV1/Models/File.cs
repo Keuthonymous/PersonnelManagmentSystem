@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PersonnelManagmentSystemV1.Models
 {
-    public class File
+    public class UserFile
     {
         [Key]
         public int ID { get; set; }

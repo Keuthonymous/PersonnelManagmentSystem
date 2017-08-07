@@ -26,7 +26,7 @@ namespace PersonnelManagmentSystemV1.DataAccess
         public DbSet<Information> Information { get; set; }
         public DbSet<Calender> CalenderTask { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<File> Files { get; set; }
+        public DbSet<UserFile> Files { get; set; }
         public DbSet<CV> CVs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
