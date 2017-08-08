@@ -5,6 +5,7 @@ using System.Web;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace PersonnelManagmentSystemV1.Repositories
 {
@@ -38,6 +39,20 @@ namespace PersonnelManagmentSystemV1.Repositories
         {
             context.CVs.Remove(GetCvById(id));
             context.SaveChanges();
+        }
+
+        public IEnumerable<Department> GetManagedDepartmentsByUserName(string userName) //!!!!! DEPARTMENT !!!!
+        {
+            return context.Users.SingleOrDefault(u => u.UserName == userName).ManagedDepartments;
+        }
+        public Department Department(int id) //!!!! DEPARTMENT !!!!
+        {
+            return context.Departments.SingleOrDefault(d => d.ID == id);
+        }
+
+        public ApplicationUser GetUserByName(string userName) //!!!! USER !!!!
+        {
+            return context.Users.SingleOrDefault(u => u.UserName == userName);
         }
     }
 }

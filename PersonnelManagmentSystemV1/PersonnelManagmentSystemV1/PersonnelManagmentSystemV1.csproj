@@ -189,6 +189,7 @@
     <Compile Include="ViewModels\CalenderViewModel.cs" />
     <Compile Include="ViewModels\CreateDepartmentViewModel.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="ViewModels\CVVM.cs" />
     <Compile Include="ViewModels\EditDepartmentViewModel.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\File.cs" />

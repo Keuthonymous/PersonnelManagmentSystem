@@ -9,6 +9,9 @@ using System.Web.Mvc;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
 using System.IO;
+using PersonnelManagmentSystemV1.ViewModels;
+using Microsoft.AspNet.Identity;
+using PersonnelManagmentSystemV1.DataAccess;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -29,27 +32,49 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View();
         }
 
-        [Authorize(Roles="Searcher")]
-        [HttpPost]
-        public ActionResult UploadCv([Bind(Include = "Title")] HttpPostedFileBase cv)
-        {
-            try
-            {
-                if (cv.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(cv.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles/CV"), _FileName);
-                    cv.SaveAs(_path);
-                }
-                ViewBag.Message = "CV Uploaded Successfully!";
-                return View();
-            }
-            catch
-            {
-                ViewBag.Message = "CV upload failed!";
-                return View();
-            }
-        }
+        [Authorize(Roles = "Searcher")]
+        [HttpPost]
+        public ActionResult UploadCv([Bind(Include = "ID,Title,Description,Contents")] CVVM cvVM)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    CV cv = new CV()
+                    {
+                        Title = cvVM.Title,
+                        Description = cvVM.Description,
+                        MimeType = cvVM.Contents.ContentType,
+                        Uploader = repo.GetUserByName(User.Identity.Name),
+                        Content = null
+                    };
+          
+                    BinaryReader binaryReader = new BinaryReader(cvVM.Contents.InputStream);
+                    cv.Content = binaryReader.ReadBytes(cvVM.Contents.ContentLength);
+
+                    repo.AddCv(cv);
+
+                    return RedirectToAction("Index");
+                }
+
+                
+                return View(cvVM);
+                //if (cv.ContentLength > 0)
+                //{
+                //    string _FileName = Path.GetFileName(cv.FileName);
+                //    string _path = Path.Combine(Server.MapPath("~/UploadedFiles/CV"), _FileName);
+                //    cv.SaveAs(_path);
+                //}
+                //ViewBag.Message = "CV Uploaded Successfully!";
+                //return View();
+            }
+            catch
+            {
+                ViewBag.Message = "CV upload failed!";
+                return View(cvVM);
+            }
+        }
+        
 
         // GET: CVs/Details/5
         public ActionResult Details(int? id)
@@ -66,30 +91,30 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(cv);
         }
 
-        // GET: CVs/Create
-        public ActionResult Create()
-        {
-            //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email");
-            return View();
-        }
+        //// GET: CVs/Create
+        //public ActionResult Create()
+        //{
+        //    //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email");
+        //    return View();
+        //}
 
-        // POST: CVs/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Description,MimeType,Content")] CV cV)
-        {
-            if (ModelState.IsValid)
-            {
-                repo.AddCv(cV);
-                //repo.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// POST: CVs/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "ID,Title,Description,MimeType,Content")] CV cV)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        repo.AddCv(cV);
+        //        //repo.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email", cV.Uploader.Id);
-            return View(cV);
-        }
+        //    //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email", cV.Uploader.Id);
+        //    return View(cV);
+        //}
 
         // GET: CVs/Edit/5
         public ActionResult Edit(int? id)
@@ -112,15 +137,34 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,MimeType,Content")] CV cV)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,Content")] CVVM cvVM)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    repo.ChangeCv(cV);
+
+            //    return RedirectToAction("Index");
+            //}
             if (ModelState.IsValid)
             {
-                repo.ChangeCv(cV);
+                CV cv = new CV()
+                {
+                    Title = cvVM.Title,
+                    Description = cvVM.Description,
+                    MimeType = cvVM.Contents.ContentType,
+                    Uploader = repo.GetUserByName(User.Identity.Name),
+                    Content = null
+                };
+
+                BinaryReader binaryReader = new BinaryReader(cvVM.Contents.InputStream);
+                cv.Content = binaryReader.ReadBytes(cvVM.Contents.ContentLength);
+
+                repo.ChangeCv(cv);
 
                 return RedirectToAction("Index");
             }
-            return View(cV);
+
+            return View(cvVM);
         }
 
         // GET: CVs/Delete/5
