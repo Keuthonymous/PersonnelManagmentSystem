@@ -20,18 +20,13 @@ namespace PersonnelManagmentSystemV1.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private ApplicationUserManager _userManager;
         private AdminRepository db = new AdminRepository();
 
-        public ApplicationUserManager UserManager
+        private ApplicationUserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
 
@@ -47,8 +42,8 @@ namespace PersonnelManagmentSystemV1.Controllers
                     ID = user.Id, 
                     Email = user.Email, 
                     UserName = user.UserName, 
-                    Role = user.Roles.First(), 
-                    RoleName = db.GetRoleName(user.Roles.First().RoleId) }).ToList();
+                    RoleName = db.GetPrimaryRoleName(user.Id)
+                }).ToList();
             indexVM.IndexDepartments = db.Departments().ToList();
 
             return View(indexVM);
@@ -61,7 +56,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.FindUser(id);
+            ApplicationUser applicationUser = db.GetUserByID(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -77,7 +72,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser user = db.FindUser(id);
+            ApplicationUser user = db.GetUserByID(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -93,8 +88,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         public ActionResult AddUserDepartment(AddUserToDepartmentViewModel addUser, string userID)
         {
             addUser.DepartmentList = db.Departments().ToList();
-            addUser.UserToAdd = db.FindUser(addUser.UserToAddID);
-            Department department = db.FindDepartment(addUser.SelectedDepartment);
+            addUser.UserToAdd = db.GetUserByID(addUser.UserToAddID);
+            Department department = db.GetDepartmentByID(addUser.SelectedDepartment.Value);
 
             if (ModelState.IsValid)
             {
@@ -113,7 +108,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.FindDepartment(id);
+            Department department = db.GetDepartmentByID(id.Value);
             if (department == null)
             {
                 return HttpNotFound();
@@ -129,13 +124,13 @@ namespace PersonnelManagmentSystemV1.Controllers
             
             addDepartment.UsersList = db.GetAllUsers().ToList();
             addDepartment.UsersToAdd = new List<ApplicationUser>();
-            addDepartment.SelectDepartment = db.FindDepartment(addDepartment.SelectDepartment.ID);
+            addDepartment.SelectDepartment = db.GetDepartmentByID(addDepartment.SelectDepartment.ID);
             if (SelectedUsers != null)
             { //only if at least one user was selected
 
                 foreach (string userID in SelectedUsers)
                 {
-                    addDepartment.UsersToAdd.Add(db.FindUser(userID));
+                    addDepartment.UsersToAdd.Add(db.GetUserByID(userID));
                 }
                 //if (ModelState.IsValid) 
                 //ModelState.IsValid is determined by the modelbinder and on the model bound, in this case addDepartment and string[] SelectedUsers
@@ -158,7 +153,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.FindDepartment(id);
+            Department department = db.GetDepartmentByID(id.Value);
             if (department == null)
             {
                 return HttpNotFound();
@@ -171,7 +166,10 @@ namespace PersonnelManagmentSystemV1.Controllers
         {
             IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
-            return View();
+            UserViewModel newUser = new UserViewModel() { 
+                Departments = db.Departments()
+            };
+            return View(newUser);
         }
 
         // POST: Admin/Create
@@ -179,14 +177,11 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateUser(RegisterViewModel registerUser, string userRole)
+        public ActionResult CreateUser(UserViewModel registerUser, string userRole)
         {
-            IEnumerable<string> roleName = db.GetRoleNames();
-            ViewBag.userRole = new SelectList(roleName);
-
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = registerUser.Email, Email = registerUser.Email };
+                var user = new ApplicationUser { UserName = registerUser.Email, Email = registerUser.Email, Department = db.GetDepartmentByID(registerUser.DepartmentID) };
                 var result = UserManager.Create(user, registerUser.Password);
 
                 if (result.Succeeded)
@@ -195,6 +190,9 @@ namespace PersonnelManagmentSystemV1.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            IEnumerable<string> roleName = db.GetRoleNames();
+            ViewBag.userRole = new SelectList(roleName);
+            registerUser.Departments = db.Departments();
             return View("CreateUser", registerUser);
         }
 
@@ -231,18 +229,23 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin/EditUser/5
         public ActionResult EditUser(string id)
         {
-            IEnumerable<string> roleName = db.GetRoleNames();
-            ViewBag.userRole = new SelectList(roleName);
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.FindUser(id);
+            ApplicationUser applicationUser = db.GetUserByID(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            EditUserViewModel editUser = new EditUserViewModel { ID = applicationUser.Id, Email = null, Password = null };
+            UserViewModel editUser = new UserViewModel { ID = applicationUser.Id, Email = applicationUser.Email, UserName = applicationUser.UserName, Password = null, Departments = db.Departments() };
+            if (applicationUser.Department != null)
+            {
+                editUser.DepartmentID = applicationUser.Department.ID;
+            }
+            IEnumerable<string> roleName = db.GetRoleNames();
+            ViewBag.userRole = new SelectList(roleName);
             return View(editUser);
         }
 
@@ -251,17 +254,18 @@ namespace PersonnelManagmentSystemV1.Controllers
         //more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(EditUserViewModel editUser, string userRole)
+        public ActionResult EditUser(UserViewModel editUser, string userRole)
         {
             IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
             if (ModelState.IsValid)
             {
-                ApplicationUser user = db.FindUser(editUser.ID);
-                if (editUser.Email != null)
-                {
-                    user.Email = editUser.Email;
-                }
+                ApplicationUser user = db.GetUserByID(editUser.ID);
+                user.Email = editUser.Email;
+                user.UserName = editUser.UserName;
+                user.Department = db.GetDepartmentByID(editUser.DepartmentID);
+
+                db.SaveUser(user);
 
                 if (editUser.Password != null)
                 {
@@ -269,16 +273,19 @@ namespace PersonnelManagmentSystemV1.Controllers
                     UserManager.AddPassword(user.Id, editUser.Password);
                 }
 
-                db.EditUser(user);
-
-                if (userRole != null)
+                if (userRole != null && userRole != "")
                 {
-                    string currentRole = user.Roles.ToString();
-                    db.RemoveUserFromRole(user, currentRole);
+                    string currentRole = db.GetPrimaryRoleName(user.Id);
+                    if (currentRole != "")
+                    {
+                        db.RemoveUserFromRole(user, currentRole);
+                    }
+                    
                     db.AddUserToRole(user, userRole);
                 }
                 return RedirectToAction("Index");
             }
+            editUser.Departments = db.Departments();
             return View(editUser);
         }
 
@@ -292,7 +299,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.FindDepartment(id);
+            Department department = db.GetDepartmentByID(id.Value);
             editDepartment.Manager = department.Manager;
             editDepartment.CurrentDepartmentID = department.ID;
             editDepartment.Name = department.Name;
@@ -311,7 +318,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             List<ApplicationUser> users = db.GetAllUsers().ToList();
             editDepartment.Users = users;
             editDepartment.UserNames = db.GetAllUserNames().ToList();
-            Department department = db.FindDepartment(editDepartment.CurrentDepartmentID);
+            Department department = db.GetDepartmentByID(editDepartment.CurrentDepartmentID);
 
             if (ModelState.IsValid)
             {
@@ -331,7 +338,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.FindUser(id);
+            ApplicationUser applicationUser = db.GetUserByID(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -344,7 +351,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteUserConfirmed(string id)
         {
-            ApplicationUser applicationUser = db.FindUser(id);
+            ApplicationUser applicationUser = db.GetUserByID(id);
             db.RemoveUser(applicationUser);
             return RedirectToAction("Index");
         }
@@ -356,7 +363,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Department department = db.FindDepartment(id);
+            Department department = db.GetDepartmentByID(id.Value);
             if (department == null)
             {
                 return HttpNotFound();
@@ -367,20 +374,11 @@ namespace PersonnelManagmentSystemV1.Controllers
         // POST: Admin/DeleteDepartment/5
         [HttpPost, ActionName("DeleteDepartment")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteDepartmentConfirmed(int? id)
+        public ActionResult DeleteDepartmentConfirmed(int id)
         {
-            Department department = db.FindDepartment(id);
+            Department department = db.GetDepartmentByID(id);
             db.RemoveDepartment(department);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

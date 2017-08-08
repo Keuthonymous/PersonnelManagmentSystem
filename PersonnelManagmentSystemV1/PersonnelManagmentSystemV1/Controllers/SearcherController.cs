@@ -37,14 +37,5 @@ namespace PersonnelManagmentSystemV1.Controllers
             }
             return View(jobOpening);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

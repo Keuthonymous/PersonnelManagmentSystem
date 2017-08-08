@@ -190,12 +190,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708081122522_Initial.cs" />
-    <Compile Include="Migrations\201708081122522_Initial.Designer.cs">
-      <DependentUpon>201708081122522_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201708080954561_Jocke.cs" />
+    <Compile Include="Migrations\201708080954561_Jocke.Designer.cs">
+      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -208,9 +207,9 @@
     <Compile Include="ViewModels\CreateDepartmentViewModel.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="ViewModels\EditDepartmentViewModel.cs" />
-    <Compile Include="ViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Models\UserFile.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Information.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
     <Compile Include="ViewModels\InformationViewModel.cs" />
@@ -312,8 +311,8 @@
     <Content Include="Views\Admin\DetailsDepartment.cshtml" />
     <Content Include="Views\Admin\DetailsUser.cshtml" />
     <Content Include="Views\Admin\EditDepartment.cshtml" />
-    <Content Include="Views\Admin\_IndexDepartments.cshtml" />
-    <Content Include="Views\Admin\_IndexUsers.cshtml" />
+    <Content Include="Views\Admin\_Departments.cshtml" />
+    <Content Include="Views\Admin\_Users.cshtml" />
     <Content Include="Views\Information\PublicNews.cshtml" />
     <Content Include="Views\Message\Create.cshtml" />
     <Content Include="Views\Message\Delete.cshtml" />
@@ -344,8 +343,7 @@
     <Content Include="Views\CVs\UploadCv.cshtml" />
     <Content Include="Views\Calender\Events_Clean.cshtml" />
     <Content Include="Views\Worker\Index.cshtml" />
-    <Content Include="Views\Worker\_WorkerIndexCalender.cshtml" />
-    <Content Include="Views\Worker\_WorkerIndexInformation.cshtml" />
+    <Content Include="Views\Admin\_EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -355,8 +353,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708081122522_Initial.resx">
-      <DependentUpon>201708081122522_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708080954561_Jocke.resx">
+      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
