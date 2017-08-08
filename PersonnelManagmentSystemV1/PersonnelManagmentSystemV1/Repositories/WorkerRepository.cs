@@ -7,7 +7,6 @@ using System.Web;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-
 namespace PersonnelManagmentSystemV1.Repositories
 {
     public class WorkerRepository
@@ -31,17 +30,22 @@ namespace PersonnelManagmentSystemV1.Repositories
             {
                 return null;
             }
-            List<Information> events = db.Information.Where(c => c.Department.ID == user.Department.ID).ToList();
-            if (events != null)
+            List<Information> information = db.Information.Where(c => c.Department.ID == user.Department.ID).ToList();
+            if (information != null)
             {
-                return events;
+                return information;
             }
             return null;
         }
 
-        public ApplicationUser GetUserById(string userId)
+        public ApplicationUser FindUser(string id)
         {
-            return db.Users.Include(u => u.Department).SingleOrDefault(u => u.Id == userId);
+            return db.Users.Include(u => u.Department).SingleOrDefault(u => u.Id == id);
+        }
+
+        public Department FindDepartment(int id)
+        {
+            return db.Departments.Where(d => d.ID == id).First();
         }
     }
 }

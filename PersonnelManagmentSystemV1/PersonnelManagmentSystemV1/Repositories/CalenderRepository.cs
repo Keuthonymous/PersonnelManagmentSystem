@@ -77,6 +77,4 @@ namespace PersonnelManagmentSystemV1.Repositories
             return db.Users.Include("Department").SingleOrDefault(u => u.UserName == userName);
         }
     }
-
-    //Include("Department").
 }

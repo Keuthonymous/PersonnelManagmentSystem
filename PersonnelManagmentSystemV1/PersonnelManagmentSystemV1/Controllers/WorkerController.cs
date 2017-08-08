@@ -19,11 +19,14 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Worker
         public ActionResult Index()
         {
+            ApplicationUser user = db.FindUser(User.Identity.GetUserId());
             WorkerIndexViewModel workerIndex = new WorkerIndexViewModel()
             {
-                Events = db.GetEvents(User.Identity.GetUserId()).Select(e => CalenderViewModel.MapCalenderToCalenderViewModel(e)),
-                Information = db.GetInformation(User.Identity.GetUserId()).Select(i => InformationViewModel.MapInformationToInformationViewModel(i))
-            };            
+                Events = db.GetEvents(user.Id).Select(e => CalenderViewModel.MapCalenderToCalenderViewModel(e)),
+                Information = db.GetInformation(user.Id).Select(i => InformationViewModel.MapInformationToInformationViewModel(i)),
+                DepartmentName = user.GetDepartmentName()
+            };
+
             return View(workerIndex);
         }
     }

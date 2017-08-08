@@ -261,7 +261,7 @@ namespace PersonnelManagmentSystemV1.Migratio7ns
             #endregion
 
 #region Jocke seed Departments
-            ApplicationUser worker;
+
             if (!context.Departments.Any(d => d.Name == "Management"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "ceo@mail.com");

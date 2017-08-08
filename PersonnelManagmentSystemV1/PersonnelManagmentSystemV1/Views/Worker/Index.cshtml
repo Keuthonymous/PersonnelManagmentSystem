@@ -1,46 +1,36 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.InformationViewModel>
-
+﻿@model PersonnelManagmentSystemV1.ViewModels.WorkerIndexViewModel
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="jumbotron" style="margin-top: 2em;">
+    <h1>Worker's Index</h1>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DepartmentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UploadTime)
-        </th>
-        <th></th>
-    </tr>
+    <h2>@Html.ActionLink("View Files", "Index", "Files")</h2>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UploadTime)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", "Information", new { id = item.ID }, new { }) 
-        </td>
-    </tr>
-}
+<div class="jumbotron">
+    @if (Model.Events != null)
+    {
+        <h2>Upcoming Events</h2>
+        @Html.Partial("_WorkerIndexCalender", Model.Events)
+    }
+    else
+    {
+        <h3>No events to display for department "<strong>@Model.DepartmentName</strong>"</h3>
+    }
+</div>
+<hr />
+<div class="jumbotron">
+    @if (Model.Information != null)
+    {   
+        <h2>Important Information</h2>
+        @Html.Partial("_WorkerIndexInformation", Model.Information)
+    }
+    else
+    {
+        <h3>No information to show for department "<strong>@Model.DepartmentName</strong>"</h3>
+    }
+</div>
+<br />
 
-</table>

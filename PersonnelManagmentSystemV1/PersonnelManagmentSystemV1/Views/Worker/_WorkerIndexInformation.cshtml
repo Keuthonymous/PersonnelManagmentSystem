@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Information>
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.InformationViewModel>
 
 
 <table class="table">
@@ -7,7 +7,7 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Contents)
+            @Html.DisplayNameFor(model => model.Content)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsPublic)
@@ -23,7 +23,7 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Contents)
+            @Html.DisplayFor(modelItem => item.Content)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsPublic)

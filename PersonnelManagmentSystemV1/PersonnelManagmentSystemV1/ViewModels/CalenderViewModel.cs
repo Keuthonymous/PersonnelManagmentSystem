@@ -11,6 +11,9 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Required]
         public int DepartmentID { get; set; }
 
+        [Display(Name = "Department")]
+        public string DepartmentName { get; set; }
+
         [Required]
         [Display(Name = "Title")]
         [StringLength(25, ErrorMessage = "The event can not be longer then 25 carracters")]
@@ -49,10 +52,16 @@ namespace PersonnelManagmentSystemV1.ViewModels
         {
             if (cal == null)
                 return null;
+            string depName = "";
+            if (cal.Department != null)
+            {
+                depName = cal.Department.Name;
+            }
 
             return new CalenderViewModel()
             {
                 DepartmentID = cal.DepartmentID,
+                DepartmentName = depName,
                 CalTitle = cal.CalTitle,
                 CalContent = cal.CalContent,
                 StartDate = cal.CalenderStart.Date,

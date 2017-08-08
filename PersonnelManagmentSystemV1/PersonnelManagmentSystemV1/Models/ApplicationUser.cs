@@ -26,6 +26,15 @@ namespace PersonnelManagmentSystemV1.Models
         public virtual ICollection<Message> ReceivedMessages { get; set; }
 
         public virtual ICollection<Message> SentMessages { get; set; }
+
+        public string GetDepartmentName() 
+        { 
+            if (Department != null)
+            {
+                return Department.Name;
+            }
+            return "";
+        }
     }
 
     
