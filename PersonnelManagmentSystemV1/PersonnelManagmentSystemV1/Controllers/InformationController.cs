@@ -18,22 +18,6 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private InformationRepository db = new InformationRepository();
 
-        private InformationViewModel MapInformationToInformationViewModel(Information info)
-        {
-            if (info == null)
-                return null;
-
-            return new InformationViewModel()
-            {
-                ID = info.ID,
-                DepartmentID = info.Department.ID,
-                DepartmentName = info.Department.Name,
-                Title = info.Title,
-                Content = info.Contents,
-                IsPublic = info.IsPublic,
-                UploadTime = info.UploadTime
-            };
-        }
 
         // GET: Information
         public ActionResult Index()
@@ -43,7 +27,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             
             foreach (Information info in db.InformationsForUsersManagedDepartments(User.Identity.Name))
             { //info for users managed departments (that he does manage)
-                infoToAdd = MapInformationToInformationViewModel(info);
+                infoToAdd = InformationViewModel.MapInformationToInformationViewModel(info);
                 infoToAdd.IsEditable = true;
                 informationToShow.Add(infoToAdd);
             }
@@ -51,7 +35,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             { //info for users own department (that he does not manage)
                 if (!informationToShow.Any(i => i.ID == info.ID))
                 {
-                    infoToAdd = MapInformationToInformationViewModel(info);
+                    infoToAdd = InformationViewModel.MapInformationToInformationViewModel(info);
                     infoToAdd.IsEditable = false;
                     informationToShow.Add(infoToAdd);
                 }
@@ -72,7 +56,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Information info = db.Information(id.Value);
-            InformationViewModel informationViewModel = MapInformationToInformationViewModel(info);
+            InformationViewModel informationViewModel = InformationViewModel.MapInformationToInformationViewModel(info);
             if (informationViewModel == null)
             {
                 return HttpNotFound();
@@ -118,7 +102,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InformationViewModel informationViewModel = MapInformationToInformationViewModel(db.Information(id.Value));
+            InformationViewModel informationViewModel = InformationViewModel.MapInformationToInformationViewModel(db.Information(id.Value));
             if (informationViewModel == null)
             {
                 return HttpNotFound();
@@ -155,7 +139,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InformationViewModel informationViewModel = MapInformationToInformationViewModel(db.Information(id.Value));
+            InformationViewModel informationViewModel = InformationViewModel.MapInformationToInformationViewModel(db.Information(id.Value));
             if (informationViewModel == null)
             {
                 return HttpNotFound();

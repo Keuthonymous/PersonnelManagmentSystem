@@ -44,5 +44,22 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         [DataType(DataType.Time)]
         public DateTime EndTime { get; set; }
+
+        public static CalenderViewModel MapCalenderToCalenderViewModel(Models.Calender cal)
+        {
+            if (cal == null)
+                return null;
+
+            return new CalenderViewModel()
+            {
+                DepartmentID = cal.DepartmentID,
+                CalTitle = cal.CalTitle,
+                CalContent = cal.CalContent,
+                StartDate = cal.CalenderStart.Date,
+                StartTime = cal.CalenderStart,
+                EndDate = cal.CalenderEnd.Date,
+                EndTime = cal.CalenderEnd
+            };
+        }
     }
 }

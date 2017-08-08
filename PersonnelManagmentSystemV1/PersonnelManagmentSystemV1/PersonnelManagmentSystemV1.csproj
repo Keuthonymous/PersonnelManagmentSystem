@@ -190,18 +190,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708080954561_Jocke.cs" />
-    <Compile Include="Migrations\201708080954561_Jocke.Designer.cs">
-      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ViewModels\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\AddDepartmentToUserViewModel.cs" />
-    <Compile Include="ViewModels\AddUserToDepartmentViewModel.cs" />
     <Compile Include="ViewModels\AdminIndexListViewModel.cs" />
-    <Compile Include="ViewModels\AdminIndexUserViewModel.cs" />
     <Compile Include="Models\Calender.cs" />
     <Compile Include="ViewModels\CalenderViewModel.cs" />
     <Compile Include="ViewModels\CreateDepartmentViewModel.cs" />
@@ -344,6 +339,7 @@
     <Content Include="Views\Calender\Events_Clean.cshtml" />
     <Content Include="Views\Worker\Index.cshtml" />
     <Content Include="Views\Admin\_EditUser.cshtml" />
+    <Content Include="Views\Admin\_DisplayUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -351,11 +347,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708080954561_Jocke.resx">
-      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

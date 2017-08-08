@@ -19,12 +19,18 @@ namespace PersonnelManagmentSystemV1.ViewModels
         public string Password { get; set; }
 
         public int DepartmentID { get; set; }
+        [Display(Name = "Department")]
+        public string DepartmentName { get; set; }
+        [Display(Name = "Role")]
+        public string RoleName { get; set; }
 
         public IEnumerable<PersonnelManagmentSystemV1.Models.Department> Departments { get; set; }
         public IEnumerable<SelectListItem> GetSelectItemsDepartment()
         {
             return Departments.Select(dep => new SelectListItem() { Text = dep.Name, Value = dep.ID.ToString() });
         }
+
+
         
     }
 }

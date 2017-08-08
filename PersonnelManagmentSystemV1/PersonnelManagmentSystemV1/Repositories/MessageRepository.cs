@@ -32,7 +32,7 @@ namespace PersonnelManagmentSystemV1.Repositories
             return GetAllMessages().SingleOrDefault(m => m.ID == id);
         }
 
-        public ApplicationUser GetUserByname(string userName) //!!!! USER !!!!
+        public ApplicationUser GetUserByName(string userName) //!!!! USER !!!!
         {
             return db.Users.SingleOrDefault(u => u.UserName == userName);
         }

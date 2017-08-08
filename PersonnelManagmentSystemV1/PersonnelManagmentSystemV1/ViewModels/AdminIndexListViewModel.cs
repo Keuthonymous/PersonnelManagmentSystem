@@ -8,7 +8,7 @@ namespace PersonnelManagmentSystemV1.ViewModels
 {
     public class AdminIndexListViewModel
     {
-        public List<AdminIndexUserViewModel> IndexUsers { get; set; }
-        public List<Department> IndexDepartments { get; set; }
+        public IEnumerable<UserViewModel> IndexUsers { get; set; }
+        public IEnumerable<Department> IndexDepartments { get; set; }
     }
 }
