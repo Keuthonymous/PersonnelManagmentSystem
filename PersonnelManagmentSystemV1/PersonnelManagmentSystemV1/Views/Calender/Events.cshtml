@@ -15,8 +15,6 @@
             }
 
         </p>
-        <h1>{{1+1}}</h1>
-        {{ID}}
         <table class="table">
             <tr>
                 <th ng-click="orderByMe('Department')">Department &#9660</th>
@@ -28,7 +26,7 @@
             </tr>
 
             @{
-                var url1 = Url.Action("Edit", new { ID = "{{id=item.ID}}" });
+                var url1 = Url.Action("Edit", new { ID = "{{id=Department.ID}}" });
                 url1 = HttpUtility.UrlDecode(url1);
             }
 
@@ -44,8 +42,8 @@
                 <td>{{event.CalTitle}}</td>
                 <td>{{event.CalContent}}</td>
                 <td>
-                    <a data-ng-href="@url1" class="alla">Edit</a> |
-                    <a data-ng-href="@url3" class="alla">Delete</a>
+                    <a data-ng-href="@url1">Edit</a> |
+                    <a data-ng-href="@url3">Delete</a>
                 </td>
             </tr>
 
