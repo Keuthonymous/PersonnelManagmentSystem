@@ -19,20 +19,28 @@ namespace PersonnelManagmentSystemV1.Controllers
         {
             WorkerIndexViewModel workerIndex = new WorkerIndexViewModel();
             workerIndex.CurrentUserID = User.Identity.GetUserId();
+            workerIndex.CurrentUser = db.FindUser(workerIndex.CurrentUserID);
+            workerIndex.CurrentUserDepartment = workerIndex.CurrentUser.Department;
            
             workerIndex.Events = new List<Calender>();
-            if (db.GetEvents(workerIndex.CurrentUserID) != null)
+            if (db.GetEvents(workerIndex.CurrentUserID).Count() != 0)
             {
                 workerIndex.Events = db.GetEvents(workerIndex.CurrentUserID).ToList();
             }
-            workerIndex.Events = null;
+            else if (db.GetEvents(workerIndex.CurrentUserID).Count() == 0)
+            {
+                workerIndex.Events = null;
+            }
             
             workerIndex.Information = new List<Information>();
-            if (db.GetInformation(workerIndex.CurrentUserID) != null)
+            if (db.GetInformation(workerIndex.CurrentUserID).Count() != 0)
             {
                 workerIndex.Information = db.GetInformation(workerIndex.CurrentUserID).ToList();
             }
-            workerIndex.Information = null;
+            else if (db.GetInformation(workerIndex.CurrentUserID).Count() == 0)
+            {
+                workerIndex.Information = null;
+            }
             
             return View(workerIndex);
         }

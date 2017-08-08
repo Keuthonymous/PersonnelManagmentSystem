@@ -14,22 +14,24 @@
 
     @if (Model.Events != null)
     {
+        <h2>Upcoming Events</h2>
         @Html.Partial("_WorkerIndexCalender", Model.Events)
     }
     else
     {
-        <h3>No events to display!</h3>
+        <h3>No events to display for department "<strong>@Model.CurrentUserDepartment.Name</strong>"</h3>
     }
 </div>
 <hr />
 <div class="jumbotron">
     @if (Model.Information != null)
-    {
+    {   
+        <h2>Important Information</h2>
         @Html.Partial("_WorkerIndexInformation", Model.Information)
     }
     else
     {
-        <h3>No information to show!</h3>
+        <h3>No information to show for department "<strong>@Model.CurrentUserDepartment.Name</strong>"</h3>
     }
 </div>
 <br />

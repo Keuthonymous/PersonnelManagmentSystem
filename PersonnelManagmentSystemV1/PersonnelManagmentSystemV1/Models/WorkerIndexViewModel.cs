@@ -10,5 +10,7 @@ namespace PersonnelManagmentSystemV1.Models
         public List<Calender> Events { get; set; }
         public List<Information> Information { get; set; }
         public string CurrentUserID { get; set; }
+        public ApplicationUser CurrentUser { get; set; }
+        public Department CurrentUserDepartment { get; set; }
     }
 }
