@@ -190,11 +190,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708080901447_Jocke.cs" />
-    <Compile Include="Migrations\201708080901447_Jocke.Designer.cs">
-      <DependentUpon>201708080901447_Jocke.cs</DependentUpon>
+    <Compile Include="Migrations\201708081122522_Initial.cs" />
+    <Compile Include="Migrations\201708081122522_Initial.Designer.cs">
+      <DependentUpon>201708081122522_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -342,6 +343,9 @@
     <Content Include="Views\Files\_FileEdit.cshtml" />
     <Content Include="Views\CVs\UploadCv.cshtml" />
     <Content Include="Views\Calender\Events_Clean.cshtml" />
+    <Content Include="Views\Worker\Index.cshtml" />
+    <Content Include="Views\Worker\_WorkerIndexCalender.cshtml" />
+    <Content Include="Views\Worker\_WorkerIndexInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -351,8 +355,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708080901447_Jocke.resx">
-      <DependentUpon>201708080901447_Jocke.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708081122522_Initial.resx">
+      <DependentUpon>201708081122522_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

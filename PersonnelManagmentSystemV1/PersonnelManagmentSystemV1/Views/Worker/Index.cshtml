@@ -3,25 +3,34 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-@Html.HiddenFor(model => model.CurrentUserID)
+<div class="jumbotron" style="margin-top: 2em;">
+    <h1>Worker's Index</h1>
 
-@if (Model.Events != null)
-{
-    @Html.Partial("_WorkerIndexCalender", Model.Events)
-}
-else
-{
-    <h2>No events to display!</h2>
-}
+    <h2>@Html.ActionLink("View Files", "Index", "Files")</h2>
+</div>
 
+<div class="jumbotron">
+    @Html.HiddenFor(model => model.CurrentUserID)
+
+    @if (Model.Events != null)
+    {
+        @Html.Partial("_WorkerIndexCalender", Model.Events)
+    }
+    else
+    {
+        <h3>No events to display!</h3>
+    }
+</div>
 <hr />
+<div class="jumbotron">
+    @if (Model.Information != null)
+    {
+        @Html.Partial("_WorkerIndexInformation", Model.Information)
+    }
+    else
+    {
+        <h3>No information to show!</h3>
+    }
+</div>
+<br />
 
-@if (Model.Information != null)
-{
-    @Html.Partial("_WorkerIndexInformation", Model.Information)
-}
-else
-{
-    <h2>No information to show!</h2>
-}
