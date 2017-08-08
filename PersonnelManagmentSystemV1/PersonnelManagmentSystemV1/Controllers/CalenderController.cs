@@ -23,7 +23,8 @@ namespace PersonnelManagmentSystemV1.Controllers
 
         #region Index Get
         // GET: Calender
-        [Authorize(Roles = "Boss")]
+
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -92,7 +93,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         #endregion
 
         #region EventsJSON
-
+        [Authorize(Roles = "Worker, Boss")]
         public string EventsJSON()
         {
 
@@ -116,6 +117,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         #region Edit
 
         // GET: Garage/Edit/5
+        [Authorize(Roles = "Boss")]
         public async Task<ActionResult> Edit(int id)
         {
 
@@ -133,6 +135,7 @@ namespace PersonnelManagmentSystemV1.Controllers
 
         // POST: Garage/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Boss")]
         public ActionResult Edit(Calender calender)
         {
             try
@@ -149,6 +152,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         #endregion
 
         #region Delete
+        [Authorize(Roles = "Boss")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -164,6 +168,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // POST: Message/Delete/5
+        [Authorize(Roles = "Boss")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

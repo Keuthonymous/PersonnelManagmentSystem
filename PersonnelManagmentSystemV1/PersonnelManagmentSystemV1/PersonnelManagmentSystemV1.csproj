@@ -190,9 +190,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708080901447_Jocke.cs" />
-    <Compile Include="Migrations\201708080901447_Jocke.Designer.cs">
-      <DependentUpon>201708080901447_Jocke.cs</DependentUpon>
+    <Compile Include="Migrations\201708080954561_Jocke.cs" />
+    <Compile Include="Migrations\201708080954561_Jocke.Designer.cs">
+      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
@@ -351,8 +351,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708080901447_Jocke.resx">
-      <DependentUpon>201708080901447_Jocke.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708080954561_Jocke.resx">
+      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

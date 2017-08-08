@@ -97,7 +97,77 @@ namespace PersonnelManagmentSystemV1.Migratio7ns
 
                 userManager.AddToRole(user.Id, "Searcher");
             }
-#region Jocke Seed Mangers
+            #region Jocke Seed Workers
+
+            if (!context.Users.Any(u => u.UserName == "accountant1@mail.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(store);
+
+                var user = new ApplicationUser { UserName = "accountant1@mail.com", Email = "accountant1@mail.com" };
+                userManager.Create(user, "Password");
+
+                userManager.AddToRole(user.Id, "Worker");
+            }
+
+            if (!context.Users.Any(u => u.UserName == "hr1@mail.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(store);
+
+                var user = new ApplicationUser { UserName = "hr1@mail.com", Email = "hr1@mail.com" };
+                userManager.Create(user, "Password");
+
+                userManager.AddToRole(user.Id, "Worker");
+            }
+
+            if (!context.Users.Any(u => u.UserName == "it1@mail.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(store);
+
+                var user = new ApplicationUser { UserName = "it1@mail.com", Email = "it1@mail.com" };
+                userManager.Create(user, "Password");
+
+                userManager.AddToRole(user.Id, "Worker");
+            }
+
+            if (!context.Users.Any(u => u.UserName == "tech1@mail.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(store);
+
+                var user = new ApplicationUser { UserName = "tech1@mail.com", Email = "tech1@mail.com" };
+                userManager.Create(user, "Password");
+
+                userManager.AddToRole(user.Id, "Worker");
+            }
+
+            if (!context.Users.Any(u => u.UserName == "researcher1@mail.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(store);
+
+                var user = new ApplicationUser { UserName = "researcher1@mail.com", Email = "researcher1@mail.com" };
+                userManager.Create(user, "Password");
+
+                userManager.AddToRole(user.Id, "Worker");
+            }
+
+            if (!context.Users.Any(u => u.UserName == "developer1@mail.com"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(store);
+
+                var user = new ApplicationUser { UserName = "developer1@mail.com", Email = "developer1@mail.com" };
+                userManager.Create(user, "Password");
+
+                userManager.AddToRole(user.Id, "Worker");
+            }
+
+            #endregion
+
+            #region Jocke Seed Mangers
             if (!context.Users.Any(u => u.UserName == "ceo@mail.com"))
             {
                 var store = new UserStore<ApplicationUser>(context);
@@ -191,54 +261,72 @@ namespace PersonnelManagmentSystemV1.Migratio7ns
             #endregion
 
 #region Jocke seed Departments
-            
-            if (!context.Departments.Any())
+            ApplicationUser worker;
+            if (!context.Departments.Any(d => d.Name == "Management"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "ceo@mail.com");
                 Department dep1 = new Department() { ID = 1, Name = "Mangement", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
+                context.Users.SingleOrDefault(u => u.UserName == "cfo@mail.com").Department = dep1;
+                context.Users.SingleOrDefault(u => u.UserName == "chro@mail.com").Department = dep1;
+                context.Users.SingleOrDefault(u => u.UserName == "cio@mail.com").Department = dep1;
+                context.Users.SingleOrDefault(u => u.UserName == "cto@mail.com").Department = dep1;
+                context.Users.SingleOrDefault(u => u.UserName == "cro@mail.com").Department = dep1;
+                context.Users.SingleOrDefault(u => u.UserName == "cdo@mail.com").Department = dep1;
             };
 
-            if (!context.Departments.Any())
+            if (!context.Departments.Any(d => d.Name == "Finance"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "cfo@mail.com");
                 Department dep1 = new Department() { ID = 1, Name = "Finance", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
+                context.Users.SingleOrDefault(u => u.UserName == "accountant1@mail.com").Department = dep1;
+
             };
 
-            if (!context.Departments.Any())
+            if (!context.Departments.Any(d => d.Name == "Human Resources"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "chro@mail.com");
                 Department dep1 = new Department() { ID = 1, Name = "Human Resources", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
+                context.Users.SingleOrDefault(u => u.UserName == "hr1@mail.com").Department = dep1;
+
             };
 
-            if (!context.Departments.Any())
+            if (!context.Departments.Any(d => d.Name == "IT"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "cio@mail.com");
                 Department dep1 = new Department() { ID = 1, Name = "IT", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
+                context.Users.SingleOrDefault(u => u.UserName == "it1@mail.com").Department = dep1;
+
             };
 
-            if (!context.Departments.Any())
+            if (!context.Departments.Any(d => d.Name == "Technology"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "cto@mail.com");
                 Department dep1 = new Department() { ID = 1, Name = "Technology", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
+                context.Users.SingleOrDefault(u => u.UserName == "tech1@mail.com").Department = dep1;
+
             };
 
-            if (!context.Departments.Any())
+            if (!context.Departments.Any(d => d.Name == "Research"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "cro@mail.com");
                 Department dep1 = new Department() { ID = 1, Name = "Research", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
+                context.Users.SingleOrDefault(u => u.UserName == "researcher1@mail.com").Department = dep1;
+
             };
 
-            if (!context.Departments.Any())
+            if (!context.Departments.Any(d => d.Name == "Development"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "cdo@mail.com");
-                Department dep1 = new Department() { ID = 1, Name = "development", Manager = manager };
+                Department dep1 = new Department() { ID = 1, Name = "Development", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
+                context.Users.SingleOrDefault(u => u.UserName == "developer1@mail.com").Department = dep1;
+
             };
             context.SaveChanges();
 #endregion
