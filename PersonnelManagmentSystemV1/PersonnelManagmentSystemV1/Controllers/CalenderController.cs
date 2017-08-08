@@ -17,15 +17,14 @@ using Newtonsoft.Json.Converters;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
-    [Authorize(Roles = "Boss, Worker")]
     public class CalenderController : Controller
     {
-        
         private CalenderRepository calrepo = new CalenderRepository();
 
         #region Index Get
         // GET: Calender
-        [Authorize(Roles = "Boss")]
+
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -70,14 +69,14 @@ namespace PersonnelManagmentSystemV1.Controllers
                 Calender calevnt = new Calender() { DepartmentID = calevntVM.DepartmentID, CalenderStart = calenderstart, CalenderEnd = calenderend, CalTitle = calevntVM.CalTitle, CalContent = calevntVM.CalContent };
 
                 calrepo.AddCalender(calevnt);
-                return RedirectToAction("Index");
+                return RedirectToAction("Events");
             }
             return View(calevntVM);
         }
         #endregion
 
         #region Events
-        [Authorize(Roles="Boss, Worker")]
+        [Authorize]
         public async Task<ActionResult> Events()
         {
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -93,7 +92,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
         #endregion
 
-        [Authorize(Roles = "Boss, Worker")]
+        #region EventsJSON
+        [Authorize(Roles = "Worker, Boss")]
         public string EventsJSON()
         {
 
@@ -111,6 +111,8 @@ namespace PersonnelManagmentSystemV1.Controllers
                 new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, DateFormatString = "yyyy-MM-dd HH:mm" });
 
         }
+
+        #endregion
 
         #region Edit
 
@@ -166,13 +168,13 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // POST: Message/Delete/5
+        [Authorize(Roles = "Boss")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Boss")]
         public ActionResult DeleteConfirmed(int id)
         {
             calrepo.DeleteMessage(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Events");
         }
         #endregion
 
