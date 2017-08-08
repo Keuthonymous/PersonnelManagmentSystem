@@ -195,6 +195,7 @@
       <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />

@@ -22,23 +22,19 @@ namespace PersonnelManagmentSystemV1.Controllers
         private CalenderRepository calrepo = new CalenderRepository();
 
         #region Index Get
-        // GET: Calender
 
+        // GET: Calender
         [Authorize]
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            // DepartmentRepository depRepo = new DepartmentRepository();
 
 
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser currentUser = await userManager.FindByNameAsync(User.Identity.Name);
 
             List<SelectListItem> departments = new List<SelectListItem>();
-            //if (currentUser.Department != null)
-            //{
-            //    departments.Add(new SelectListItem() { Text = currentUser.Department.Name, Value = currentUser.Department.ID.ToString() });
-            //}
+
             departments.AddRange(currentUser.ManagedDepartments.Select(dep => new SelectListItem() { Text = dep.Name, Value = dep.ID.ToString() }));
 
             ViewBag.DepartmentList = departments;
