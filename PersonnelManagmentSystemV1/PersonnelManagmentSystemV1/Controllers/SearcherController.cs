@@ -30,7 +30,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JobOpening jobOpening = db.Job(id);
+            JobOpening jobOpening = db.Job(id.Value);
             if (jobOpening == null)
             {
                 return HttpNotFound();

@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace PersonnelManagmentSystemV1.Models
+namespace PersonnelManagmentSystemV1.ViewModels
 {
-    public class CalenderVM
+    public class CalenderViewModel
     {
         [Required]
         public int DepartmentID { get; set; }

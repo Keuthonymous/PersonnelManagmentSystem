@@ -1,0 +1,18 @@
+﻿@model PersonnelManagmentSystemV1.ViewModels.FileViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>File</h4>
+    <hr />
+    @Html.Partial("_FileDetails", Model)
+</div>
+<p>
+    <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</div>
+    <div class="btn">@Html.ActionLink("Back to List", "Index")</div>
+    
+</p>

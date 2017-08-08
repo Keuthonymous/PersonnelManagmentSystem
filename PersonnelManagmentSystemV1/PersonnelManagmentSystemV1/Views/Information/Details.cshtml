@@ -1,8 +1,7 @@
-﻿@model PersonnelManagmentSystemV1.Models.Information
+﻿@model PersonnelManagmentSystemV1.ViewModels.InformationViewModel
 
 @{
     ViewBag.Title = "Details";
-    bool editable = User.IsInRole("Boss");
 }
 
 <h2>Details</h2>
@@ -20,13 +19,13 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Contents)
+            @Html.DisplayNameFor(model => model.Content)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Contents)
+            @Html.DisplayFor(model => model.Content)
         </dd>
-        @if (editable)
+        @if (Model.IsEditable)
         {
             <dt>
                 @Html.DisplayNameFor(model => model.IsPublic)
@@ -37,7 +36,7 @@
         </dd>
 
         <dd>
-            @Html.DisplayFor(model => model.Department.Name)
+            @Html.DisplayFor(model => model.DepartmentName)
         </dd>
 
         <dt>
@@ -51,7 +50,7 @@
     </dl>
 </div>
 <p>
-    @if (editable)
+    @if (Model.IsEditable)
     {
         <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </div>
     }

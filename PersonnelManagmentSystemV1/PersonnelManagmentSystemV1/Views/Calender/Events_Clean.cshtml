@@ -1,0 +1,67 @@
+﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Calender>
+
+@{
+    ViewBag.Title = "Events";
+}
+
+<h2>Calender Events</h2>
+<div>
+    <p>
+        @if (ViewContext.HttpContext.User.IsInRole("Boss"))
+        {
+            @Html.ActionLink("Create New", "Index")
+        }
+
+    </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                    @Html.DisplayNameFor(model => model.Department.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalenderStart)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalenderEnd)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CalContent)
+                </th>
+
+
+        </tr>
+
+        @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CalenderStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CalenderEnd)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CalTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CalContent)
+                    </td>
+                    @if (ViewContext.HttpContext.User.IsInRole("Boss"))
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+
+                        </td>}
+                </tr>
+            }
+
+    </table>
+</div>

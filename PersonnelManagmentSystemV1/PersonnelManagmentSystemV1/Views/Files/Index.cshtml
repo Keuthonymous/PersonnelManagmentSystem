@@ -1,0 +1,52 @@
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.FileViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+ @if (User.IsInRole("Boss"))
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="~/Files/Download/@item.ID">
+                @Html.DisplayFor(modelItem => item.Title)
+            </a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartmentName)
+        </td>
+        <td>
+            @if (item.AllowEdit)
+            {
+                <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
+                <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID }) </div>
+                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
+            }
+        </td>
+    </tr>
+}
+
+</table>

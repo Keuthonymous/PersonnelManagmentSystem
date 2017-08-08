@@ -1,0 +1,28 @@
+﻿@model PersonnelManagmentSystemV1.ViewModels.FileViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.DepartmentID, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @{
+            IEnumerable<SelectListItem> list = ViewBag.Departments;
+        }
+        @Html.DropDownListFor(model => model.DepartmentID, list, new { @class = "select" })
+    </div>
+</div>
+

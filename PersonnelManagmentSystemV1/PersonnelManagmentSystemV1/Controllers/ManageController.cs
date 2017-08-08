@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.ViewModels;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {

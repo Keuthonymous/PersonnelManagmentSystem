@@ -6,13 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
+using PersonnelManagmentSystemV1.ViewModels;
 using PersonnelManagmentSystemV1.Repositories;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -37,11 +38,20 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            AdminIndexListViewModel indexList = new AdminIndexListViewModel();
-            indexList.IndexUsers = db.GetIndexList().ToList();
-            indexList.IndexDepartments = db.Departments().ToList();
+            AdminIndexListViewModel indexVM = new AdminIndexListViewModel();
+            //Get a list of users first, so that the readaction on the dbcontext finishes
+            List<ApplicationUser> users = db.GetAllUsers().ToList();
+            //Now convert the list using a lookup function for the role name
+            indexVM.IndexUsers = users.Select(user => 
+                new AdminIndexUserViewModel { 
+                    ID = user.Id, 
+                    Email = user.Email, 
+                    UserName = user.UserName, 
+                    Role = user.Roles.First(), 
+                    RoleName = db.GetRoleName(user.Roles.First().RoleId) }).ToList();
+            indexVM.IndexDepartments = db.Departments().ToList();
 
-            return View(indexList);
+            return View(indexVM);
         }
 
         // GET: Admin/DetailsUser/5
@@ -116,24 +126,26 @@ namespace PersonnelManagmentSystemV1.Controllers
         [HttpPost]
         public ActionResult DepartmentUserAdd(AddDepartmentToUserViewModel addDepartment, string[] SelectedUsers)
         {
+            
             addDepartment.UsersList = db.GetAllUsers().ToList();
             addDepartment.UsersToAdd = new List<ApplicationUser>();
             addDepartment.SelectDepartment = db.FindDepartment(addDepartment.SelectDepartment.ID);
-            addDepartment.SelectDepartment.Name = db.FindDepartment(addDepartment.SelectDepartment.ID).Name;
-            //UpdateModel(addDepartment);
             if (SelectedUsers != null)
-            {
-                foreach (var i in SelectedUsers)
+            { //only if at least one user was selected
+
+                foreach (string userID in SelectedUsers)
                 {
-                    addDepartment.UsersToAdd.Add(db.FindUser(i));
+                    addDepartment.UsersToAdd.Add(db.FindUser(userID));
                 }
-                foreach (var i in addDepartment.UsersToAdd)
+                //if (ModelState.IsValid) 
+                //ModelState.IsValid is determined by the modelbinder and on the model bound, in this case addDepartment and string[] SelectedUsers
+                // In this case the check is meaningless and will always fail, because addDepartment.SelectDepartment is recreated from scratch in the modelbinder and 
+                // does not have all properties needed at the end of modelbinding.
                 {
-                    db.AddUserToDepartment(addDepartment.SelectDepartment, i);
-                }
-                if (ModelState.IsValid)
-                {
-                    return RedirectToAction("Index");
+                    foreach (ApplicationUser user in addDepartment.UsersToAdd)
+                    {
+                        db.AddUserToDepartment(addDepartment.SelectDepartment, user);
+                    }
                 }
             }
             return View(addDepartment);
@@ -157,7 +169,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin/CreateUser
         public ActionResult CreateUser()
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
             return View();
         }
@@ -169,7 +181,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateUser(RegisterViewModel registerUser, string userRole)
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
 
             if (ModelState.IsValid)
@@ -219,7 +231,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Admin/EditUser/5
         public ActionResult EditUser(string id)
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
             if (id == null)
             {
@@ -241,13 +253,24 @@ namespace PersonnelManagmentSystemV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(EditUserViewModel editUser, string userRole)
         {
-            IEnumerable<string> roleName = db.GetRoles();
+            IEnumerable<string> roleName = db.GetRoleNames();
             ViewBag.userRole = new SelectList(roleName);
             if (ModelState.IsValid)
             {
                 ApplicationUser user = db.FindUser(editUser.ID);
+                if (editUser.Email != null)
+                {
+                    user.Email = editUser.Email;
+                }
 
-                db.EditUser(user, editUser);
+                if (editUser.Password != null)
+                {
+                    UserManager.RemovePassword(user.Id);
+                    UserManager.AddPassword(user.Id, editUser.Password);
+                }
+
+                db.EditUser(user);
+
                 if (userRole != null)
                 {
                     string currentRole = user.Roles.ToString();

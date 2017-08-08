@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
+//using PersonnelManagmentSystemV1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,26 +21,7 @@ namespace PersonnelManagmentSystemV1.Repositories
             return db.Users;
         }
 
-        public IEnumerable<AdminIndexUserViewModel> GetIndexList()
-        {
-            List<ApplicationUser> users = db.Users.ToList();
-            List<AdminIndexUserViewModel> indexList = new List<AdminIndexUserViewModel>();
-            List<IdentityRole> roles = db.Roles.ToList();
-
-            foreach (var i in users)
-            {
-                indexList.Add(new AdminIndexUserViewModel { ID = i.Id, Email = i.Email, UserName = i.UserName, Role = i.Roles.First() });
-            }
-            foreach (var i in indexList)
-            {
-                i.RoleName = (from t in roles
-                              where t.Id == i.Role.RoleId
-                              select t.Name).FirstOrDefault();
-            }
-            return indexList;
-        }
-
-        public IEnumerable<string> GetRoles()
+        public IEnumerable<string> GetRoleNames()
         {
             List<IdentityRole> roles = db.Roles.ToList();
             List<string> roleNames = new List<string>();
@@ -51,6 +33,15 @@ namespace PersonnelManagmentSystemV1.Repositories
 
             return roleNames;
         }
+
+        public string GetRoleName(string roleId)
+        {
+            return (from t in db.Roles
+             where t.Id == roleId
+             select t.Name).FirstOrDefault();
+        }
+
+
 
         public void RemoveUserFromRole(ApplicationUser user, string currentRole)
         {
@@ -117,18 +108,8 @@ namespace PersonnelManagmentSystemV1.Repositories
             db.SaveChanges();
         }
 
-        public void EditUser(ApplicationUser applicationUser, EditUserViewModel editUser)
+        public void EditUser(ApplicationUser applicationUser)
         {
-            if (editUser.Email != null)
-            {
-                applicationUser.Email = editUser.Email;
-            }
-
-            if (editUser.Password != null)
-            {
-                userManager.RemovePassword(applicationUser.Id);
-                userManager.AddPassword(applicationUser.Id, editUser.Password);
-            }
             db.SaveChanges();
         }
 
@@ -140,7 +121,8 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public void AddUserToDepartment(Department department, ApplicationUser user)
         {
-            department.Employees.Add(user);
+            user.Department = department;
+            //department.Employees.Add(user);
             db.SaveChanges();
         }
 
