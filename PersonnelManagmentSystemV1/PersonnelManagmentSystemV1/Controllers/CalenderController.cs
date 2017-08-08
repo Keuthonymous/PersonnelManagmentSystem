@@ -17,8 +17,10 @@ using Newtonsoft.Json.Converters;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
+    [Authorize(Roles = "Boss, Worker")]
     public class CalenderController : Controller
     {
+        
         private CalenderRepository calrepo = new CalenderRepository();
 
         #region Index Get
@@ -75,7 +77,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         #endregion
 
         #region Events
-        [Authorize]
+        [Authorize(Roles="Boss, Worker")]
         public async Task<ActionResult> Events()
         {
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -91,6 +93,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
         #endregion
 
+        [Authorize(Roles = "Boss, Worker")]
         public string EventsJSON()
         {
 
@@ -112,6 +115,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         #region Edit
 
         // GET: Garage/Edit/5
+        [Authorize(Roles = "Boss")]
         public async Task<ActionResult> Edit(int id)
         {
 
@@ -129,6 +133,7 @@ namespace PersonnelManagmentSystemV1.Controllers
 
         // POST: Garage/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Boss")]
         public ActionResult Edit(Calender calender)
         {
             try
@@ -145,6 +150,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         #endregion
 
         #region Delete
+        [Authorize(Roles = "Boss")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -162,6 +168,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // POST: Message/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Boss")]
         public ActionResult DeleteConfirmed(int id)
         {
             calrepo.DeleteMessage(id);

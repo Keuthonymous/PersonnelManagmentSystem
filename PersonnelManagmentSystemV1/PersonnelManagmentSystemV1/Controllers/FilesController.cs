@@ -13,7 +13,7 @@ using System.IO;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
-    [Authorize(Roles="Boss")]
+    [Authorize]
     public class FilesController : Controller
     {
         private FileRepository repo = new FileRepository();
@@ -39,7 +39,24 @@ namespace PersonnelManagmentSystemV1.Controllers
         [Authorize(Roles = "Boss, Worker")]
         public ActionResult Index()
         {
-            return View(repo.GetAllFiles().Select(file => MapFileToFileViewModel(file)));
+            FileViewModel fileToAdd = null;
+            List<FileViewModel> files = new List<FileViewModel>();
+            foreach (UserFile file in repo.GetFilesForUsersManagedDepartments(User.Identity.Name))
+            { //info for users managed departments (that he does manage)
+                fileToAdd = MapFileToFileViewModel(file);
+                fileToAdd.AllowEdit = true;
+                files.Add(fileToAdd);
+            }
+            foreach (UserFile file in repo.GetFilesForUser(User.Identity.Name))
+            { //info for users own department (that he does not manage)
+                if (!files.Any(i => i.ID == file.ID))
+                {
+                    fileToAdd = MapFileToFileViewModel(file);
+                    fileToAdd.AllowEdit = false;
+                    files.Add(fileToAdd);
+                }
+            }
+            return View(files);
         }
 
         // GET: Files/Details/5
@@ -75,6 +92,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // GET: Files/Create
+        [Authorize(Roles = "Boss")]
         public ActionResult Create()
         {
             ViewBag.Departments = repo.GetManagedDepartmentsByUserName(User.Identity.Name).Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
@@ -86,6 +104,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Boss")]
         public ActionResult Create([Bind(Include = "ID,Title,DepartmentID,Description,Contents")] FileViewModel fileVM)
         {
             if (ModelState.IsValid)
@@ -113,6 +132,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // GET: Files/Edit/5
+        [Authorize(Roles = "Boss")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -133,6 +153,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Boss")]
         public ActionResult Edit([Bind(Include = "ID,Title,Description,DepartmentID")] FileViewModel fileViewModel)
         {
             if (ModelState.IsValid)
@@ -150,6 +171,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // GET: Files/Delete/5
+        [Authorize(Roles = "Boss")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -167,6 +189,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // POST: Files/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Boss")]
         public ActionResult DeleteConfirmed(int id)
         {
             repo.DeleteFile(id);

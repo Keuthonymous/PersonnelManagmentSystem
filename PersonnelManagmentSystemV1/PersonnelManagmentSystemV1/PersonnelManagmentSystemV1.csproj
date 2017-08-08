@@ -334,6 +334,7 @@
     <Content Include="Views\Files\_FileEdit.cshtml" />
     <Content Include="Views\CVs\UploadCv.cshtml" />
     <Content Include="Views\Calender\Events_Clean.cshtml" />
+    <Content Include="Views\Worker\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
