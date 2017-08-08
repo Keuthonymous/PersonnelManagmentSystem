@@ -26,16 +26,17 @@
             </tr>
 
             @{
-                var url1 = Url.Action("Edit", new { ID = "{{id=Department.ID}}" });
+                var url1 = Url.Action("Edit", new { ID = "{{id=event.ID}}" });
                 url1 = HttpUtility.UrlDecode(url1);
             }
 
             @{
-                var url3 = Url.Action("Delete", new { ID = "{{id=item.ID}}" });
+                var url3 = Url.Action("Delete", new { ID = "{{id=event.ID}}" });
                 url3 = HttpUtility.UrlDecode(url3);
             }
 
             <tr ng-repeat="event in Events | orderBy:CalenderSort:reverse">
+                <td>{{}}</td>
                 <td>{{event.Department.Name}}</td>
                 <td>{{event.CalenderStart}}</td>
                 <td>{{event.CalenderEnd}}</td>

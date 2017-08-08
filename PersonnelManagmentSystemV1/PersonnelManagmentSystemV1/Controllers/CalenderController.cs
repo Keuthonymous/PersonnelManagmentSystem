@@ -68,7 +68,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                 Calender calevnt = new Calender() { DepartmentID = calevntVM.DepartmentID, CalenderStart = calenderstart, CalenderEnd = calenderend, CalTitle = calevntVM.CalTitle, CalContent = calevntVM.CalContent };
 
                 calrepo.AddCalender(calevnt);
-                return RedirectToAction("Index");
+                return RedirectToAction("Events");
             }
             return View(calevntVM);
         }
@@ -91,6 +91,8 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
         #endregion
 
+        #region EventsJSON
+
         public string EventsJSON()
         {
 
@@ -108,6 +110,8 @@ namespace PersonnelManagmentSystemV1.Controllers
                 new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, DateFormatString = "yyyy-MM-dd HH:mm" });
 
         }
+
+        #endregion
 
         #region Edit
 
@@ -165,7 +169,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             calrepo.DeleteMessage(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Events");
         }
         #endregion
 
