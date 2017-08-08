@@ -17,9 +17,6 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Display(Name = "User Name")]
         public string UserName { get; set; }
 
-        [Display(Name = "Identity User Role")]
-        public IdentityUserRole Role { get; set; }
-
         [Display(Name = "Role")]
         public string RoleName { get; set; }
     }

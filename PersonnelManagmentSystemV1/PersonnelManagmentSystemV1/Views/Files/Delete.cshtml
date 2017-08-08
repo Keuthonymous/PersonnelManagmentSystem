@@ -1,4 +1,4 @@
-﻿@model PersonnelManagmentSystemV1.Models.File
+﻿@model PersonnelManagmentSystemV1.ViewModels.FileViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -10,40 +10,7 @@
 <div>
     <h4>File</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MimeType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MimeType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-    </dl>
+    @Html.Partial("_FileDetails", Model)
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()

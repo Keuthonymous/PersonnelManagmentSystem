@@ -18,7 +18,8 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
-            return db.Users;
+            return db.Users
+                .Include(u => u.Department);
         }
 
         public IEnumerable<string> GetRoleNames()
@@ -81,37 +82,22 @@ namespace PersonnelManagmentSystemV1.Repositories
             return userNames;
         }
 
-        public ApplicationUser FindUser(string id)
+        public ApplicationUser GetUserByID(string id)
         {
-            return db.Users.Where(u => u.Id == id).First();
+            return GetAllUsers().SingleOrDefault(u => u.Id == id);
         }
 
-        public IEnumerable<Department> Departments()
+        public IEnumerable<Department> Departments() //!!!! DEPARTMENTS !!!!
         {
             return db.Departments;
         }
 
-        public Department FindDepartment(int? id)
-        {
-            return db.Departments.Where(d => d.ID == id).First();
-        }
-
-        public void AddUser(ApplicationUser applicationUser)
-        {
-            db.Users.Add(applicationUser);
-            db.SaveChanges();
-        }
-
-        public void AddDepartment(Department department)
+        public void AddDepartment(Department department) //!!!! DEPARTMENTS !!!!
         {
             db.Departments.Add(department);
             db.SaveChanges();
         }
 
-        public void EditUser(ApplicationUser applicationUser)
-        {
-            db.SaveChanges();
-        }
 
         public void EditDepartment(Department department)
         {
@@ -122,7 +108,6 @@ namespace PersonnelManagmentSystemV1.Repositories
         public void AddUserToDepartment(Department department, ApplicationUser user)
         {
             user.Department = department;
-            //department.Employees.Add(user);
             db.SaveChanges();
         }
 
@@ -138,30 +123,24 @@ namespace PersonnelManagmentSystemV1.Repositories
             db.SaveChanges();
         }
 
-        #region IDisposable Support
-
-        private bool disposedValue = false; // To detect redundant calls
-
-        // This code added to correctly implement the disposable pattern.
-        protected virtual void Dispose(bool disposing)
+        public Department GetDepartmentByID(int id)//!!!! DEPARTMENTS !!!!
         {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    db.Dispose();
-                }
-
-                disposedValue = true;
-            }
+            return db.Departments.SingleOrDefault(d => d.ID == id);
         }
 
-        public void Dispose()
+        public void SaveUser(ApplicationUser user)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
-        #endregion
+        public string GetPrimaryRoleName(string userId)
+        {
+            List<IdentityUserRole> roles = GetUserByID(userId).Roles.ToList();
+
+            var primaryRole = roles.FirstOrDefault();
+            if (primaryRole == null) return "";
+            return GetRoleName(primaryRole.RoleId);
+        }
     }
 }

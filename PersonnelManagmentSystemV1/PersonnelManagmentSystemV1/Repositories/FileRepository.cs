@@ -48,5 +48,20 @@ namespace PersonnelManagmentSystemV1.Repositories
         {
             return context.Departments.SingleOrDefault(d => d.ID == id);
         }
+
+        private IEnumerable<UserFile> GetFilesForDepartments(IEnumerable<Department> departments)
+        {
+            return GetAllFiles().Where(info => departments.Contains(info.Department));
+        }
+
+        public IEnumerable<UserFile> GetFilesForUser(string userName)
+        {
+            return GetFilesForDepartments(new List<Department>(){ context.Users.SingleOrDefault(u => u.UserName == userName).Department });
+        }
+
+        public IEnumerable<UserFile> GetFilesForUsersManagedDepartments(string userName)
+        {
+            return GetFilesForDepartments(context.Users.SingleOrDefault(u => u.UserName == userName).ManagedDepartments);
+        }
     }
 }

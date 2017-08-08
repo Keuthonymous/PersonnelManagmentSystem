@@ -51,12 +51,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -160,6 +172,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BossController.cs" />
@@ -177,7 +190,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708080954561_Jocke.cs" />
+    <Compile Include="Migrations\201708080954561_Jocke.Designer.cs">
+      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
@@ -191,9 +209,9 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="ViewModels\CVVM.cs" />
     <Compile Include="ViewModels\EditDepartmentViewModel.cs" />
-    <Compile Include="ViewModels\EditUserViewModel.cs" />
-    <Compile Include="Models\File.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="Models\UserFile.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Information.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
     <Compile Include="ViewModels\InformationViewModel.cs" />
@@ -214,6 +232,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\PMS.mdf" />
+    <Content Include="App_Data\PMS_log.ldf">
+      <DependentUpon>PMS.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -291,8 +313,8 @@
     <Content Include="Views\Admin\DetailsDepartment.cshtml" />
     <Content Include="Views\Admin\DetailsUser.cshtml" />
     <Content Include="Views\Admin\EditDepartment.cshtml" />
-    <Content Include="Views\Admin\_IndexDepartments.cshtml" />
-    <Content Include="Views\Admin\_IndexUsers.cshtml" />
+    <Content Include="Views\Admin\_Departments.cshtml" />
+    <Content Include="Views\Admin\_Users.cshtml" />
     <Content Include="Views\Information\PublicNews.cshtml" />
     <Content Include="Views\Message\Create.cshtml" />
     <Content Include="Views\Message\Delete.cshtml" />
@@ -318,10 +340,12 @@
     <Content Include="Views\CVs\Edit.cshtml" />
     <Content Include="Views\CVs\Index.cshtml" />
     <Content Include="Views\CVs\CV.cshtml" />
+    <Content Include="Views\Files\_FileDetails.cshtml" />
+    <Content Include="Views\Files\_FileEdit.cshtml" />
     <Content Include="Views\CVs\UploadCv.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Content Include="Views\Calender\Events_Clean.cshtml" />
+    <Content Include="Views\Worker\Index.cshtml" />
+    <Content Include="Views\Admin\_EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -329,6 +353,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708080954561_Jocke.resx">
+      <DependentUpon>201708080954561_Jocke.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

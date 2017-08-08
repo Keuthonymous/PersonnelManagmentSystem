@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Calender>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Department.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CalTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CalContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CalenderStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CalenderEnd)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Department.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CalTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CalContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CalenderStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CalenderEnd)
+        </td>
+    </tr>
+}
+
+</table>

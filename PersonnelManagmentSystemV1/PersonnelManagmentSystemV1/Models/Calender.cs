@@ -22,7 +22,6 @@ namespace PersonnelManagmentSystemV1.Models
         [Display(Name = "Title")]
         public string CalTitle { get; set; }
 
-
         [StringLength(200)]
         [Display(Name = "Content")]
         public string CalContent { get; set; }

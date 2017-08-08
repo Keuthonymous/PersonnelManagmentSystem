@@ -1,0 +1,38 @@
+﻿@model PersonnelManagmentSystemV1.Models.WorkerIndexViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="jumbotron" style="margin-top: 2em;">
+    <h1>Worker's Index</h1>
+
+    <h2>@Html.ActionLink("View Files", "Index", "Files")</h2>
+</div>
+
+<div class="jumbotron">
+    @Html.HiddenFor(model => model.CurrentUserID)
+
+    @if (Model.Events != null)
+    {
+        <h2>Upcoming Events</h2>
+        @Html.Partial("_WorkerIndexCalender", Model.Events)
+    }
+    else
+    {
+        <h3>No events to display for department "<strong>@Model.CurrentUserDepartment.Name</strong>"</h3>
+    }
+</div>
+<hr />
+<div class="jumbotron">
+    @if (Model.Information != null)
+    {   
+        <h2>Important Information</h2>
+        @Html.Partial("_WorkerIndexInformation", Model.Information)
+    }
+    else
+    {
+        <h3>No information to show for department "<strong>@Model.CurrentUserDepartment.Name</strong>"</h3>
+    }
+</div>
+<br />
+

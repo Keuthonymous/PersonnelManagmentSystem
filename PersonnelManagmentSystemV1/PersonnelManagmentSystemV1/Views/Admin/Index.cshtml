@@ -1,8 +1,14 @@
 ﻿@model PersonnelManagmentSystemV1.ViewModels.AdminIndexListViewModel
 
-<h2>Index</h2>
+<h3>Users</h3>
+<p>
+    @Html.ActionLink("New user", "CreateUser")
+</p>
+@Html.Partial("_Users", Model.IndexUsers)
 
 
-@Html.Partial("_IndexUsers", Model.IndexUsers)
-
-@Html.Partial("_IndexDepartments", Model.IndexDepartments)
+<h3>Departments</h3>
+<p>
+    @Html.ActionLink("New department", "CreateDepartment")
+</p>
+@Html.Partial("_Departments", Model.IndexDepartments)

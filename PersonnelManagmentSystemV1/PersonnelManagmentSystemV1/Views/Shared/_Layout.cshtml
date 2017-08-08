@@ -1,11 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@Html.AntiForgeryToken()
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/modernizr")
+
 
 </head>
 <body>
@@ -23,30 +26,36 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
 
-                    @if (User.IsInRole("Searcher"))
+                    @if (ViewContext.HttpContext.User.IsInRole("Searcher"))
                     {
                         <li>@Html.ActionLink("Job Openings", "Index", "Searcher")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
                     }
-                    @if (User.IsInRole("Worker"))
+                    
+                    @if (ViewContext.HttpContext.User.IsInRole("Worker"))
                     {
                         <li>@Html.ActionLink("News & Info", "Index", "Information")</li>
-                        <li>@Html.ActionLink("Calender", "Index", "Calender")</li>
                         <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
+                        <li>@Html.ActionLink("Files", "Index", "Files")</li>
+                        <li>@Html.ActionLink("Calender", "Events", "Calender")</li>
                     }
-                    @if (User.IsInRole("Boss"))
+                    
+                    @if (ViewContext.HttpContext.User.IsInRole("Boss"))
                     {
                         <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
                         <li>@Html.ActionLink("Departments", "Index", "Boss")</li>
                         <li>@Html.ActionLink("News & Info", "Index", "Information")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
-                        <li>@Html.ActionLink("Calender", "Index", "Calender")</li>
+                        <li>@Html.ActionLink("Calender", "Events", "Calender")</li>
+                        <li>@Html.ActionLink("Files", "Index", "Files")</li>
                     }
-                    @if (User.IsInRole("Admin"))
+                    
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Manage", "Index", "Admin")</li>
                     }
+                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

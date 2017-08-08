@@ -1,22 +1,24 @@
 ﻿(function () {
-    var app = angular.module("Garage", []);
+    var app = angular.module("calenderApp", []);
 
     app.controller("MainController", ["$scope", "$http", function ($scope, $http) {
 
         $scope.getData = getData;
+        $scope.Events;
 
         function getData() {
-            $http.get('/api/values/get')
+            $http.get('/Calender/EventsJSON')
                 .then(onRepos)
         };
 
         var onRepos = function (response) {
-            $scope.vehicles = response.data;
+            $scope.Events = response.data;
         };
 
-
-        $scope.orderByMe = function (vehicle) {
-            $scope.myOrderBy = vehicle;
+        $scope.reverse = true;
+        $scope.orderByMe = function (CalenderSort) {
+            $scope.reverse = ($scope.CalenderSort === CalenderSort) ? !$scope.reverse : false;
+            $scope.CalenderSort = CalenderSort;
         };
 
     }]);

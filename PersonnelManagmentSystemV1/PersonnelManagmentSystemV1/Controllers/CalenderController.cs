@@ -12,6 +12,8 @@ using Microsoft.Owin.Security;
 using PersonnelManagmentSystemV1.DataAccess;
 using System.Threading.Tasks;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -20,22 +22,19 @@ namespace PersonnelManagmentSystemV1.Controllers
         private CalenderRepository calrepo = new CalenderRepository();
 
         #region Index Get
+
         // GET: Calender
-        [Authorize(Roles="Boss")]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-           // DepartmentRepository depRepo = new DepartmentRepository();
 
 
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser currentUser = await userManager.FindByNameAsync(User.Identity.Name);
 
             List<SelectListItem> departments = new List<SelectListItem>();
-            //if (currentUser.Department != null)
-            //{
-            //    departments.Add(new SelectListItem() { Text = currentUser.Department.Name, Value = currentUser.Department.ID.ToString() });
-            //}
+
             departments.AddRange(currentUser.ManagedDepartments.Select(dep => new SelectListItem() { Text = dep.Name, Value = dep.ID.ToString() }));
 
             ViewBag.DepartmentList = departments;
@@ -66,7 +65,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                 Calender calevnt = new Calender() { DepartmentID = calevntVM.DepartmentID, CalenderStart = calenderstart, CalenderEnd = calenderend, CalTitle = calevntVM.CalTitle, CalContent = calevntVM.CalContent };
 
                 calrepo.AddCalender(calevnt);
-                return RedirectToAction("Index");
+                return RedirectToAction("Events");
             }
             return View(calevntVM);
         }
@@ -89,9 +88,32 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
         #endregion
 
+        #region EventsJSON
+        [Authorize(Roles = "Worker, Boss")]
+        public string EventsJSON()
+        {
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser currentUser = calrepo.GetUserByName(User.Identity.Name);
+
+            List<Department> departments = new List<Department>();
+            if (currentUser.Department != null)
+            {
+                departments.Add(currentUser.Department);
+            }
+            departments.AddRange(currentUser.ManagedDepartments);
+
+            return JsonConvert.SerializeObject(calrepo.GetAllCalenderTasks(departments),
+                new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, DateFormatString = "yyyy-MM-dd HH:mm" });
+
+        }
+
+        #endregion
+
         #region Edit
 
         // GET: Garage/Edit/5
+        [Authorize(Roles = "Boss")]
         public async Task<ActionResult> Edit(int id)
         {
 
@@ -109,6 +131,7 @@ namespace PersonnelManagmentSystemV1.Controllers
 
         // POST: Garage/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Boss")]
         public ActionResult Edit(Calender calender)
         {
             try
@@ -122,9 +145,10 @@ namespace PersonnelManagmentSystemV1.Controllers
             }
         }
 
-        #endregion 
+        #endregion
 
         #region Delete
+        [Authorize(Roles = "Boss")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -140,14 +164,15 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // POST: Message/Delete/5
+        [Authorize(Roles = "Boss")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             calrepo.DeleteMessage(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Events");
         }
-#endregion
+        #endregion
 
 
         protected override void Dispose(bool disposing)
