@@ -1,0 +1,27 @@
+﻿@model PersonnelManagmentSystemV1.Models.WorkerIndexViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Html.HiddenFor(model => model.CurrentUserID)
+
+@if (Model.Events != null)
+{
+    @Html.Partial("_WorkerIndexCalender", Model.Events)
+}
+else
+{
+    <h2>No events to display!</h2>
+}
+
+<hr />
+
+@if (Model.Information != null)
+{
+    @Html.Partial("_WorkerIndexInformation", Model.Information)
+}
+else
+{
+    <h2>No information to show!</h2>
+}
