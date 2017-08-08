@@ -191,7 +191,7 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="ViewModels\EditDepartmentViewModel.cs" />
     <Compile Include="ViewModels\EditUserViewModel.cs" />
-    <Compile Include="Models\File.cs" />
+    <Compile Include="Models\UserFile.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Information.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
@@ -317,6 +317,8 @@
     <Content Include="Views\CVs\Edit.cshtml" />
     <Content Include="Views\CVs\Index.cshtml" />
     <Content Include="Views\CVs\CV.cshtml" />
+    <Content Include="Views\Files\_FileDetails.cshtml" />
+    <Content Include="Views\Files\_FileEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

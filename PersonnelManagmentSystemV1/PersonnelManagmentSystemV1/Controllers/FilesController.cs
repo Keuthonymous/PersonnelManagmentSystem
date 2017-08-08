@@ -13,17 +13,37 @@ using System.IO;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
+    [Authorize(Roles="Boss")]
     public class FilesController : Controller
     {
         private FileRepository repo = new FileRepository();
 
+        private FileViewModel MapFileToFileViewModel(UserFile file)
+        {
+            if (file == null)
+                return null;
+
+            return new FileViewModel()
+            {
+                ID = file.ID,
+                Title = file.Title,
+                Description = file.Description,
+                DepartmentID = file.Department.ID,
+                DepartmentName = file.Department.Name,
+                AllowEdit = User.IsInRole("Boss")//repo.GetManagedDepartmentsByUserName(User.Identity.Name).Contains(file.Department)
+            };
+
+        }
+
         // GET: Files
+        [Authorize(Roles = "Boss, Worker")]
         public ActionResult Index()
         {
-            return View(repo.GetAllFiles());
+            return View(repo.GetAllFiles().Select(file => MapFileToFileViewModel(file)));
         }
 
         // GET: Files/Details/5
+        [Authorize(Roles = "Boss, Worker")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,7 +55,23 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(file);
+
+            return View(MapFileToFileViewModel(file));
+        }
+        // GET download
+        [Authorize(Roles = "Boss, Worker")]
+        public ActionResult Download(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            UserFile file = repo.GetFileById(id.Value);
+            if (file == null)
+            {
+                return HttpNotFound();
+            }
+            return File(file.Content, file.MimeType, file.GetFileName());
         }
 
         // GET: Files/Create
@@ -60,6 +96,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                     Description = fileVM.Description,
                     MimeType = fileVM.Contents.ContentType,
                     Department = repo.Department(fileVM.DepartmentID),
+                    OriginalFilename = fileVM.Contents.FileName,
                     Content = null
                 };
 
@@ -87,7 +124,8 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(file);
+            ViewBag.Departments = repo.GetManagedDepartmentsByUserName(User.Identity.Name).Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
+            return View(MapFileToFileViewModel(file));
         }
 
         // POST: Files/Edit/5
@@ -95,15 +133,20 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,MimeType,Content")] UserFile file)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,DepartmentID")] FileViewModel fileViewModel)
         {
             if (ModelState.IsValid)
             {
+                UserFile file = repo.GetFileById(fileViewModel.ID);
+                file.Description = fileViewModel.Description;
+                file.Title = fileViewModel.Title;
+                file.Department = repo.Department(fileViewModel.DepartmentID);
                 repo.ChangeFile(file);
                 
                 return RedirectToAction("Index");
             }
-            return View(file);
+            ViewBag.Departments = repo.GetManagedDepartmentsByUserName(User.Identity.Name).Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
+            return View(fileViewModel);
         }
 
         // GET: Files/Delete/5
@@ -118,7 +161,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(file);
+            return View(MapFileToFileViewModel(file));
         }
 
         // POST: Files/Delete/5

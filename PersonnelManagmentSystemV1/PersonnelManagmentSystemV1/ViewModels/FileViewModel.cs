@@ -18,11 +18,17 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [Required]
+        public string FileName { get; set; }
+
         public HttpPostedFileBase Contents { get; set; }
 
         [Required]
         public int DepartmentID { get; set; }
+
+        [Display(Name = "Department")]
+        public string DepartmentName { get; set; }
+
+        public bool AllowEdit { get; set; }
     }
 
 
