@@ -1,4 +1,4 @@
-﻿@model PersonnelManagmentSystemV1.Models.CV
+﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.CV>
 
 @{
     ViewBag.Title = "Index";
@@ -17,19 +17,37 @@
 
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Upload CV", "UploadCv")
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MimeType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uploader)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Uploader.Name)
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MimeType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uploader.UserName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
