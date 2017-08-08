@@ -148,14 +148,5 @@ namespace PersonnelManagmentSystemV1.Controllers
             db.Remove(job);
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

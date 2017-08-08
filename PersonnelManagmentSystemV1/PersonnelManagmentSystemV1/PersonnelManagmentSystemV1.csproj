@@ -208,9 +208,9 @@
     <Compile Include="ViewModels\CreateDepartmentViewModel.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="ViewModels\EditDepartmentViewModel.cs" />
-    <Compile Include="ViewModels\EditUserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Models\UserFile.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Information.cs" />
     <Compile Include="ViewModels\FileViewModel.cs" />
     <Compile Include="ViewModels\InformationViewModel.cs" />
@@ -312,8 +312,8 @@
     <Content Include="Views\Admin\DetailsDepartment.cshtml" />
     <Content Include="Views\Admin\DetailsUser.cshtml" />
     <Content Include="Views\Admin\EditDepartment.cshtml" />
-    <Content Include="Views\Admin\_IndexDepartments.cshtml" />
-    <Content Include="Views\Admin\_IndexUsers.cshtml" />
+    <Content Include="Views\Admin\_Departments.cshtml" />
+    <Content Include="Views\Admin\_Users.cshtml" />
     <Content Include="Views\Information\PublicNews.cshtml" />
     <Content Include="Views\Message\Create.cshtml" />
     <Content Include="Views\Message\Delete.cshtml" />
@@ -343,6 +343,8 @@
     <Content Include="Views\Files\_FileEdit.cshtml" />
     <Content Include="Views\CVs\UploadCv.cshtml" />
     <Content Include="Views\Calender\Events_Clean.cshtml" />
+    <Content Include="Views\Worker\Index.cshtml" />
+    <Content Include="Views\Admin\_EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
