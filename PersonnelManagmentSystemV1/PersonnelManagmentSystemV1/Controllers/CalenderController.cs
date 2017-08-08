@@ -53,7 +53,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(calevntVM);
         }
 
-        [Authorize(Roles="User")]
+        [Authorize]
         public ActionResult Events()
         {
             return View(calrepo.GetAllCalenderTasks());

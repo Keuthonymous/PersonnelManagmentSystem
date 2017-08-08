@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PersonnelManagmentSystemV1.Models
 {
@@ -18,6 +19,7 @@ namespace PersonnelManagmentSystemV1.Models
             return userIdentity;
         }
         public Department Department { get; set; }
+
         public virtual ICollection<Department> ManagedDepartments { get; set; }
         public virtual ICollection<CV> CVs { get; set; }
         public virtual ICollection<Message> ReceivedMessages { get; set; }

@@ -119,16 +119,21 @@ namespace PersonnelManagmentSystemV1.Controllers
             addDepartment.UsersList = db.GetAllUsers().ToList();
             addDepartment.UsersToAdd = new List<ApplicationUser>();
             addDepartment.SelectDepartment = db.FindDepartment(addDepartment.SelectDepartment.ID);
-
-            foreach (var i in SelectedUsers)
+            addDepartment.SelectDepartment.Name = db.FindDepartment(addDepartment.SelectDepartment.ID).Name;
+            //UpdateModel(addDepartment);
+            if (SelectedUsers != null)
             {
-                addDepartment.UsersToAdd.Add(db.FindUser(i));
-            }
-            if (ModelState.IsValid)
-            {
+                foreach (var i in SelectedUsers)
+                {
+                    addDepartment.UsersToAdd.Add(db.FindUser(i));
+                }
                 foreach (var i in addDepartment.UsersToAdd)
                 {
                     db.AddUserToDepartment(addDepartment.SelectDepartment, i);
+                }
+                if (ModelState.IsValid)
+                {
+                    return RedirectToAction("Index");
                 }
             }
             return View(addDepartment);
