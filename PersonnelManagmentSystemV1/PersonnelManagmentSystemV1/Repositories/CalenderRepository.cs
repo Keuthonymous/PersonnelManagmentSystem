@@ -69,10 +69,12 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public void Edit(Calender calender)
         {
-            //Edits the element without removing and inserting it
             db.Entry(calender).State = EntityState.Modified;
-            //Saves the new Data in the Database
             db.SaveChanges();
+        }
+        public ApplicationUser GetUserByName(string userName) //!!!! USER !!!!
+        {
+            return db.Users.SingleOrDefault(u => u.UserName == userName);
         }
     }
 

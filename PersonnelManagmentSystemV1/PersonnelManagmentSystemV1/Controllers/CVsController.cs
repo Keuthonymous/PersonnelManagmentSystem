@@ -22,29 +22,31 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(repo.GetAllCVs());
         }
 
+        [Authorize(Roles = "Searcher")]
         [HttpGet]
         public ActionResult UploadCv()
         {
             return View();
         }
 
-        [HttpPost]  
-        public ActionResult UploadCv(HttpPostedFileBase cv)
+        [Authorize(Roles="Searcher")]
+        [HttpPost]
+        public ActionResult UploadCv([Bind(Include = "Title")] HttpPostedFileBase cv)
         {
             try
             {
                 if (cv.ContentLength > 0)
                 {
-                    string _FileName = Path.GetFileName(cv.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles/CV"), _FileName);
-                    cv.SaveAs(_path);
+                    string _FileName = Path.GetFileName(cv.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles/CV"), _FileName);
+                    cv.SaveAs(_path);
                 }
-                ViewBag.Message = "CV Uploaded Successfully!!";
+                ViewBag.Message = "CV Uploaded Successfully!";
                 return View();
             }
             catch
             {
-                ViewBag.Message = "CV upload failed!!";
+                ViewBag.Message = "CV upload failed!";
                 return View();
             }
         }

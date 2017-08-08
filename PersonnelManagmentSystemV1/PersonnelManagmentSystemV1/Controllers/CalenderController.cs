@@ -12,6 +12,8 @@ using Microsoft.Owin.Security;
 using PersonnelManagmentSystemV1.DataAccess;
 using System.Threading.Tasks;
 using System.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -21,11 +23,11 @@ namespace PersonnelManagmentSystemV1.Controllers
 
         #region Index Get
         // GET: Calender
-        [Authorize(Roles="Boss")]
+        [Authorize(Roles = "Boss")]
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-           // DepartmentRepository depRepo = new DepartmentRepository();
+            // DepartmentRepository depRepo = new DepartmentRepository();
 
 
             ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -89,6 +91,24 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
         #endregion
 
+        public string EventsJSON()
+        {
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser currentUser = calrepo.GetUserByName(User.Identity.Name);
+
+            List<Department> departments = new List<Department>();
+            if (currentUser.Department != null)
+            {
+                departments.Add(currentUser.Department);
+            }
+            departments.AddRange(currentUser.ManagedDepartments);
+
+            return JsonConvert.SerializeObject(calrepo.GetAllCalenderTasks(departments),
+                new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, DateFormatString = "yyyy-MM-dd HH:mm" });
+
+        }
+
         #region Edit
 
         // GET: Garage/Edit/5
@@ -122,7 +142,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             }
         }
 
-        #endregion 
+        #endregion
 
         #region Delete
         public ActionResult Delete(int? id)
@@ -147,7 +167,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             calrepo.DeleteMessage(id);
             return RedirectToAction("Index");
         }
-#endregion
+        #endregion
 
 
         protected override void Dispose(bool disposing)
