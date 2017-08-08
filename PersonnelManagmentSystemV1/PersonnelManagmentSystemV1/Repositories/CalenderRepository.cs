@@ -74,9 +74,9 @@ namespace PersonnelManagmentSystemV1.Repositories
         }
         public ApplicationUser GetUserByName(string userName) //!!!! USER !!!!
         {
-            return db.Users.SingleOrDefault(u => u.UserName == userName);
+            return db.Users.Include("Department").SingleOrDefault(u => u.UserName == userName);
         }
     }
 
-
+    //Include("Department").
 }

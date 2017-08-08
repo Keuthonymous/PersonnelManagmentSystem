@@ -26,19 +26,21 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
 
-                    @if (User.IsInRole("Searcher"))
+                    @if (ViewContext.HttpContext.User.IsInRole("Searcher"))
                     {
                         <li>@Html.ActionLink("Job Openings", "Index", "Searcher")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
                     }
-                    @if (User.IsInRole("Worker"))
+                    
+                    @if (ViewContext.HttpContext.User.IsInRole("Worker"))
                     {
                         <li>@Html.ActionLink("News & Info", "Index", "Information")</li>
-                        <li>@Html.ActionLink("Calender", "Index", "Calender")</li>
                         <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
+                        <li>@Html.ActionLink("Calender", "Events", "Calender")</li>
                     }
-                    @if (User.IsInRole("Boss"))
+                    
+                    @if (ViewContext.HttpContext.User.IsInRole("Boss"))
                     {
                         <li>@Html.ActionLink("Job Openings", "Index", "JobOpenings")</li>
                         <li>@Html.ActionLink("Departments", "Index", "Boss")</li>
@@ -47,10 +49,12 @@
                         <li>@Html.ActionLink("Calender", "Events", "Calender")</li>
                         <li>@Html.ActionLink("Files", "Index", "Files")</li>
                     }
-                    @if (User.IsInRole("Admin"))
+                    
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Manage", "Index", "Admin")</li>
                     }
+                    
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
