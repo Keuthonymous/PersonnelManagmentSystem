@@ -40,34 +40,33 @@ namespace PersonnelManagmentSystemV1.Controllers
             return View(repo.GetCVsForUser(User.Identity.GetUserId()).OrderByDescending(c => c.UploadTime));
         }
 
-        
+
         [Authorize(Roles = "Searcher")]
         [HttpPost]
         public ActionResult Create([Bind(Include = "ID,Title,Description,Contents")] CVVM cvVM)
-        {
-            if (ModelState.IsValid)
             {
-                CV cv = new CV()
+                if (ModelState.IsValid)
                 {
-                    Title = cvVM.Title,
-                    Description = cvVM.Description,
-                    MimeType = cvVM.Contents.ContentType,
-                    Uploader = repo.GetUserByName(User.Identity.Name),
+                    CV cv = new CV()
+                    {
+                        Title = cvVM.Title,
+                        Description = cvVM.Description,
+                        MimeType = cvVM.Contents.ContentType,
+                        Uploader = repo.GetUserByName(User.Identity.Name),
                     FileName = cvVM.Contents.FileName,
-                    Content = null
-                };
+                        Content = null
+                    };
           
-                BinaryReader binaryReader = new BinaryReader(cvVM.Contents.InputStream);
-                cv.Content = binaryReader.ReadBytes(cvVM.Contents.ContentLength);
+                    BinaryReader binaryReader = new BinaryReader(cvVM.Contents.InputStream);
+                    cv.Content = binaryReader.ReadBytes(cvVM.Contents.ContentLength);
 
-                repo.AddCv(cv);
+                    repo.AddCv(cv);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+
+                return View(cvVM);
             }
-
-                
-            return View(cvVM);
-        }
         
 
         // GET: CVs/Details/5
@@ -100,8 +99,8 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = repo.GetCvById(id.Value);
-            if (cV == null)
+            CV cv = repo.GetCvById(id.Value);
+            if (cv == null)
             {
                 return HttpNotFound();
             }

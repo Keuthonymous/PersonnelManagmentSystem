@@ -1,4 +1,4 @@
-﻿@model PersonnelManagmentSystemV1.Models.CV
+﻿@model PersonnelManagmentSystemV1.ViewModels.CVVM
 
 @{
     ViewBag.Title = "Edit";
@@ -33,8 +33,6 @@
             </div>
         </div>
 
-        <input type="file" name="Contents" placeholder="File to Upload" value="Upload" />
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -42,7 +40,9 @@
         </div>
     </div>
 }
-
+<div style="background-color:red; border:1px solid black; color:white;" class="col-md-2">
+    @ViewBag.Message
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

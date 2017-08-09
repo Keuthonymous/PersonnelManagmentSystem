@@ -42,15 +42,6 @@ namespace PersonnelManagmentSystemV1.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<Department> GetManagedDepartmentsByUserName(string userName) //!!!!! DEPARTMENT !!!!
-        {
-            return context.Users.SingleOrDefault(u => u.UserName == userName).ManagedDepartments;
-        }
-        public Department Department(int id) //!!!! DEPARTMENT !!!!
-        {
-            return context.Departments.SingleOrDefault(d => d.ID == id);
-        }
-
         public ApplicationUser GetUserByName(string userName) //!!!! USER !!!!
         {
             return context.Users.SingleOrDefault(u => u.UserName == userName);
