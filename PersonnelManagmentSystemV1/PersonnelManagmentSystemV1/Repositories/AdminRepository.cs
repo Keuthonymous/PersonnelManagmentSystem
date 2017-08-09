@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
-//using PersonnelManagmentSystemV1.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,9 +12,14 @@ namespace PersonnelManagmentSystemV1.Repositories
 {
     public class AdminRepository
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+        private ApplicationDbContext db;
+        private UserManager<ApplicationUser> userManager;
 
+        public AdminRepository(ApplicationDbContext context, UserManager<ApplicationUser> manager)
+        {
+            db = context;
+            userManager = manager;
+        }
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
             return db.Users
@@ -143,6 +147,31 @@ namespace PersonnelManagmentSystemV1.Repositories
             var primaryRole = roles.FirstOrDefault();
             if (primaryRole == null) return "";
             return GetRoleName(primaryRole.RoleId);
+        }
+
+        public ApplicationUser GetUserByName(string userName)
+        {
+            return GetAllUsers().SingleOrDefault(u => u.UserName == userName);
+        }
+
+        public bool AddUser(ApplicationUser user, string password)
+        {
+            return userManager.Create(user, password).Succeeded;
+        }
+
+        public string ResetPassword(string userId, string password)
+        {
+            string code = userManager.GeneratePasswordResetToken(userId);
+            IdentityResult actionResult = userManager.ResetPassword(userId, code, password);
+            string result = "";
+            if (!actionResult.Succeeded)
+            {
+                foreach (string error in actionResult.Errors)
+                {
+                    result += error;
+                }
+            }
+            return result;
         }
     }
 }

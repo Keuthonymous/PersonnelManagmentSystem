@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using Newtonsoft.Json;
 
 [assembly: OwinStartupAttribute(typeof(PersonnelManagmentSystemV1.Startup))]
 namespace PersonnelManagmentSystemV1

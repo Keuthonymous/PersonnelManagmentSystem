@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.ViewModels;
 using PersonnelManagmentSystemV1.Repositories;
+using PersonnelManagmentSystemV1.DataAccess;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -20,13 +21,17 @@ namespace PersonnelManagmentSystemV1.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private AdminRepository db = new AdminRepository();
+        private AdminRepository repository;
 
-        private ApplicationUserManager UserManager
+        private AdminRepository db
         {
             get
             {
-                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                if (repository == null)
+                {
+                    repository = new AdminRepository(HttpContext.GetOwinContext().Get<ApplicationDbContext>(), HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>());
+                }
+                return repository;
             }
         }
 
@@ -34,7 +39,14 @@ namespace PersonnelManagmentSystemV1.Controllers
         {
             if (user == null)
                 return null;
-            UserViewModel result = MapUserToUserViewModel(user);
+            UserViewModel result = new UserViewModel()
+            {
+                ID = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                RoleName = db.GetPrimaryRoleName(user.Id),
+                Departments = db.Departments()
+            };
 
             if (user.Department != null)
             {
@@ -158,12 +170,11 @@ namespace PersonnelManagmentSystemV1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = registerUser.Email, Email = registerUser.Email, Department = db.GetDepartmentByID(registerUser.DepartmentID) };
-                var result = UserManager.Create(user, registerUser.Password);
+                ApplicationUser user = new ApplicationUser { UserName = registerUser.Email, Email = registerUser.Email, Department = db.GetDepartmentByID(registerUser.DepartmentID) };
 
-                if (result.Succeeded)
+                if (db.AddUser(user, registerUser.Password))
                 {
-                    UserManager.AddToRole(user.Id, userRole);
+                    db.AddUserToRole(user, userRole);
                     return RedirectToAction("Index");
                 }
             }
@@ -237,12 +248,22 @@ namespace PersonnelManagmentSystemV1.Controllers
                 user.UserName = editUser.UserName;
                 user.Department = db.GetDepartmentByID(editUser.DepartmentID);
 
-                db.SaveUser(user);
+                
 
                 if (editUser.Password != null)
                 {
-                    UserManager.RemovePassword(user.Id);
-                    UserManager.AddPassword(user.Id, editUser.Password);
+                    string errors = db.ResetPassword(user.Id, editUser.Password);
+                    if (errors == "")
+                    {
+                        ViewBag.Message = "Password reset successfully.";
+                    }
+                    else
+                    {
+                        ViewBag.Message = errors;
+                        editUser.Departments = db.Departments();
+                        
+                        return View(editUser);
+                    }
                 }
 
                 if (userRole != null && userRole != "")
@@ -255,6 +276,8 @@ namespace PersonnelManagmentSystemV1.Controllers
                     
                     db.AddUserToRole(user, userRole);
                 }
+
+                db.SaveUser(user);
                 return RedirectToAction("Index");
             }
             editUser.Departments = db.Departments();
@@ -294,7 +317,7 @@ namespace PersonnelManagmentSystemV1.Controllers
 
             if (ModelState.IsValid)
             {
-                department.Manager = db.GetAllUsers().Where(u => u.UserName == editDepartment.ManagerUserName).First();
+                department.Manager = db.GetUserByName(editDepartment.ManagerUserName);
                 department.Name = editDepartment.Name;
 
                 db.EditDepartment(department);

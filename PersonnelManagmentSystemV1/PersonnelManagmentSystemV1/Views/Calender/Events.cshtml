@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Calender>
+﻿ @model IEnumerable<PersonnelManagmentSystemV1.Models.Calender>
 
 @{
     ViewBag.Title = "Events";
@@ -35,7 +35,7 @@
         }
 
         <tr ng-repeat="event in Events | orderBy:CalenderSort:reverse">
-            <td>{{event.Department.Name}}</td>
+            <td>{{event.DepartmentName}}</td>
             <td>{{event.CalenderStart}}</td>
             <td>{{event.CalenderEnd}}</td>
             <td>{{event.CalTitle}}</td>

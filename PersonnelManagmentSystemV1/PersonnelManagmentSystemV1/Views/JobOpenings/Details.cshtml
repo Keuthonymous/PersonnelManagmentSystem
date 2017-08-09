@@ -1,4 +1,5 @@
-﻿@model PersonnelManagmentSystemV1.Models.JobOpening
+﻿@using PersonnelManagmentSystemV1.Models
+@model JobOpening
 
 @{
     ViewBag.Title = "Details";
@@ -33,9 +34,50 @@
         <dd>
             @Html.DisplayFor(model => model.JobType)
         </dd>
-
     </dl>
 </div>
+@if (Model.Department.Manager.UserName == User.Identity.Name)
+{
+    <div class="row">
+        <hr />
+        <h4>Applicants</h4>
+        <table>
+            <tr>
+                <th>E-mail address</th>
+                <th>Department</th>
+            </tr>
+            @foreach (ApplicationUser item in Model.GetAllApplicants())
+            {
+                <tr>
+                    <td>@item.Email</td>
+                    <td>@item.GetDepartmentName()</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="row">
+        <hr />
+        <h4>Applications</h4>
+        <table>
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Time sent</th>
+                <th>Content</th>
+            </tr>
+            @foreach (Message item in Model.Messages)
+            {
+                <tr>
+                    <td>@item.Sender.Email</td>
+                    <td>@item.Recipient.Email</td>
+                    <td>@item.SendTime</td>
+                    <td>@item.BodyContent</td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+
 <p>
     <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { jobOpeningID = Model.ID }, new { })</div>
     <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</div>
