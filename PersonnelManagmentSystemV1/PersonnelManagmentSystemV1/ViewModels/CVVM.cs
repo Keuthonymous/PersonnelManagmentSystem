@@ -24,5 +24,7 @@ namespace PersonnelManagmentSystemV1.ViewModels
 
         //[Required]
         //public virtual ApplicationUser Uploader { get; set; }
+
+        public DateTime UploadTime { get; set; }
     }
 }

@@ -6,18 +6,9 @@
 
 <h2>Index</h2>
 
-@*@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div>
-        @Html.LabelFor(x => x.Content)
-        @Html.TextBoxFor(x => x.Content, new { type = "file" })
-        @Html.ValidationMessageFor(x => x.Content)
-    </div>
-}*@
-
 
 <p>
-    @Html.ActionLink("Upload CV", "UploadCv")
+    @Html.ActionLink("New CV", "Create")
 </p>
 <table class="table">
     <tr>

@@ -1,15 +1,13 @@
-﻿@using PersonnelManagmentSystemV1.Models
-@model JobOpening
+﻿@using PersonnelManagmentSystemV1.ViewModels
+@model JobOpeningViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
+<h2>Job Details</h2>
+<hr/>
 <div>
-    <h4>Job</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -36,21 +34,36 @@
         </dd>
     </dl>
 </div>
-@if (Model.Department.Manager.UserName == User.Identity.Name)
+<div class="row">
+    <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { jobOpeningID = Model.ID }, new { })</div>
+    <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</div>
+    <div class="btn">@Html.ActionLink("Back to List", "Index")</div>
+</div>
+@if (Model.AllowEdit)
 {
     <div class="row">
         <hr />
         <h4>Applicants</h4>
-        <table>
+        <table class="table">
             <tr>
                 <th>E-mail address</th>
                 <th>Department</th>
+                <th>CV</th>
             </tr>
-            @foreach (ApplicationUser item in Model.GetAllApplicants())
+            @foreach (ApplicantViewModel item in Model.Applicants)
             {
                 <tr>
                     <td>@item.Email</td>
-                    <td>@item.GetDepartmentName()</td>
+                    <td>@item.DepartmentName</td>
+                    @if (item.CVID == 0)
+                    {
+                        <td></td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("Download", "DownloadCV", new { id = item.CVID })</td>
+                    }
+                    
                 </tr>
             }
         </table>
@@ -58,18 +71,18 @@
     <div class="row">
         <hr />
         <h4>Applications</h4>
-        <table>
+        <table class="table">
             <tr>
                 <th>From</th>
                 <th>To</th>
                 <th>Time sent</th>
                 <th>Content</th>
             </tr>
-            @foreach (Message item in Model.Messages)
+            @foreach (MessageViewModel item in Model.Messages)
             {
                 <tr>
-                    <td>@item.Sender.Email</td>
-                    <td>@item.Recipient.Email</td>
+                    <td>@item.SenderName</td>
+                    <td>@item.RecipientName</td>
                     <td>@item.SendTime</td>
                     <td>@item.BodyContent</td>
                 </tr>
@@ -78,8 +91,4 @@
     </div>
 }
 
-<p>
-    <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { jobOpeningID = Model.ID }, new { })</div>
-    <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</div>
-    <div class="btn">@Html.ActionLink("Back to List", "Index")</div> 
-</p>
+

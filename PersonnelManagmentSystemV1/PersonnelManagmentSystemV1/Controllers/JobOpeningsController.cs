@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
 using PersonnelManagmentSystemV1.ViewModels;
@@ -27,7 +28,17 @@ namespace PersonnelManagmentSystemV1.Controllers
                 DepartmentID = jobOpening.Department.ID,
                 Title = jobOpening.Title,
                 Description = jobOpening.Description,
-                JobType = jobOpening.JobType
+                JobType = jobOpening.JobType,
+                Applicants = jobOpening.GetAllApplicants().Select(a => new ApplicantViewModel() 
+                    { 
+                        Email = a.Email, 
+                        DepartmentName = a.GetDepartmentName(), 
+                        CVID = a.GetMostRecentCVID() 
+                    }),
+                Messages = jobOpening.Messages
+                    .Where(m => m.IsFirstMessage)
+                    .Select(m => new MessageViewModel() { SenderName = m.Sender.UserName, RecipientName = m.Recipient.UserName, SendTime = m.SendTime, BodyContent = m.BodyContent}),
+                AllowEdit = jobOpening.Department.ManagerID == User.Identity.GetUserId()
             };
         }
 
@@ -50,7 +61,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(job);
+            return View(MapJobOpeningToJobOpeningViewModel(job));
         }
 
         // GET: Jobs/Create
@@ -147,6 +158,23 @@ namespace PersonnelManagmentSystemV1.Controllers
             JobOpening job = db.Job(id);
             db.Remove(job);
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult DownloadCV(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            CV cv = db.GetCvById(id.Value);
+            if (cv == null)
+            {
+                return HttpNotFound();
+            }
+            return File(cv.Content, cv.MimeType, cv.GetFileName());
+        
+
         }
     }
 }

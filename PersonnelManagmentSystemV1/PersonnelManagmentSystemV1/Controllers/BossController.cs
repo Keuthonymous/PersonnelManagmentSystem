@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
@@ -20,7 +21,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Boss
         public ActionResult Index()
         {
-             return View(db.Departments());
+             return View(db.GetDepartmentsForManagerID(User.Identity.GetUserId()));
         }
 
         // GET: Boss/Details/5

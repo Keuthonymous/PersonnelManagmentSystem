@@ -26,6 +26,10 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Required]
         [Display(Name="Job Type")]
         public string JobType { get; set; }
+        public bool AllowEdit { get; set; }
+
+        public IEnumerable<ApplicantViewModel> Applicants { get; set; }
+        public IEnumerable<MessageViewModel> Messages { get; set; }
 
     }
 }

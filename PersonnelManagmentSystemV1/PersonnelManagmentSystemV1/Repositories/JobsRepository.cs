@@ -14,7 +14,9 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public IEnumerable<JobOpening> Jobs()
         {
-            return db.Jobs.Include(j => j.Department);
+            return db.Jobs
+                .Include(j => j.Messages)
+                .Include(j => j.Department);
         }
 
         public IEnumerable<Department> Departments() //!!!! DEPARTMENT !!!!
@@ -54,6 +56,21 @@ namespace PersonnelManagmentSystemV1.Repositories
         {
             db.Jobs.Remove(job);
             db.SaveChanges();
+        }
+
+        public CV GetCvById(int cvId)
+        {
+            return db.CVs.SingleOrDefault(c => c.ID == cvId);
+        }
+
+        public IEnumerable<ApplicationUser> GetAllApplicants(int jobID)
+        {
+            IEnumerable<ApplicationUser> applicants = Job(jobID).GetAllApplicants();
+            foreach (ApplicationUser applicant in applicants)
+            {
+                applicant.CVs = db.CVs.Where(c => c.Uploader.Id == applicant.Id).ToList();
+            }
+            return applicants;
         }
     }
 }

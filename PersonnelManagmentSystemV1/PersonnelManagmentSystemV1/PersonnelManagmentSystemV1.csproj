@@ -191,6 +191,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ViewModels\ApplicantViewModel.cs" />
     <Compile Include="ViewModels\CalenderJSONModel.cs" />
     <Compile Include="ViewModels\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
@@ -325,21 +326,19 @@
     <Content Include="Views\Files\Details.cshtml" />
     <Content Include="Views\Files\Edit.cshtml" />
     <Content Include="Views\Files\Index.cshtml" />
-    <Content Include="Views\CVs\Create.cshtml" />
     <Content Include="Views\CVs\Delete.cshtml" />
     <Content Include="Views\CVs\Details.cshtml" />
     <Content Include="Views\CVs\Edit.cshtml" />
     <Content Include="Views\CVs\Index.cshtml" />
-    <Content Include="Views\CVs\CV.cshtml" />
     <Content Include="Views\Files\_FileDetails.cshtml" />
     <Content Include="Views\Files\_FileEdit.cshtml" />
-    <Content Include="Views\CVs\UploadCv.cshtml" />
     <Content Include="Views\Calender\Events_Clean.cshtml" />
     <Content Include="Views\Worker\Index.cshtml" />
     <Content Include="Views\Admin\_EditUser.cshtml" />
     <Content Include="Views\Admin\_DisplayUser.cshtml" />
     <Content Include="Views\Worker\_WorkerIndexCalender.cshtml" />
     <Content Include="Views\Worker\_WorkerIndexInformation.cshtml" />
+    <Content Include="Views\CVs\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

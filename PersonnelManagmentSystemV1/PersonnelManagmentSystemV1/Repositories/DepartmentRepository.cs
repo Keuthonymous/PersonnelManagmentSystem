@@ -23,6 +23,11 @@ namespace PersonnelManagmentSystemV1.Repositories
             return db.Departments.SingleOrDefault(d => d.ID == id);
         }
 
+        public IEnumerable<Department> GetDepartmentsForManagerID(string managerID)
+        {
+            return Departments().Where(d => d.ManagerID == managerID);
+        }
+
         #region IDisposable Support
 
         private bool disposedValue = false; // To detect redundant calls

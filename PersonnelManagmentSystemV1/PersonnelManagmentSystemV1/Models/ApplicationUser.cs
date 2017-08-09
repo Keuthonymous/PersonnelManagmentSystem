@@ -35,6 +35,13 @@ namespace PersonnelManagmentSystemV1.Models
             }
             return "";
         }
+
+        public int GetMostRecentCVID()
+        {
+            if (CVs == null || CVs.Count() == 0)
+                return 0;
+            return CVs.OrderByDescending(c => c.UploadTime).FirstOrDefault().ID;
+        }
     }
 
     

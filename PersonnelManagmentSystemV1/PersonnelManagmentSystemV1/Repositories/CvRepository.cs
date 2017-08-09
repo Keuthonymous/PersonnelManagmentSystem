@@ -25,6 +25,7 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public void AddCv(CV cv)
         {
+            cv.UploadTime = DateTime.Now;
             context.CVs.Add(cv);
             context.SaveChanges();
         }
@@ -53,6 +54,11 @@ namespace PersonnelManagmentSystemV1.Repositories
         public ApplicationUser GetUserByName(string userName) //!!!! USER !!!!
         {
             return context.Users.SingleOrDefault(u => u.UserName == userName);
+        }
+
+        public IEnumerable<CV> GetCVsForUser(string userId)
+        {
+            return context.CVs.Where(c => c.Uploader.Id == userId);
         }
     }
 }
