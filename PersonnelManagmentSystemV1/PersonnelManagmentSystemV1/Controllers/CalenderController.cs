@@ -110,7 +110,8 @@ namespace PersonnelManagmentSystemV1.Controllers
                     CalTitle = c.CalTitle,
                     CalContent = c.CalContent,
                     CalenderStart = c.CalenderStart,
-                    CalenderEnd = c.CalenderEnd
+                    CalenderEnd = c.CalenderEnd,
+                    AllowEdit = c.Department.Manager.UserName == User.Identity.Name
                 }), 
                 new JsonSerializerSettings()
                 {

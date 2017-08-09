@@ -13,5 +13,7 @@ namespace PersonnelManagmentSystemV1.ViewModels
         public DateTime CalenderEnd { get; set; }
         public string CalTitle { get; set; }
         public string CalContent { get; set; }
+
+        public bool AllowEdit { get; set; }
     }
 }
