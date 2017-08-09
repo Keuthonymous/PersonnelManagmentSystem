@@ -191,6 +191,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ViewModels\CalenderJSONModel.cs" />
     <Compile Include="ViewModels\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
     <Compile Include="Repositories\FileRepository.cs" />

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Calender>
+﻿ @model IEnumerable<PersonnelManagmentSystemV1.Models.Calender>
 
 @{
     ViewBag.Title = "Events";
@@ -35,21 +35,17 @@
         }
 
         <tr ng-repeat="event in Events | orderBy:CalenderSort:reverse">
-            <td>{{event.Department.Name}}</td>
+            <td>{{event.DepartmentName}}</td>
             <td>{{event.CalenderStart}}</td>
             <td>{{event.CalenderEnd}}</td>
             <td>{{event.CalTitle}}</td>
             <td>{{event.CalContent}}</td>
-
-            @if (ViewContext.HttpContext.User.IsInRole("Boss"))
-            {
-                <td>
+            <td>
+                <span ng-show="event.AllowEdit">
                     <a data-ng-href="@url1">Edit</a> |
                     <a data-ng-href="@url3">Delete</a>
-
-                </td>
-            }
-
+                </span>
+            </td>
         </tr>
 
     </table>

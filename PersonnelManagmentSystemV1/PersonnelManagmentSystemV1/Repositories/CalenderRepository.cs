@@ -37,22 +37,19 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         }
 
-        public List<Calender> GetAllCalenderTasks(IEnumerable<Department> departments)
+        public IEnumerable<Calender> GetAllCalenderTasks(IEnumerable<Department> departments)
         {
-            List<Calender> result = db.CalenderTask.ToList();
-            for (var i = result.Count - 1; i > -1; i--)
+            List<Calender> result = new List<Calender>();
+            foreach (Department dep in departments)
             {
-                if (!departments.Any(d => d.ID == result[i].Department.ID))
-                {
-                    result.RemoveAt(i);
-                }
+                result.AddRange(dep.Calenders);
             }
             return result;
         }
 
-        public List<Calender> GetAll()
+        public IEnumerable<Calender> GetAll()
         {
-            return db.CalenderTask.ToList();
+            return db.CalenderTask;
         }
 
         public Calender GetEventById(int id)
@@ -74,7 +71,33 @@ namespace PersonnelManagmentSystemV1.Repositories
         }
         public ApplicationUser GetUserByName(string userName) //!!!! USER !!!!
         {
-            return db.Users.Include("Department").SingleOrDefault(u => u.UserName == userName);
+            return db.Users.Include(c => c.Department).SingleOrDefault(u => u.UserName == userName);
         }
+
+        #region IDisposable Support
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        // This code added to correctly implement the disposable pattern.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
     }
 }

@@ -17,7 +17,7 @@ using Newtonsoft.Json.Converters;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
-    public class CalenderController : Controller
+    public class CalenderController : Controller, IDisposable
     {
         private CalenderRepository calrepo = new CalenderRepository();
 
@@ -103,8 +103,21 @@ namespace PersonnelManagmentSystemV1.Controllers
             }
             departments.AddRange(currentUser.ManagedDepartments);
 
-            return JsonConvert.SerializeObject(calrepo.GetAllCalenderTasks(departments),
-                new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, DateFormatString = "yyyy-MM-dd HH:mm" });
+            return JsonConvert.SerializeObject(calrepo.GetAllCalenderTasks(departments).Select(c => new CalenderJSONModel()
+                {
+                    ID = c.ID,
+                    DepartmentName = c.Department.Name,
+                    CalTitle = c.CalTitle,
+                    CalContent = c.CalContent,
+                    CalenderStart = c.CalenderStart,
+                    CalenderEnd = c.CalenderEnd,
+                    AllowEdit = c.Department.Manager.UserName == User.Identity.Name
+                }), 
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    DateFormatString = "yyyy-MM-dd HH:mm"
+                });
 
         }
 
@@ -175,9 +188,30 @@ namespace PersonnelManagmentSystemV1.Controllers
         #endregion
 
 
-        protected override void Dispose(bool disposing)
+        #region IDisposable Support
+
+        private bool disposedValue = false; // To detect redundant calls
+
+        // This code added to correctly implement the disposable pattern.
+        protected virtual void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    calrepo.Dispose();
+                }
+
+                disposedValue = true;
+            }
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
     }
 }
