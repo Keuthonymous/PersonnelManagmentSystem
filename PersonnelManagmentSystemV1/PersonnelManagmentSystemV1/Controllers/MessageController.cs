@@ -77,7 +77,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         public ActionResult Create([Bind(Include = "ID,Title,BodyContent,JobOpeningID")] MessageViewModel messageViewModel)
         {
             Message message = new Message() { Title = messageViewModel.Title, BodyContent = messageViewModel.BodyContent };
-            message.Sender = repo.GetUserByname(User.Identity.Name);
+            message.Sender = repo.GetUserByName(User.Identity.Name);
             message.JobOpening = repo.GetJobopeningByID(messageViewModel.JobOpeningID);
             message.Recipient = message.JobOpening.Department.Manager;
             if (ModelState.IsValid)
@@ -119,7 +119,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             Message message = new Message() 
                 { Title = messageViewModel.Title, 
                     BodyContent = messageViewModel.BodyContent, 
-                    Sender = repo.GetUserByname(User.Identity.Name),
+                    Sender = repo.GetUserByName(User.Identity.Name),
                     JobOpening = previousMessage.JobOpening,
                     Recipient = previousMessage.Sender,
                     FirstMessageInThreadID = previousMessage.FirstMessageInThreadID

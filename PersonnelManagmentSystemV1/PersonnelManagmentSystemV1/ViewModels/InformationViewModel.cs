@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PersonnelManagmentSystemV1.Models;
 
 namespace PersonnelManagmentSystemV1.ViewModels
 {
@@ -32,5 +33,22 @@ namespace PersonnelManagmentSystemV1.ViewModels
         public DateTime UploadTime { get; set; }
 
         public bool IsEditable { get; set; }
+
+        public static InformationViewModel MapInformationToInformationViewModel(Information info)
+        {
+            if (info == null)
+                return null;
+
+            return new InformationViewModel()
+            {
+                ID = info.ID,
+                DepartmentID = info.Department.ID,
+                DepartmentName = info.Department.Name,
+                Title = info.Title,
+                Content = info.Contents,
+                IsPublic = info.IsPublic,
+                UploadTime = info.UploadTime
+            };
+        }
     }
 }

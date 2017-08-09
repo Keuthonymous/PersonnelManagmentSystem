@@ -1,9 +1,9 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Calender>
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.CalenderViewModel>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Department.Name)
+            @Html.DisplayNameFor(model => model.DepartmentName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CalTitle)
@@ -12,17 +12,17 @@
             @Html.DisplayNameFor(model => model.CalContent)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CalenderStart)
+            @Html.DisplayNameFor(model => model.StartTime)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CalenderEnd)
+            @Html.DisplayNameFor(model => model.EndTime)
         </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Department.Name)
+            @Html.DisplayFor(modelItem => item.DepartmentID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CalTitle)
@@ -31,10 +31,10 @@
             @Html.DisplayFor(modelItem => item.CalContent)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CalenderStart)
+            @Html.DisplayFor(modelItem => item.StartTime)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CalenderEnd)
+            @Html.DisplayFor(modelItem => item.EndTime)
         </td>
     </tr>
 }

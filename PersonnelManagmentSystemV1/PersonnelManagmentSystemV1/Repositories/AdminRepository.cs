@@ -111,14 +111,16 @@ namespace PersonnelManagmentSystemV1.Repositories
             db.SaveChanges();
         }
 
-        public void RemoveUser(ApplicationUser user)
+        public void RemoveUser(string userId)
         {
+            ApplicationUser user = db.Users.Find(userId);
             db.Users.Remove(user);
             db.SaveChanges();
         }
 
-        public void RemoveDepartment(Department department)
+        public void RemoveDepartment(int departmentId)
         {
+            Department department = db.Departments.Find(departmentId);
             db.Departments.Remove(department);
             db.SaveChanges();
         }

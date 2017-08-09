@@ -1,4 +1,4 @@
-﻿@model PersonnelManagmentSystemV1.Models.WorkerIndexViewModel
+﻿@model PersonnelManagmentSystemV1.ViewModels.WorkerIndexViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -10,8 +10,6 @@
 </div>
 
 <div class="jumbotron">
-    @Html.HiddenFor(model => model.CurrentUserID)
-
     @if (Model.Events != null)
     {
         @*<h2>Upcoming Events</h2>*@
@@ -19,7 +17,7 @@
     }
     else
     {
-        <h3>No events to display for department "<strong>@Model.CurrentUserDepartment.Name</strong>"</h3>
+        <h3>No events to display for department "<strong>@Model.DepartmentName</strong>"</h3>
     }
 </div>
 <hr />
@@ -31,7 +29,7 @@
     }
     else
     {
-        <h3>No information to show for department "<strong>@Model.CurrentUserDepartment.Name</strong>"</h3>
+        <h3>No information to show for department "<strong>@Model.DepartmentName</strong>"</h3>
     }
 </div>
 <br />

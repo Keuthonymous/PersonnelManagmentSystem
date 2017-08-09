@@ -4,29 +4,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
-
 namespace PersonnelManagmentSystemV1.Repositories
 {
     public class WorkerRepository
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public IEnumerable<Calender> GetEvents(string id)
+        public IEnumerable<Calender> GetEvents(string userId)
         { 
-            var user = db.Users.Find(id);
+            var user = db.Users.Find(userId);
             if (user.Department == null)
             {
                 return null;
             }
-            List<Calender> events = db.CalenderTask.Where(c => c.DepartmentID == user.Department.ID).ToList();
-            if (events != null)
-            {
-                return events;
-            }
-            return null;
+            return db.CalenderTask.Where(c => c.DepartmentID == user.Department.ID);
         }
 
         public IEnumerable<Information> GetInformation(string id)
