@@ -19,10 +19,32 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private CvRepository repo = new CvRepository();
 
+        private CVVM MapCvToCVVM(CV cv)
+        {
+            if (cv == null)
+                return null;
+
+            return new CVVM()
+            {
+                ID = cv.ID,
+                Title = cv.Title,
+                Description = cv.Description
+            };
+        }
+
         // GET: CVs
         public ActionResult Index()
         {
             return View(repo.GetAllCVs());
+            //CVVM CVToAdd = null;
+            //List<CVVM> cvs = new List<CVVM>();
+            //foreach (CV cv in repo.GetAllCVs())
+            //{
+            //    CVToAdd = MapCvToCVVM(cv);
+            //    CVToAdd.AllowEdit = true;
+            //    cvs.Add(CVToAdd);
+            //}
+            //return View(cvs);
         }
 
         [Authorize(Roles = "Searcher")]
@@ -46,6 +68,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                         Description = cvVM.Description,
                         MimeType = cvVM.Contents.ContentType,
                         Uploader = repo.GetUserByName(User.Identity.Name),
+                        OriginalCV = cvVM.Contents.FileName,
                         Content = null
                     };
           
@@ -57,7 +80,6 @@ namespace PersonnelManagmentSystemV1.Controllers
                     return RedirectToAction("Index");
                 }
 
-                
                 return View(cvVM);
                 //if (cv.ContentLength > 0)
                 //{
@@ -123,13 +145,13 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CV cV = repo.GetCvById(id.Value);
-            if (cV == null)
+            CV cv = repo.GetCvById(id.Value);
+            if (cv == null)
             {
                 return HttpNotFound();
             }
             //ViewBag.UploaderID = new SelectList(repo.Users, "Id", "Email", cV.Uploader.Id);
-            return View(cV);
+            return View(MapCvToCVVM(cv));
         }
 
         // POST: CVs/Edit/5
@@ -137,33 +159,22 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,Content")] CVVM cvVM)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description")] CVVM cvVM)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    repo.ChangeCv(cV);
-
-            //    return RedirectToAction("Index");
-            //}
+            CV cv = repo.GetCvById(cvVM.ID);
+            MapCvToCVVM(cv);
+            cvVM.AllowEdit = true;
             if (ModelState.IsValid)
             {
-                CV cv = new CV()
-                {
-                    Title = cvVM.Title,
-                    Description = cvVM.Description,
-                    MimeType = cvVM.Contents.ContentType,
-                    Uploader = repo.GetUserByName(User.Identity.Name),
-                    Content = null
-                };
-
-                BinaryReader binaryReader = new BinaryReader(cvVM.Contents.InputStream);
-                cv.Content = binaryReader.ReadBytes(cvVM.Contents.ContentLength);
-
+                
+                cv.Title = cvVM.Title;
+                cv.Description = cvVM.Description;
                 repo.ChangeCv(cv);
 
                 return RedirectToAction("Index");
             }
 
+            ViewBag.Message = "Goddamnit!";
             return View(cvVM);
         }
 
