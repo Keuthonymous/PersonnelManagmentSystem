@@ -12,8 +12,8 @@
 <div class="jumbotron">
     @if (Model.Events != null)
     {
-        <h2>Upcoming Events</h2>
-        @Html.Partial("_WorkerIndexCalender", Model.Events)
+        @*<h2>Upcoming Events</h2>*@
+        @Html.Partial("../Calender/Events", Model.Events)
     }
     else
     {
