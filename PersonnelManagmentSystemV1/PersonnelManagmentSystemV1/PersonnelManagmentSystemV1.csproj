@@ -345,6 +345,8 @@
     <Content Include="Views\Calender\Events_Clean.cshtml" />
     <Content Include="Views\Worker\Index.cshtml" />
     <Content Include="Views\Admin\_EditUser.cshtml" />
+    <Content Include="Views\Worker\_WorkerIndexCalender.cshtml" />
+    <Content Include="Views\Worker\_WorkerIndexInformation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
