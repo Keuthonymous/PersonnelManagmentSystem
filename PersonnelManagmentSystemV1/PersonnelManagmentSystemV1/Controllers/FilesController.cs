@@ -30,7 +30,9 @@ namespace PersonnelManagmentSystemV1.Controllers
                 Description = file.Description,
                 DepartmentID = file.Department.ID,
                 DepartmentName = file.Department.Name,
-                AllowEdit = User.IsInRole("Boss")//repo.GetManagedDepartmentsByUserName(User.Identity.Name).Contains(file.Department)
+                FileName = file.GetFileName(),
+                AllowEdit = file.Department.Manager.UserName == User.Identity.Name
+                //AllowEdit = User.IsInRole("Boss")//repo.GetManagedDepartmentsByUserName(User.Identity.Name).Contains(file.Department)
             };
 
         }
@@ -154,14 +156,29 @@ namespace PersonnelManagmentSystemV1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Boss")]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,DepartmentID")] FileViewModel fileViewModel)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,DepartmentID,Contents")] FileViewModel fileViewModel)
         {
             if (ModelState.IsValid)
             {
                 UserFile file = repo.GetFileById(fileViewModel.ID);
+
+                if (file == null)
+                {
+                    return HttpNotFound();
+                }
+
                 file.Description = fileViewModel.Description;
                 file.Title = fileViewModel.Title;
                 file.Department = repo.Department(fileViewModel.DepartmentID);
+
+                if (fileViewModel.Contents != null)
+                {
+                    file.OriginalFilename = fileViewModel.Contents.FileName;
+                    file.MimeType = fileViewModel.Contents.ContentType;
+                    BinaryReader binaryReader = new BinaryReader(fileViewModel.Contents.InputStream);
+                    file.Content = binaryReader.ReadBytes(fileViewModel.Contents.ContentLength);
+                }
+
                 repo.ChangeFile(file);
                 
                 return RedirectToAction("Index");

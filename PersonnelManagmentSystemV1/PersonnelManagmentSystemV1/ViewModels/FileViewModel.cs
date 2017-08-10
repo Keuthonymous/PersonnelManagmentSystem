@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PersonnelManagmentSystemV1.ViewModels
 {
-    public class FileViewModel
+    public class FileViewModel: IValidatableObject
     {
         public int ID { get; set; }
 
@@ -29,6 +29,14 @@ namespace PersonnelManagmentSystemV1.ViewModels
         public string DepartmentName { get; set; }
 
         public bool AllowEdit { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (ID == 0 && Contents == null)
+            {
+                yield return new ValidationResult("File to upload is mandatory when uploading a new file", new[] { "Contents" });
+            }
+        }
     }
 
 
