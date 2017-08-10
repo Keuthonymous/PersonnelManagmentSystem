@@ -18,17 +18,17 @@
             </th>
         </tr>
 
-            <tr ng-repeat="item in data">
-                <td>
-                    {{item.ManagerName}}
-                </td>
-                <td>
-                    {{item.Name}}
-                </td>
-                <td>
-                    <a data-ng-href="./Details/{{item.ID}}">Details</a> 
-                </td>
-            </tr>
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+            <td>
+                {{item.ManagerName}}
+            </td>
+            <td>
+                {{item.Name}}
+            </td>
+            <td>
+                <a data-ng-href="./Boss/Details/{{item.ID}}">Details</a>
+            </td>
+        </tr>
 
 
     </table>

@@ -1,4 +1,4 @@
-﻿@model PersonnelManagmentSystemV1.Models.Department
+﻿@model PersonnelManagmentSystemV1.ViewModels.DepartmentViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -15,7 +15,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Manager.Email)
+            @Html.DisplayFor(model => model.ManagerName)
         </dd>
 
         <dt>
@@ -27,22 +27,25 @@
         </dd>
     </dl>
 </div>
-<div class="row">
+
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Employees))">
     <h4>Employees</h4>
     <table class="table">
-        
         <tr>
-            <th>Name</th>
+            <th ng-click="orderByColumn('UserName')">Name</th>
+            <th>
+
+            </th>
         </tr>
-        @foreach (PersonnelManagmentSystemV1.Models.ApplicationUser employee in Model.Employees)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(emp => employee.UserName)
-                </td>
-                
-            </tr>
-        }
+
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+            <td>
+                {{item.UserName}}
+            </td>
+            <td></td>
+        </tr>
+
+
     </table>
 </div>
 <p>

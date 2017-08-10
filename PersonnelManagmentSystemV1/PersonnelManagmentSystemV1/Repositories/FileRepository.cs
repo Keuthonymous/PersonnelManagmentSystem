@@ -14,7 +14,9 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public IEnumerable<UserFile> GetAllFiles()
         {
-            return context.Files.Include(f => f.Department);
+            return context.Files
+                .Include(f => f.Department)
+                .Include(f => f.Department.Manager);
         }
 
         public UserFile GetFileById(int id)

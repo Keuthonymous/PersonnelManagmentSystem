@@ -190,22 +190,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708101250557_Complete.cs" />
-    <Compile Include="Migrations\201708101250557_Complete.Designer.cs">
-      <DependentUpon>201708101250557_Complete.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708101315009_Complete_2.cs" />
-    <Compile Include="Migrations\201708101315009_Complete_2.Designer.cs">
-      <DependentUpon>201708101315009_Complete_2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708101317064_Complete_3.cs" />
-    <Compile Include="Migrations\201708101317064_Complete_3.Designer.cs">
-      <DependentUpon>201708101317064_Complete_3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708101320179_Complete_4.cs" />
-    <Compile Include="Migrations\201708101320179_Complete_4.Designer.cs">
-      <DependentUpon>201708101320179_Complete_4.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\ApplicantViewModel.cs" />
     <Compile Include="ViewModels\CalenderJSONModel.cs" />
@@ -370,20 +354,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708101250557_Complete.resx">
-      <DependentUpon>201708101250557_Complete.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708101315009_Complete_2.resx">
-      <DependentUpon>201708101315009_Complete_2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708101317064_Complete_3.resx">
-      <DependentUpon>201708101317064_Complete_3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708101320179_Complete_4.resx">
-      <DependentUpon>201708101320179_Complete_4.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

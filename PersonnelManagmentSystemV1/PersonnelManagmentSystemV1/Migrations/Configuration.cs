@@ -13,7 +13,7 @@ namespace PersonnelManagmentSystemV1.Migratio7ns
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ApplicationDbContext context)

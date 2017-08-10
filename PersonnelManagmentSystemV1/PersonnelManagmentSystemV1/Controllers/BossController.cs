@@ -19,16 +19,11 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private DepartmentRepository db = new DepartmentRepository();
 
+        
         // GET: Boss
         public ActionResult Index()
         {
-            return View(db.GetDepartmentsForManagerID(User.Identity.GetUserId()).Select(d => new DepartmentViewModel()
-            {
-                ID = d.ID,
-                Name = d.Name,
-                ManagerName = d.Manager.UserName
-            }
-                 ));
+            return View(db.GetDepartmentsForManagerID(User.Identity.GetUserId()).Select(d => DepartmentViewModel.MapDepartment(d)));
         }
 
         // GET: Boss/Details/5
@@ -43,7 +38,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(department);
+            return View(DepartmentViewModel.MapDepartment(department));
         }
 
         protected override void Dispose(bool disposing)
