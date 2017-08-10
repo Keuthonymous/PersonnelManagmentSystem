@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -23,15 +24,11 @@ namespace PersonnelManagmentSystemV1.Models
         [Display(Name = "Public Information")]
         public bool IsPublic { get; set; }
 
-        public Information()
-        {
-            Department = new Department();
-        }
-
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Posted Time")]
         public DateTime UploadTime { get; set; }
+
         public virtual Department Department { get; set; }
     }
 }

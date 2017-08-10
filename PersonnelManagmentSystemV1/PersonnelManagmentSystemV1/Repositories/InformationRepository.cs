@@ -60,8 +60,8 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public void DeleteInformation(int id)
         {
-            Information information = Information(id);
-            db.Information.Remove(information);
+            Information information = db.Information.SingleOrDefault(i => i.ID == id);
+            db.Entry(information).State = EntityState.Deleted;
             db.SaveChanges();
         }
 
