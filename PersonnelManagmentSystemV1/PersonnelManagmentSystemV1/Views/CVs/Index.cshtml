@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.CV>
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.CVVM>
 
 @{
     ViewBag.Title = "Index";
@@ -10,42 +10,40 @@
 <p>
     @Html.ActionLink("New CV", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MimeType)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Uploader)
-        </th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MimeType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Uploader.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('UploadTime'); reverse = true">
+    <h4>Employees</h4>
+    <table class="table">
+        <tr>
+            <th ng-click="orderByColumn('Title')">Title</th>
+            <th ng-click="orderByColumn('Description')">Description</th>
+            <th ng-click="orderByColumn('FileName')">Filename</th>
+            <th ng-click="orderByColumn('UploadTime')">Upload time</th>
+            <th>
 
-</table>
+            </th>
+        </tr>
+
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+            <td>
+                {{item.Title}}
+            </td>
+            <td>
+                {{item.Description}}
+            </td>
+            <td>
+                {{item.FileName}}
+            </td>
+            <td>
+                {{item.UploadTime}}
+            </td>
+            <td>
+                <span ng-show="item.AllowEdit">
+                    <a ng-href="./CVs/Edit?id={{item.ID}}">Edit</a>|
+                    <a ng-href="./CVs/Delete?id={{item.ID}}">Delete</a>|
+                </span>
+                <a ng-href="./CVs/Details?id={{item.ID}}">Details</a>
+            </td>
+        </tr>
+    </table>
+</div>
