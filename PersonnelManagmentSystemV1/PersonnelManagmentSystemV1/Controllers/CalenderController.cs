@@ -92,8 +92,6 @@ namespace PersonnelManagmentSystemV1.Controllers
         [Authorize(Roles = "Worker, Boss")]
         public string EventsJSON()
         {
-
-            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser currentUser = calrepo.GetUserByName(User.Identity.Name);
 
             List<Department> departments = new List<Department>();

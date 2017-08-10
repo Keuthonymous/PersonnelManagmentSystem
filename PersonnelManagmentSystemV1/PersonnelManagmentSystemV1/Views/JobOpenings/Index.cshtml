@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.JobOpening>
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.JobOpeningViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.JobType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.DisplayNameFor(model => model.DepartmentName)
         </th>
         <th></th>
     </tr>
@@ -42,13 +42,13 @@
                 @Html.DisplayFor(modelItem => item.JobType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Department.Name)
+                @Html.DisplayFor(modelItem => item.DepartmentName)
             </td>
             <td>
                 <div class="btn">@Html.ActionLink("Apply", "Create", "Message", new { jobOpeningID = item.ID }, new { })</div> 
-                <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
+                @if(item.AllowEdit) { <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>}
                 <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
-                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
+                @if(item.AllowEdit) {<div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>}
             </td>
         </tr>
     }

@@ -39,17 +39,20 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         public IEnumerable<Calender> GetAllCalenderTasks(IEnumerable<Department> departments)
         {
-            List<Calender> result = new List<Calender>();
-            foreach (Department dep in departments)
-            {
-                result.AddRange(dep.Calenders);
-            }
-            return result;
+            return GetAll().Where(cal => departments.Contains(cal.Department));//.ToList(); //Added to ToList() in order to force the query to execute
+            //List<Calender> result = new List<Calender>();
+            //foreach (Department dep in departments)
+            //{
+            //    result.AddRange(dep.Calenders);
+            //}
+            //return result;
         }
 
         public IEnumerable<Calender> GetAll()
         {
-            return db.CalenderTask;
+            return db.CalenderTask
+                .Include(c => c.Department)
+                .Include(c => c.Department.Manager);
         }
 
         public Calender GetEventById(int id)

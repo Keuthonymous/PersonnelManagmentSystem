@@ -6,12 +6,12 @@
 
 <h2>Details</h2>
 
-<div>
+<div class="row">
     <h4>Department</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Manager.Email)
+            <label >Manager</label> 
         </dt>
 
         <dd>
@@ -19,14 +19,31 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            <label>Department name</label>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-
     </dl>
+</div>
+<div class="row">
+    <h4>Employees</h4>
+    <table class="table">
+        
+        <tr>
+            <th>Name</th>
+        </tr>
+        @foreach (PersonnelManagmentSystemV1.Models.ApplicationUser employee in Model.Employees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(emp => employee.UserName)
+                </td>
+                
+            </tr>
+        }
+    </table>
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

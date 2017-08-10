@@ -26,6 +26,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 ID = jobOpening.ID,
                 DepartmentID = jobOpening.Department.ID,
+                DepartmentName = jobOpening.Department.Name,
                 Title = jobOpening.Title,
                 Description = jobOpening.Description,
                 JobType = jobOpening.JobType,
@@ -46,7 +47,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Jobs().ToList());
+            return View(db.Jobs().Select(j => MapJobOpeningToJobOpeningViewModel(j)));
         }
 
         // GET: Jobs/Details/5
@@ -120,7 +121,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,JobType")] JobOpeningViewModel jobVM)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,JobType,DepartmentID")] JobOpeningViewModel jobVM)
         {
             if (ModelState.IsValid) //Refers to the model that has been bound by the modelbinder; in this case it is jobVM
             {

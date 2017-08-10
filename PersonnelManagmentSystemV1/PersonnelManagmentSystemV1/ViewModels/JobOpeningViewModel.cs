@@ -14,6 +14,8 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Required]
         [Display(Name = "Department")]
         public int DepartmentID { get; set; }
+
+        public string DepartmentName { get; set; }
         
         [Required]
         [Display(Name="Title")]
