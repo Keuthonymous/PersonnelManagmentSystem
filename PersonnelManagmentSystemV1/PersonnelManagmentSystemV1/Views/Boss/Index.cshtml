@@ -1,33 +1,35 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Department>
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.DepartmentViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Manager.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
+<h2>Home</h2>
+<hr/>
+<h4>Departments</h4>
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+    
+    <table class="table">
+        <tr>
+            <th ng-click="orderByColumn('Manager')">Manager</th>
+            <th ng-click="orderByColumn('Department')">Department</th>
+            <th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Manager.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.ID })
-        </td>
-    </tr>
-}
+            </th>
+        </tr>
 
-</table>
+            <tr ng-repeat="item in data">
+                <td>
+                    {{item.ManagerName}}
+                </td>
+                <td>
+                    {{item.Name}}
+                </td>
+                <td>
+                    <a data-ng-href="./Details/{{item.ID}}">Details</a> 
+                </td>
+            </tr>
+
+
+    </table>
+</div>

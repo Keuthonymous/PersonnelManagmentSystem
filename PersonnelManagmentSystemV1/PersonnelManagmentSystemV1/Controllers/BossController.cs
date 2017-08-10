@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
+using PersonnelManagmentSystemV1.ViewModels;
 
 namespace PersonnelManagmentSystemV1.Controllers
 {
@@ -21,7 +22,13 @@ namespace PersonnelManagmentSystemV1.Controllers
         // GET: Boss
         public ActionResult Index()
         {
-             return View(db.GetDepartmentsForManagerID(User.Identity.GetUserId()));
+            return View(db.GetDepartmentsForManagerID(User.Identity.GetUserId()).Select(d => new DepartmentViewModel()
+            {
+                ID = d.ID,
+                Name = d.Name,
+                ManagerName = d.Manager.UserName
+            }
+                 ));
         }
 
         // GET: Boss/Details/5
