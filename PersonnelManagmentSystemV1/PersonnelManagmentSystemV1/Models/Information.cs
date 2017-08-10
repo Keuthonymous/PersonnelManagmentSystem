@@ -23,11 +23,6 @@ namespace PersonnelManagmentSystemV1.Models
         [Display(Name = "Public Information")]
         public bool IsPublic { get; set; }
 
-        public Information()
-        {
-            Department = new Department();
-        }
-
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Posted Time")]
