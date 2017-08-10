@@ -104,7 +104,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(cV);
+            return View(MapCVToCVVM(cv));
         }
 
         // POST: CVs/Edit/5
@@ -113,7 +113,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Searcher")]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description")] CVVM cvVM)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,Contents")] CVVM cvVM)
         {
 
             if (ModelState.IsValid)
@@ -126,10 +126,18 @@ namespace PersonnelManagmentSystemV1.Controllers
 
                 cv.Title = cvVM.Title;
                 cv.Description = cvVM.Description;
+                if (cvVM.Contents != null)
+                {
+                    cv.FileName = cvVM.Contents.FileName;
+                    cv.MimeType = cvVM.Contents.ContentType;
+                    BinaryReader binaryReader = new BinaryReader(cvVM.Contents.InputStream);
+                    cv.Content = binaryReader.ReadBytes(cvVM.Contents.ContentLength);
+                }
 
                 repo.ChangeCv(cv);
 
                 return RedirectToAction("Index");
+            
             }
 
             return View(cvVM);

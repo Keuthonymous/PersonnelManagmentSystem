@@ -15,3 +15,11 @@
         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
     </div>
 </div>
+
+<div class="form-group">
+    <label class="control-label col-md-2">Select file to upload</label>
+    <div class="col-md-10">
+        <input type="file" name="Contents" placeholder="Browse" value="Browse" />
+        @Html.ValidationMessageFor(model => model.Contents, "", new { @class = "text-danger" })
+    </div>
+</div>

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PersonnelManagmentSystemV1.ViewModels
 {
-    public class CVVM
+    public class CVVM: IValidatableObject
     {
         public int ID { get; set; }
 
@@ -19,7 +19,6 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        [Required]
         public HttpPostedFileBase Contents { get; set; }
 
         public bool AllowEdit { get; set; }
@@ -28,5 +27,13 @@ namespace PersonnelManagmentSystemV1.ViewModels
         //public virtual ApplicationUser Uploader { get; set; }
 
         public DateTime UploadTime { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (ID == 0 && Contents == null)
+            {
+                yield return new ValidationResult("File to upload is mandatory when uploading a new CV", new[] { "Contents" });
+            }
+        }
     }
 }
