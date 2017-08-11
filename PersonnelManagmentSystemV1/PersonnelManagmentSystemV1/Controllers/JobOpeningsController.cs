@@ -35,6 +35,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // GET: Jobs
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
