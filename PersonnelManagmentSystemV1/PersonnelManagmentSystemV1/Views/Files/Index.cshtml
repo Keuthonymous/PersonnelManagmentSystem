@@ -11,42 +11,38 @@
     @Html.ActionLink("New file", "Create")
 </p>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DepartmentName)
-        </th>
-        <th></th>
-    </tr>
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('Title')">
+    <table class="table">
+        <tr>
+            <th ng-click="orderByColumn('Title')">Title</th>
+            <th ng-click="orderByColumn('Description')">Description</th>
+            <th ng-click="orderByColumn('FileName')">Filename</th>
+            <th ng-click="orderByColumn('DepartmentName')">Department</th>
+            <th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <a href="~/Files/Download/@item.ID">
-                @Html.DisplayFor(modelItem => item.Title)
-            </a>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DepartmentName)
-        </td>
-        <td>
-            @if (item.AllowEdit)
-            {
-                <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
-                <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID }) </div>
-                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
-            }
-        </td>
-    </tr>
-}
+            </th>
+        </tr>
 
-</table>
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+            <td>
+                <a ng-href="../Files/Download/{{item.ID}}">{{item.Title}}</a> 
+            </td>
+            <td>
+                {{item.Description}}
+            </td>
+            <td>
+                {{item.FileName}}
+            </td>
+            <td>
+                {{item.DepartmentName}}
+            </td>
+            <td>
+                <span ng-show="item.AllowEdit">
+                    <a ng-href="../Files/Edit?id={{item.ID}}">Edit</a>|
+                    <a ng-href="../Files/Delete?id={{item.ID}}">Delete</a>|
+                </span>
+                <a ng-href="../Files/Details?id={{item.ID}}">Details</a>
+            </td>
+        </tr>
+    </table>
+</div>
