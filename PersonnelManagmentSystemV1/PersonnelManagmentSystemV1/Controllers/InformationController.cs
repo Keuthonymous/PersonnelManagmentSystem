@@ -27,16 +27,16 @@ namespace PersonnelManagmentSystemV1.Controllers
             
             foreach (Information info in db.InformationsForUsersManagedDepartments(User.Identity.Name))
             { //info for users managed departments (that he does manage)
-                infoToAdd = InformationViewModel.MapInformationToInformationViewModel(info);
-                infoToAdd.IsEditable = true;
+                infoToAdd = InformationViewModel.MapInformation(info);
+                infoToAdd.AllowEdit = true;
                 informationToShow.Add(infoToAdd);
             }
             foreach (Information info in db.InformationsForUser(User.Identity.Name))
             { //info for users own department (that he does not manage)
                 if (!informationToShow.Any(i => i.ID == info.ID))
                 {
-                    infoToAdd = InformationViewModel.MapInformationToInformationViewModel(info);
-                    infoToAdd.IsEditable = false;
+                    infoToAdd = InformationViewModel.MapInformation(info);
+                    infoToAdd.AllowEdit = false;
                     informationToShow.Add(infoToAdd);
                 }
             }
@@ -46,7 +46,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [AllowAnonymous]
         public ActionResult PublicNews()
         {
-            return PartialView(db.Informations(true));
+            return PartialView(db.Informations(true).Select(i => InformationViewModel.MapInformation(i)));
         }
         // GET: Information/Details/5
         public ActionResult Details(int? id)
@@ -56,12 +56,12 @@ namespace PersonnelManagmentSystemV1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Information info = db.Information(id.Value);
-            InformationViewModel informationViewModel = InformationViewModel.MapInformationToInformationViewModel(info);
+            InformationViewModel informationViewModel = InformationViewModel.MapInformation(info);
             if (informationViewModel == null)
             {
                 return HttpNotFound();
             }
-            informationViewModel.IsEditable = db.GetManagedDepartmentsByUserName(User.Identity.Name).Contains(info.Department);
+            informationViewModel.AllowEdit = db.GetManagedDepartmentsByUserName(User.Identity.Name).Contains(info.Department);
             return View(informationViewModel);
         }
 
@@ -102,7 +102,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InformationViewModel informationViewModel = InformationViewModel.MapInformationToInformationViewModel(db.Information(id.Value));
+            InformationViewModel informationViewModel = InformationViewModel.MapInformation(db.Information(id.Value));
             if (informationViewModel == null)
             {
                 return HttpNotFound();
@@ -139,7 +139,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InformationViewModel informationViewModel = InformationViewModel.MapInformationToInformationViewModel(db.Information(id.Value));
+            InformationViewModel informationViewModel = InformationViewModel.MapInformation(db.Information(id.Value));
             if (informationViewModel == null)
             {
                 return HttpNotFound();

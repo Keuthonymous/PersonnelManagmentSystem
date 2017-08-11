@@ -12,58 +12,36 @@
     </p>
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsPublic)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DepartmentName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UploadTime)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('Title')">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPublic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartmentName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UploadTime)
-            </td>
-            <td>
-                @if (item.IsEditable)
-                {
-                    <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = item.ID })</div>
+            <th ng-click="orderByColumn('Title')">Title</th>
+            <th ng-click="orderByColumn('Content')">Contents</th>
+            <th ng-click="orderByColumn('DepartmentName')">Department</th>
+            <th ng-click="orderByColumn('UploadTime')">Time created</th>
+            <th></th>
+        </tr>
 
-                    <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
-                    <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
-                }
-                else
-                {
-                    <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
-                }
+        <tr ng-repeat="item in data| orderBy:columnName:reverse" ng-hide="item.IsPublic&&!item.AllowEdit">
+            <td>
+                {{item.Title}}
+            </td>
+            <td>
+                {{item.Content}}
+            </td>
+            <td>
+                {{item.DepartmentName}}
+            </td>
+            <td>
+                {{item.UploadTime}}
+            </td>
+            <td>
+                <span ng-show="item.AllowEdit">
+                    <a ng-href="../Information/Edit?id={{item.ID}}">Edit</a>|
+                    <a ng-href="../Information/Delete?id={{item.ID}}">Delete</a>|
+                </span>
+                <a ng-href="../Information/Details?id={{item.ID}}">Details</a>
             </td>
         </tr>
-    }
-
-</table>
+    </table>
+</div>

@@ -12,7 +12,7 @@
    @Html.Partial("_InformationDetails")
 </div>
 <p>
-    @if (Model.IsEditable)
+    @if (Model.AllowEdit)
     {
         <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) </div>
     }

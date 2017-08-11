@@ -1,40 +1,29 @@
-﻿@model IEnumerable<PersonnelManagmentSystemV1.Models.Information>
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.InformationViewModel>
 
 @{
-    ViewBag.Title = "Information";
+    ViewBag.Title = "News";
 }
 
-<h2>Information</h2>
+<h2>News</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Contents)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UploadTime)
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('Title')">
+    <table class="table">
         <tr>
+            <th ng-click="orderByColumn('Title')">Title</th>
+            <th ng-click="orderByColumn('Content')">Contents</th>
+            <th ng-click="orderByColumn('UploadTime')">Time created</th>
+        </tr>
+
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                {{item.Title}}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Contents)
+                {{item.Content}}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UploadTime)
-            </td>
-            <td>
-                <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
+                {{item.UploadTime}}
             </td>
         </tr>
-    }
-
-</table>
+    </table>
+</div>
