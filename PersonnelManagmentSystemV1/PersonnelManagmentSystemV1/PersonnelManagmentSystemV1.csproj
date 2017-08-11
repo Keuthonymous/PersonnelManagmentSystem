@@ -344,6 +344,7 @@
     <Content Include="Views\CVs\Create.cshtml" />
     <Content Include="Views\CVs\_CvEdit.cshtml" />
     <Content Include="Views\Information\_InformationDetails.cshtml" />
+    <Content Include="Views\JobOpenings\_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

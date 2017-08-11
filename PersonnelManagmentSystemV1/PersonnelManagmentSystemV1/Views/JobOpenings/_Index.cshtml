@@ -1,0 +1,34 @@
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.JobOpeningViewModel>
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('Title')">
+    <table class="table">
+        <tr>
+            <th ng-click="orderByColumn('Title')">Title</th>
+            <th ng-click="orderByColumn('Description')">Description</th>
+            <th ng-click="orderByColumn('JobType')">Job type</th>
+            <th ng-click="orderByColumn('DepartmentName')">Department</th>
+            <th></th>
+        </tr>
+
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+            <td>
+                {{item.Title}}
+            </td>
+            <td>
+                {{item.Description}}
+            </td>
+            <td>
+                {{item.JobType}}
+            </td>
+            <td>
+                {{item.DepartmentName}}
+            </td>
+            <td>
+
+                <div class="btn"><a ng-href="../Message/Create?jobOpeningID={{item.ID}}">Apply</a></div>
+                <div class="btn"><a ng-href="../JobOpenings/Details?id={{item.ID}}">Details</a></div>
+                <div class="btn" ng-show="item.AllowEdit"><a ng-href="../JobOpenings/Edit?id={{item.ID}}">Edit</a></div>
+                <div class="btn" ng-show="item.AllowEdit"><a ng-href="../JobOpenings/Delete?id={{item.ID}}">Delete</a></div>
+            </td>
+        </tr>
+    </table>
+</div>

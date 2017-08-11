@@ -35,12 +35,16 @@ namespace PersonnelManagmentSystemV1.Controllers
         }
 
         // GET: Jobs
-        [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Jobs().Select(j => MapJobOpening(j)));
+            return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult _Index()
+        {
+            return PartialView(db.Jobs().Select(j => MapJobOpening(j)));
+        }
         // GET: Jobs/Details/5
         public ActionResult Details(int? id)
         {
