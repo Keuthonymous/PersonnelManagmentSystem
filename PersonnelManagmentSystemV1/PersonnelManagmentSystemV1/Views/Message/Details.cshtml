@@ -23,7 +23,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BodyContent)
+            @Html.TextAreaFor(model => model.BodyContent, new { @class = "form-control", rows = "10", @readonly = "readonly" })
         </dd>
 
         <dt>
@@ -37,7 +37,7 @@
     </dl>
 </div>
 <p>
-    <div class="btn">@Html.ActionLink("Reply", "Reply", new { Id = Model.ID })</div>
-    <div class="btn">@Html.ActionLink("Back to List", "Index")</div>
+    <div class="btn btn-default">@Html.ActionLink("Reply", "Reply", new { Id = Model.ID })</div>
+    <div class="btn btn-default">@Html.ActionLink("Back to List", "Index")</div>
     
 </p>

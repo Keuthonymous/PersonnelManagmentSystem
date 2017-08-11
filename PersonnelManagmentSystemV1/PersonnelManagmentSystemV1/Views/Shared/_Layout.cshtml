@@ -24,12 +24,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-
                     @if (ViewContext.HttpContext.User.IsInRole("Searcher"))
                     {
                         <li>@Html.ActionLink("Home", "Index", "Searcher")</li>
-                        <li>@Html.ActionLink("Job Openings", "Index", "Searcher")</li>
                         <li>@Html.ActionLink("Messages", "Index", "Message")</li>
                         <li>@Html.ActionLink("CV", "Index", "CVs")</li>
                     }

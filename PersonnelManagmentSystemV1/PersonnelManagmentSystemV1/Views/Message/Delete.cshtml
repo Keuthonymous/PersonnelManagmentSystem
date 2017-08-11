@@ -24,7 +24,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BodyContent)
+            @Html.TextAreaFor(model => model.BodyContent, new { @class = "form-control", rows = "10", @readonly = "readonly" })
         </dd>
 
         <dt>

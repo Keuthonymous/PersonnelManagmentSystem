@@ -47,6 +47,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             return PartialView(db.Jobs().Select(j => MapJobOpening(j)));
         }
         // GET: Jobs/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)

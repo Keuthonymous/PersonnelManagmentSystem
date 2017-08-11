@@ -13,7 +13,9 @@
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.Content)
+
+            @Html.TextAreaFor(model => model.Content, new {@class="form-control", rows = "10",  @readonly="readonly"})
+
     </dd>
     @if (Model.AllowEdit)
     {
