@@ -340,6 +340,7 @@
     <Content Include="Views\Worker\_WorkerIndexInformation.cshtml" />
     <Content Include="Views\CVs\Create.cshtml" />
     <Content Include="Views\CVs\_CvEdit.cshtml" />
+    <Content Include="Views\Home\Start.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
