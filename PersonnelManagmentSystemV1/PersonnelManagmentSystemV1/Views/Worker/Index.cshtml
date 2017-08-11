@@ -1,5 +1,4 @@
-﻿@model PersonnelManagmentSystemV1.ViewModels.WorkerIndexViewModel
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -12,25 +11,14 @@
 <div class="jumbotron">
     @if (Model.Events != null)
     {
-        @*<h2>Upcoming Events</h2>*@
-        @Html.Partial("../Calender/Events")
-    }
-    else
-    {
-        <h3>No events to display for department "<strong>@Model.DepartmentName</strong>"</h3>
+        <h4>Upcoming Events</h4>
+        @Html.Action("_Events", "Calender")
     }
 </div>
 <hr />
 <div class="jumbotron">
-    @if (Model.Information != null)
-    {   
-        <h2>Important Information</h2>
-        @Html.Partial("_WorkerIndexInformation", Model.Information)
-    }
-    else
-    {
-        <h3>No information to show for department "<strong>@Model.DepartmentName</strong>"</h3>
-    }
+        <h4>Important Information</h4>
+        @Html.Action("_Index", "Information")
 </div>
 <br />
 

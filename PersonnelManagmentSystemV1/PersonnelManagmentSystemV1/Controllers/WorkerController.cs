@@ -23,7 +23,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             WorkerIndexViewModel workerIndex = new WorkerIndexViewModel()
             {
                 Events = db.GetEvents(user.Id).Select(e => CalenderViewModel.MapCalenderToCalenderViewModel(e)),
-                Information = db.GetInformation(user.Id).Select(i => InformationViewModel.MapInformationToInformationViewModel(i)),
+                Information = db.GetInformation(user.Id).Select(i => InformationViewModel.MapInformation(i)),
                 DepartmentName = user.GetDepartmentName()
             };
 

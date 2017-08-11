@@ -265,7 +265,7 @@ namespace PersonnelManagmentSystemV1.Migratio7ns
             if (!context.Departments.Any(d => d.Name == "Management"))
             {
                 ApplicationUser manager = context.Users.SingleOrDefault(u => u.UserName == "ceo@mail.com");
-                Department dep1 = new Department() { ID = 1, Name = "Mangement", Manager = manager };
+                Department dep1 = new Department() { ID = 1, Name = "Management", Manager = manager };
                 context.Departments.AddOrUpdate(dep1);
                 context.Users.SingleOrDefault(u => u.UserName == "cfo@mail.com").Department = dep1;
                 context.Users.SingleOrDefault(u => u.UserName == "chro@mail.com").Department = dep1;
@@ -332,7 +332,9 @@ namespace PersonnelManagmentSystemV1.Migratio7ns
 #endregion
 
 #region Jocke seed Calender
-            var calenders = new Calender[]{
+            if (!context.CalenderTask.Any())
+            {
+                var calenders = new Calender[]{
                 new Calender{DepartmentID=1,CalTitle="Week Meeting",CalContent="Week Meeting",CalenderStart=DateTime.Parse("2017-08-14 08:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 10:00:00")},
                 new Calender{DepartmentID=1,CalTitle="Monthly Meeting",CalContent="Monthly Meet. Be There!!!",CalenderStart=DateTime.Parse("2017-08-30 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-30 16:00:00")},
                 new Calender{DepartmentID=1,CalTitle="Kaizen Meeting",CalContent="Monthly Quality and Improve Meet",CalenderStart=DateTime.Parse("2017-08-22 15:00:00"),CalenderEnd=DateTime.Parse("2017-08-22 16:00:00")},
@@ -396,18 +398,22 @@ namespace PersonnelManagmentSystemV1.Migratio7ns
                 new Calender{DepartmentID=7,CalTitle="Team Buildning",CalContent="We Build Our Group",CalenderStart=DateTime.Parse("2017-08-25 12:00:00"),CalenderEnd=DateTime.Parse("2017-08-25 16:00:00")},
                 new Calender{DepartmentID=7,CalTitle="Scrum Meeting",CalContent="SCRUM..",CalenderStart=DateTime.Parse("2017-08-18 15:00:00"),CalenderEnd=DateTime.Parse("2017-08-18 16:00:00")},
 
-                new Calender{DepartmentID=1,CalTitle="Prsentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
-                new Calender{DepartmentID=2,CalTitle="Prsentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
-                new Calender{DepartmentID=3,CalTitle="Prsentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
-                new Calender{DepartmentID=4,CalTitle="Prsentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
-                new Calender{DepartmentID=5,CalTitle="Prsentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
-                new Calender{DepartmentID=6,CalTitle="Prsentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
-                new Calender{DepartmentID=7,CalTitle="Prsentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")}
+                new Calender{DepartmentID=1,CalTitle="Presentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
+                new Calender{DepartmentID=2,CalTitle="Presentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
+                new Calender{DepartmentID=3,CalTitle="Presentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
+                new Calender{DepartmentID=4,CalTitle="Presentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
+                new Calender{DepartmentID=5,CalTitle="Presentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
+                new Calender{DepartmentID=6,CalTitle="Presentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")},
+                new Calender{DepartmentID=7,CalTitle="Presentation",CalContent="We Present Project",CalenderStart=DateTime.Parse("2017-08-14 13:00:00"),CalenderEnd=DateTime.Parse("2017-08-14 16:00:00")}
             };
-            foreach (Calender c in calenders){
-                context.CalenderTask.Add(c);
-            };
-            context.SaveChanges();
+                foreach (Calender c in calenders)
+                {
+                    context.CalenderTask.Add(c);
+                };
+                context.SaveChanges();
+
+            }
+            
 #endregion
         }
     }

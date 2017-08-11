@@ -44,50 +44,55 @@
     <div class="row">
         <hr />
         <h4>Applicants</h4>
-        <table class="table">
-            <tr>
-                <th>E-mail address</th>
-                <th>Department</th>
-                <th>CV</th>
-            </tr>
-            @foreach (ApplicantViewModel item in Model.Applicants)
-            {
+        <div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Applicants)); orderByColumn('Email')">
+            <table class="table">
                 <tr>
-                    <td>@item.Email</td>
-                    <td>@item.DepartmentName</td>
-                    @if (item.CVID == 0)
-                    {
-                        <td></td>
-                    }
-                    else
-                    {
-                        <td>@Html.ActionLink("Download", "DownloadCV", new { id = item.CVID })</td>
-                    }
-                    
+                    <th ng-click="orderByColumn('Email')">E-mail address</th>
+                    @*<th ng-click="orderByColumn('DepartmentName')">Department</th>*@
+                    <th ng-click="orderByColumn('CVID')">CV</th>
                 </tr>
-            }
-        </table>
+                <tr ng-repeat="item in data| orderBy:columnName:reverse">
+                    <td>
+                        {{item.Email}}
+                    </td>
+                    @*<td>
+                        {{item.DepartmentName}}
+                    </td>*@
+                    <td>
+                        <div class="btn btn-default" ng-show="item.CVID>0"><a ng-href="../JobOpenings/DownloadCV?id={{item.CVID}}">Download CV</a></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+      
     </div>
     <div class="row">
         <hr />
         <h4>Applications</h4>
-        <table class="table">
-            <tr>
-                <th>From</th>
-                <th>To</th>
-                <th>Time sent</th>
-                <th>Content</th>
-            </tr>
-            @foreach (MessageViewModel item in Model.Messages)
-            {
+        <div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Messages)); orderByColumn('Email')">
+            <table class="table">
                 <tr>
-                    <td>@item.SenderName</td>
-                    <td>@item.RecipientName</td>
-                    <td>@item.SendTime</td>
-                    <td>@item.BodyContent</td>
+                    <th ng-click="orderByColumn('SenderName')">From</th>
+                    <th ng-click="orderByColumn('RecipientName')">To</th>
+                    <th ng-click="orderByColumn('SendTime')">Time sent</th>
+                    <th ng-click="orderByColumn('BodyContent')">Contents</th>
                 </tr>
-            }
-        </table>
+                <tr ng-repeat="item in data| orderBy:columnName:reverse">
+                    <td>
+                        {{item.SenderName}}
+                    </td>
+                    <td>
+                        {{item.RecipientName}}
+                    </td>
+                    <td>
+                        {{item.SendTime}}
+                    </td>
+                    <td>
+                        {{item.BodyContent}}
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 }
 

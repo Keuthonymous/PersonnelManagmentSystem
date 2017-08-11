@@ -23,9 +23,7 @@ namespace PersonnelManagmentSystemV1.ViewModels
 
         public bool AllowEdit { get; set; }
 
-        //[Required]
-        //public virtual ApplicationUser Uploader { get; set; }
-
+        public string FileName { get; set; }
         public DateTime UploadTime { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

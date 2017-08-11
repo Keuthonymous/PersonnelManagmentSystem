@@ -10,7 +10,9 @@ namespace PersonnelManagmentSystemV1
         {              
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
             "~/Scripts/Angular/angular.min.js",
-            "~/Scripts/Angular/Calender-Angular.js"));
+            "~/Scripts/Angular/AngularPMSModule.js",
+            "~/Scripts/Angular/AngularListController.js",
+            "~/Scripts/Angular/AngularCalenderController.js"));
         
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));

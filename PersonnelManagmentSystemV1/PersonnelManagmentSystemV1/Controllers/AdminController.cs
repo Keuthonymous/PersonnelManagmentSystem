@@ -39,14 +39,10 @@ namespace PersonnelManagmentSystemV1.Controllers
         {
             if (user == null)
                 return null;
-            UserViewModel result = new UserViewModel()
-            {
-                ID = user.Id,
-                Email = user.Email,
-                UserName = user.UserName,
-                RoleName = db.GetPrimaryRoleName(user.Id),
-                Departments = db.Departments()
-            };
+            UserViewModel result = UserViewModel.MapUser(user);
+                   
+            result.Departments = db.Departments();
+            result.RoleName = db.GetPrimaryRoleName(user.Id);
 
             if (user.Department != null)
             {

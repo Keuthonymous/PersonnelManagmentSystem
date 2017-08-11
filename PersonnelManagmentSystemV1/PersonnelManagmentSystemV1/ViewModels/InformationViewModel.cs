@@ -32,9 +32,9 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Display(Name = "Posted Time")]
         public DateTime UploadTime { get; set; }
 
-        public bool IsEditable { get; set; }
+        public bool AllowEdit { get; set; }
 
-        public static InformationViewModel MapInformationToInformationViewModel(Information info)
+        public static InformationViewModel MapInformation(Information info)
         {
             if (info == null)
                 return null;

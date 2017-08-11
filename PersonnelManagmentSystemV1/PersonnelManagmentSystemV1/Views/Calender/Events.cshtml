@@ -5,46 +5,4 @@
 
 
 <h2>Calender Events</h2>
-<div ng-app="calenderApp" ng-controller="MainController" ng-init="getData()">
-    @if (ViewContext.HttpContext.User.IsInRole("Boss"))
-    {
-        <p>
-            @Html.ActionLink("Create New", "Index")
-        </p>
-    }
-    <table class="table">
-        <tr>
-            <th ng-click="orderByMe('Department')">Department &#9660</th>
-            <th ng-click="orderByMe('CalenderStart')">Event Start &#9660</th>
-            <th ng-click="orderByMe('CalenderEnd')">Event End &#9660</th>
-            <th ng-click="orderByMe('CalTitle')">Event Title &#9660</th>
-            <th ng-click="orderByMe('CalContent')">Event Content &#9660</th>
-            <th></th>
-        </tr>
-
-        @{
-            var url1 = Url.Action("Edit", new { ID = "{{id=event.ID}}" });
-            url1 = HttpUtility.UrlDecode(url1);
-        }
-
-        @{
-            var url3 = Url.Action("Delete", new { ID = "{{id=event.ID}}" });
-            url3 = HttpUtility.UrlDecode(url3);
-        }
-
-        <tr ng-repeat="event in Events | orderBy:CalenderSort:reverse">
-            <td>{{event.DepartmentName}}</td>
-            <td>{{event.CalenderStart}}</td>
-            <td>{{event.CalenderEnd}}</td>
-            <td>{{event.CalTitle}}</td>
-            <td>{{event.CalContent}}</td>
-            <td>
-                <span ng-show="event.AllowEdit">
-                    <a data-ng-href="@url1">Edit</a> |
-                    <a data-ng-href="@url3">Delete</a>
-                </span>
-            </td>
-        </tr>
-
-    </table>
-</div>
+@Html.Partial("_Events")

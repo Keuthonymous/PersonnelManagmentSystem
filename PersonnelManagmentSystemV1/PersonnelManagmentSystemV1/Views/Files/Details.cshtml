@@ -11,7 +11,11 @@
     @Html.Partial("_FileDetails", Model)
 </div>
 <p>
-    <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</div>
+    @if (Model.AllowEdit)
+    {
+        <div class="btn">@Html.ActionLink("Edit", "Edit", new { id = Model.ID })</div>
+    }
+    
     <div class="btn">@Html.ActionLink("Back to List", "Index")</div>
     
 </p>

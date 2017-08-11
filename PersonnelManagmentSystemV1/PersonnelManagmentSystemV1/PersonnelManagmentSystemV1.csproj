@@ -193,6 +193,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\ApplicantViewModel.cs" />
     <Compile Include="ViewModels\CalenderJSONModel.cs" />
+    <Compile Include="ViewModels\DepartmentViewModel.cs" />
     <Compile Include="ViewModels\WorkerIndexViewModel.cs" />
     <Compile Include="Repositories\CvRepository.cs" />
     <Compile Include="Repositories\FileRepository.cs" />
@@ -235,7 +236,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\Angular\angular.min.js" />
-    <Content Include="Scripts\Angular\Calender-Angular.js" />
+    <Content Include="Scripts\Angular\AngularListController.js" />
+    <Content Include="Scripts\Angular\AngularPMSModule.js" />
+    <Content Include="Scripts\Angular\AngularCalenderController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -336,10 +339,12 @@
     <Content Include="Views\Worker\Index.cshtml" />
     <Content Include="Views\Admin\_EditUser.cshtml" />
     <Content Include="Views\Admin\_DisplayUser.cshtml" />
-    <Content Include="Views\Worker\_WorkerIndexCalender.cshtml" />
-    <Content Include="Views\Worker\_WorkerIndexInformation.cshtml" />
     <Content Include="Views\CVs\Create.cshtml" />
     <Content Include="Views\CVs\_CvEdit.cshtml" />
+    <Content Include="Views\Information\_InformationDetails.cshtml" />
+    <Content Include="Views\JobOpenings\_Index.cshtml" />
+    <Content Include="Views\Information\_Index.cshtml" />
+    <Content Include="Views\Calender\_Events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
