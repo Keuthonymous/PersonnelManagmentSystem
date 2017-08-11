@@ -1,5 +1,5 @@
-﻿@using PersonnelManagmentSystemV1.Models
-@model IEnumerable<Message>
+﻿@using PersonnelManagmentSystemV1.ViewModels
+@model IEnumerable<MessageViewModel>
 
 @{
     ViewBag.Title = "Messages";
@@ -7,58 +7,44 @@
 
 <h2>@ViewBag.Title</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Sender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Recipient)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.JobOpening)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BodyContent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SendTime)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sender.UserName) 
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Recipient.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.JobOpening.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BodyContent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SendTime)
-        </td>
-        <td>
-            <div class="btn">@Html.ActionLink("Details", "Details", new { id = item.ID })</div>
-            <div class="btn">@Html.ActionLink("Reply", "Reply", new { Id = item.ID })</div>
-            @if (User.IsInRole("Boss"))
-            {
-                <div class="btn">@Html.ActionLink("Delete", "Delete", new { id = item.ID })</div>
-            }
-        </td>
-    </tr>
-}
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('SendTime'); reverse=true;">
+    <table class="table">
+        <tr>
+            <th ng-click="orderByColumn('SenderName')">Sender</th>
+            <th ng-click="orderByColumn('RecipientName')">Recipient</th>
+            <th ng-click="orderByColumn('JobOpeningName')">Job opening</th>
+            <th ng-click="orderByColumn('Title')">Title</th>
+            <th ng-click="orderByColumn('BodyContent')">Contents</th>
+            <th ng-click="orderByColumn('SendTime')">Time sent</th>
+            <th></th>
+        </tr>
 
-</table>
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+            <td>
+                {{item.SenderName}}
+            </td>
+            <td>
+                {{item.RecipientName}}
+            </td>
+            <td>
+                {{item.JobOpeningName}}
+            </td>
+            <td>
+                {{item.Title}}
+            </td>
+            <td>
+                {{item.BodyContent}}
+            </td>
+            <td>
+                {{item.SendTime}}
+            </td>
+            <td>
+
+                <div class="btn"><a ng-href="../Message/Details?id={{item.ID}}">Details</a></div>
+                <div class="btn"><a ng-href="../Message/Reply?id={{item.ID}}">Reply</a></div>
+                <div class="btn" ng-show="item.AllowEdit"><a ng-href="../Message/Delete?id={{item.ID}}">Delete</a></div>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -31,12 +31,13 @@ namespace PersonnelManagmentSystemV1.ViewModels
         public int PreviousMessageID { get; set; }
         public int FirstMessageinThreadID { get; set; }
         public string SenderName { get; set; }
-        public IEnumerable<MessageViewModel> MessagesInThread { get; set; }
+        public bool AllowEdit { get; set; }
+      //  public IEnumerable<MessageViewModel> MessagesInThread { get; set; }
 
-        public MessageViewModel()
-        {
-            MessagesInThread = new MessageViewModel[] { };
-        }
+        //public MessageViewModel()
+        //{
+        //    MessagesInThread = new MessageViewModel[] { };
+        //}
 
         
     }
