@@ -73,9 +73,14 @@ namespace PersonnelManagmentSystemV1.Controllers
 
         #region Events
         [Authorize]
-        public async Task<ActionResult> Events()
+        public ActionResult Events()
         {
-            return View(calrepo.GetAllCalenderTasksForUser(User.Identity.Name));
+            return View();
+        }
+
+        public ActionResult _Events()
+        {
+            return PartialView();
         }
         #endregion
 

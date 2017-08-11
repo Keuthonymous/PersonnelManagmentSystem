@@ -18,13 +18,22 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private InformationRepository db = new InformationRepository();
 
-
-        // GET: Information
+        // GET: Information: heavy lifting is done by childaction _Index
         public ActionResult Index()
+        {
+            return View(IndexInformation());
+        }
+        // GET: Information
+        public ActionResult _Index()
+        {
+            return PartialView(IndexInformation());
+        }
+
+        private IEnumerable<InformationViewModel> IndexInformation()
         {
             List<InformationViewModel> informationToShow = new List<InformationViewModel>();
             InformationViewModel infoToAdd;
-            
+
             foreach (Information info in db.InformationsForUsersManagedDepartments(User.Identity.Name))
             { //info for users managed departments (that he does manage)
                 infoToAdd = InformationViewModel.MapInformation(info);
@@ -40,7 +49,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                     informationToShow.Add(infoToAdd);
                 }
             }
-            return View(informationToShow);
+            return informationToShow;
         }
 
         [AllowAnonymous]
