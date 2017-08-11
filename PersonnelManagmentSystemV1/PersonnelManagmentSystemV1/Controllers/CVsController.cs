@@ -55,7 +55,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                         Description = cvVM.Description,
                         MimeType = cvVM.Contents.ContentType,
                         Uploader = repo.GetUserByName(User.Identity.Name),
-                    FileName = cvVM.Contents.FileName,
+                        FileName = cvVM.Contents.FileName,
                         Content = null
                     };
           

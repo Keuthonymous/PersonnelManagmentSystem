@@ -11,7 +11,7 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         public ActionResult Index()
         {
-
+            //It works...
             if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Admin");
