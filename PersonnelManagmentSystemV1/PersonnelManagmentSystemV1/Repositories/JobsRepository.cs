@@ -16,6 +16,7 @@ namespace PersonnelManagmentSystemV1.Repositories
         {
             return db.Jobs
                 .Include(j => j.Messages)
+                //.Include(j => j.Messages.Select(m => m.Sender))
                 .Include(j => j.Department);
         }
 
