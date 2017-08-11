@@ -11,6 +11,29 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         public ActionResult Index()
         {
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            if (User.IsInRole("Worker"))
+            {
+                return RedirectToAction("Index", "Worker");
+            }
+            if (User.IsInRole("Boss"))
+            {
+                return RedirectToAction("Index", "Boss");
+            }
+            if (User.IsInRole("Searcher"))
+            {
+                return RedirectToAction("Index", "Searcher");
+            }
+
+            return View();
+        }
+
+        public ActionResult Start()
+        {
             return View();
         }
     }

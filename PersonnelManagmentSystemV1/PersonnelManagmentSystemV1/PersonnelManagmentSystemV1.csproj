@@ -341,6 +341,7 @@
     <Content Include="Views\Admin\_DisplayUser.cshtml" />
     <Content Include="Views\CVs\Create.cshtml" />
     <Content Include="Views\CVs\_CvEdit.cshtml" />
+    <Content Include="Views\Home\Start.cshtml" />
     <Content Include="Views\Information\_InformationDetails.cshtml" />
     <Content Include="Views\JobOpenings\_Index.cshtml" />
     <Content Include="Views\Information\_Index.cshtml" />
