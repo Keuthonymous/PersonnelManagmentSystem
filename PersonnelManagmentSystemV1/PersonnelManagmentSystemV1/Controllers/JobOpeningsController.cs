@@ -18,7 +18,7 @@ namespace PersonnelManagmentSystemV1.Controllers
     {
         private JobsRepository db = new JobsRepository();
 
-        private JobOpeningViewModel MapJobOpeningToJobOpeningViewModel(JobOpening jobOpening)
+        private JobOpeningViewModel MapJobOpening(JobOpening jobOpening)
         {
             if (jobOpening == null)
                 return null;
@@ -30,15 +30,6 @@ namespace PersonnelManagmentSystemV1.Controllers
                 Title = jobOpening.Title,
                 Description = jobOpening.Description,
                 JobType = jobOpening.JobType,
-                Applicants = jobOpening.GetAllApplicants().Select(a => new ApplicantViewModel() 
-                    { 
-                        Email = a.Email, 
-                        DepartmentName = a.GetDepartmentName(), 
-                        CVID = a.GetMostRecentCVID() 
-                    }),
-                Messages = jobOpening.Messages
-                    .Where(m => m.IsFirstMessage)
-                    .Select(m => new MessageViewModel() { SenderName = m.Sender.UserName, RecipientName = m.Recipient.UserName, SendTime = m.SendTime, BodyContent = m.BodyContent}),
                 AllowEdit = jobOpening.Department.ManagerID == User.Identity.GetUserId()
             };
         }
@@ -47,9 +38,14 @@ namespace PersonnelManagmentSystemV1.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View(db.Jobs().Select(j => MapJobOpeningToJobOpeningViewModel(j)));
+            return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult _Index()
+        {
+            return PartialView(db.Jobs().Select(j => MapJobOpening(j)));
+        }
         // GET: Jobs/Details/5
         public ActionResult Details(int? id)
         {
@@ -62,7 +58,18 @@ namespace PersonnelManagmentSystemV1.Controllers
             {
                 return HttpNotFound();
             }
-            return View(MapJobOpeningToJobOpeningViewModel(job));
+            JobOpeningViewModel jobVM = MapJobOpening(job);
+            //Moved here in order to prevent multiple concurrent read actions
+             jobVM.Applicants = job.GetAllApplicants().Select(a => new ApplicantViewModel() 
+                    { 
+                        Email = a.Email, 
+                        DepartmentName = a.GetDepartmentName(), 
+                        CVID = a.GetMostRecentCVID() 
+                    });
+             jobVM.Messages = job.Messages
+                    .Where(m => m.IsFirstMessage)
+                    .Select(m => new MessageViewModel() { SenderName = m.Sender.UserName, RecipientName = m.Recipient.UserName, SendTime = m.SendTime, BodyContent = m.BodyContent });
+            return View(jobVM);
         }
 
         // GET: Jobs/Create
@@ -111,7 +118,7 @@ namespace PersonnelManagmentSystemV1.Controllers
             }
             //Convert list of departents to a list of selectitem
             ViewBag.Departments = departments.Select(d => new SelectListItem() { Text = d.Name, Value = d.ID.ToString() });
-            JobOpeningViewModel jobVM = MapJobOpeningToJobOpeningViewModel(job);
+            JobOpeningViewModel jobVM = MapJobOpening(job);
 
             return View(jobVM);
         }

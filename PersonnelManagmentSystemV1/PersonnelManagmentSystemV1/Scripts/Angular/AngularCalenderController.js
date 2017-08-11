@@ -1,7 +1,7 @@
 ﻿(function () {
-    var app = angular.module("calenderApp", []);
+    var app = angular.module("PMS");
 
-    app.controller("MainController", ["$scope", "$http", function ($scope, $http) {
+    app.controller("CalenderController", ["$scope", "$http", function ($scope, $http) {
 
         $scope.getData = getData;
         $scope.Events;

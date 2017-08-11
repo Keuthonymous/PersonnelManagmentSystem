@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PersonnelManagmentSystemV1.DataAccess;
 using PersonnelManagmentSystemV1.Models;
 using PersonnelManagmentSystemV1.Repositories;
@@ -32,14 +33,15 @@ namespace PersonnelManagmentSystemV1.Controllers
                 FirstMessageinThreadID = message.FirstMessageInThreadID,
                 RecipientName = message.Recipient.UserName,
                 JobOpeningName = message.JobOpening.Title,
-                SenderName = message.Sender.UserName
+                SenderName = message.Sender.UserName,
+                AllowEdit = message.JobOpening.Department.ManagerID == User.Identity.GetUserId()
             };
         }
 
         // GET: Message
         public ActionResult Index()
         {
-            return View(repo.GetMessagesForUser(User.Identity.Name).OrderByDescending(m => m.SendTime));
+            return View(repo.GetMessagesForUser(User.Identity.Name).Select(m => MapMessageToMessageVM(m)));
         }
 
         // GET: Message/Details/5
@@ -102,7 +104,7 @@ namespace PersonnelManagmentSystemV1.Controllers
                 RecipientName = previousMessage.Sender.UserName,
                 JobOpeningName = previousMessage.JobOpening.Title
             };
-            messageViewModel.MessagesInThread = new List<MessageViewModel>() { MapMessageToMessageVM(previousMessage) };
+           // messageViewModel.MessagesInThread = new List<MessageViewModel>() { MapMessageToMessageVM(previousMessage) };
 
 
             return View(messageViewModel);

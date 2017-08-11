@@ -24,6 +24,16 @@ namespace PersonnelManagmentSystemV1.ViewModels
         [Display(Name = "Role")]
         public string RoleName { get; set; }
 
+        public static UserViewModel MapUser(PersonnelManagmentSystemV1.Models.ApplicationUser user )
+        {
+            return new UserViewModel(){
+                ID = user.Id,
+                Email = user.Email,
+                UserName = user.UserName
+            };
+        }
+
+
         public IEnumerable<PersonnelManagmentSystemV1.Models.Department> Departments { get; set; }
         public IEnumerable<SelectListItem> GetSelectItemsDepartment()
         {

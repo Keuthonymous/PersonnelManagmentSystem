@@ -73,18 +73,14 @@ namespace PersonnelManagmentSystemV1.Controllers
 
         #region Events
         [Authorize]
-        public async Task<ActionResult> Events()
+        public ActionResult Events()
         {
-            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+            return View();
+        }
 
-            List<Department> departments = new List<Department>();
-            if (currentUser.Department != null)
-            {
-                departments.Add(currentUser.Department);
-            }
-            departments.AddRange(currentUser.ManagedDepartments);
-            return View(calrepo.GetAllCalenderTasks(departments));
+        public ActionResult _Events()
+        {
+            return PartialView();
         }
         #endregion
 
@@ -92,16 +88,7 @@ namespace PersonnelManagmentSystemV1.Controllers
         [Authorize(Roles = "Worker, Boss")]
         public string EventsJSON()
         {
-            ApplicationUser currentUser = calrepo.GetUserByName(User.Identity.Name);
-
-            List<Department> departments = new List<Department>();
-            if (currentUser.Department != null)
-            {
-                departments.Add(currentUser.Department);
-            }
-            departments.AddRange(currentUser.ManagedDepartments);
-
-            return JsonConvert.SerializeObject(calrepo.GetAllCalenderTasks(departments).Select(c => new CalenderJSONModel()
+            return JsonConvert.SerializeObject(calrepo.GetAllCalenderTasksForUser(User.Identity.Name).Select(c => new CalenderJSONModel()
                 {
                     ID = c.ID,
                     DepartmentName = c.Department.Name,

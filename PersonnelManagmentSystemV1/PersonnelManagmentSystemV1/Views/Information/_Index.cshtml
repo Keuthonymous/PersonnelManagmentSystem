@@ -1,20 +1,23 @@
 ﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.InformationViewModel>
 
-@{
-    ViewBag.Title = "News";
+@if (User.IsInRole("Boss"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 }
-
-<h2>News</h2>
 
 <div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('Title')">
     <table class="table">
         <tr>
             <th ng-click="orderByColumn('Title')">Title</th>
             <th ng-click="orderByColumn('Content')">Contents</th>
+            <th ng-click="orderByColumn('DepartmentName')">Department</th>
             <th ng-click="orderByColumn('UploadTime')">Time created</th>
+            <th></th>
         </tr>
 
-        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+        <tr ng-repeat="item in data| orderBy:columnName:reverse" ng-hide="item.IsPublic&&!item.AllowEdit">
             <td>
                 {{item.Title}}
             </td>
@@ -22,8 +25,19 @@
                 {{item.Content}}
             </td>
             <td>
+                {{item.DepartmentName}}
+            </td>
+            <td>
                 {{item.UploadTime}}
+            </td>
+            <td>
+                <span ng-show="item.AllowEdit">
+                    <a ng-href="../Information/Edit?id={{item.ID}}">Edit</a>|
+                    <a ng-href="../Information/Delete?id={{item.ID}}">Delete</a>|
+                </span>
+                <a ng-href="../Information/Details?id={{item.ID}}">Details</a>
             </td>
         </tr>
     </table>
 </div>
+

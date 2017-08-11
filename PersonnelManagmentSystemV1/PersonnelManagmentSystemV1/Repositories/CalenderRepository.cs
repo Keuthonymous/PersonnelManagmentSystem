@@ -37,15 +37,9 @@ namespace PersonnelManagmentSystemV1.Repositories
 
         }
 
-        public IEnumerable<Calender> GetAllCalenderTasks(IEnumerable<Department> departments)
+        private IEnumerable<Calender> GetAllCalenderTasks(IEnumerable<Department> departments)
         {
-            return GetAll().Where(cal => departments.Contains(cal.Department));//.ToList(); //Added to ToList() in order to force the query to execute
-            //List<Calender> result = new List<Calender>();
-            //foreach (Department dep in departments)
-            //{
-            //    result.AddRange(dep.Calenders);
-            //}
-            //return result;
+            return GetAll().Where(cal => departments.Contains(cal.Department));
         }
 
         public IEnumerable<Calender> GetAll()
@@ -102,5 +96,25 @@ namespace PersonnelManagmentSystemV1.Repositories
         }
 
         #endregion
+
+        public IEnumerable<Calender>  GetAllCalenderTasksForUser(string userName)
+        {
+            List<Department> departments = new List<Department>();
+            ApplicationUser user = GetUserByName(userName);
+            if (user.Department != null)
+            {
+                departments.Add(user.Department);
+            }
+            departments.AddRange(user.ManagedDepartments);
+            if (departments.Count() > 0)
+            {
+                return GetAllCalenderTasks(departments);
+            }
+            else
+            {
+                return new Calender[] { };
+            }
+            
+        }
     }
 }

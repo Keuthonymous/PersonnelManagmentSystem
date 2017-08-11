@@ -30,14 +30,16 @@ namespace PersonnelManagmentSystemV1.Controllers
                 ID = cv.ID,
                 Title = cv.Title,
                 Description = cv.Description,
-                UploadTime = cv.UploadTime
+                UploadTime = cv.UploadTime,
+                FileName = cv.FileName,
+                AllowEdit = cv.Uploader.UserName == User.Identity.Name
             };
         }
 
         // GET: CVs
         public ActionResult Index()
         {
-            return View(repo.GetCVsForUser(User.Identity.GetUserId()).OrderByDescending(c => c.UploadTime));
+            return View(repo.GetCVsForUser(User.Identity.GetUserId()).OrderByDescending(c => c.UploadTime).Select(cv => MapCVToCVVM(cv)));
         }
 
 
