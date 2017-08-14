@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PersonnelManagmentSystemV1.ViewModels.FileViewModel>
+
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('Title')">
+    <table class="table">
+        <tr>
+            <th ng-click="orderByColumn('Title')">Title</th>
+            <th ng-click="orderByColumn('Description')">Description</th>
+            <th ng-click="orderByColumn('FileName')">Filename</th>
+            <th ng-click="orderByColumn('DepartmentName')">Department</th>
+            <th>
+
+            </th>
+        </tr>
+
+        <tr ng-repeat="item in data| orderBy:columnName:reverse">
+            <td>
+                <a ng-href="../Files/Download/{{item.ID}}">{{item.Title}}</a>
+            </td>
+            <td>
+                {{item.Description}}
+            </td>
+            <td>
+                {{item.FileName}}
+            </td>
+            <td>
+                {{item.DepartmentName}}
+            </td>
+            <td>
+                <span ng-show="item.AllowEdit">
+                    <a ng-href="../Files/Edit?id={{item.ID}}">Edit</a>|
+                    <a ng-href="../Files/Delete?id={{item.ID}}">Delete</a>|
+                </span>
+                <a ng-href="../Files/Details?id={{item.ID}}">Details</a>
+            </td>
+        </tr>
+    </table>
+</div>
+

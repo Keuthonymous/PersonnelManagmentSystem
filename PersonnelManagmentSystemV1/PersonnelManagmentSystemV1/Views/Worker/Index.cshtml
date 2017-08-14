@@ -2,23 +2,26 @@
     ViewBag.Title = "Index";
 }
 
-<div class="jumbotron" style="margin-top: 2em;">
-    <h1>Worker's Index</h1>
-
-    <h2>@Html.ActionLink("View Files", "Index", "Files")</h2>
+<div class="jumbotron">
+    <h4>Important Information</h4>
+    @Html.Action("_Index", "Information")
 </div>
 
-<div class="jumbotron">
+<div class="jumbotron" style="margin-top: 2em;">
+    <h4>Files</h4>
+
+    @Html.Action("_Index", "Files")
+</div>
+
+
     @if (Model.Events != null)
     {
-        <h4>Upcoming Events</h4>
-        @Html.Action("_Events", "Calender")
+        <div class="jumbotron">
+            <h4>Upcoming Events</h4>
+            @Html.Action("_Events", "Calender")
+        </div>
     }
-</div>
 <hr />
-<div class="jumbotron">
-        <h4>Important Information</h4>
-        @Html.Action("_Index", "Information")
-</div>
+
 <br />
 

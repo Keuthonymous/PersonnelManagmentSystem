@@ -7,7 +7,7 @@
     </p>
 }
 
-<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('Title')">
+<div class="row" ng-controller="ListController" ng-init="onInitialise(@Newtonsoft.Json.JsonConvert.SerializeObject(Model)); orderByColumn('UploadTime'); reverse=true">
     <table class="table">
         <tr>
             <th ng-click="orderByColumn('Title')">Title</th>

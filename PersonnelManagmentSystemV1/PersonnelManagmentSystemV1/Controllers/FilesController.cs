@@ -41,6 +41,11 @@ namespace PersonnelManagmentSystemV1.Controllers
         [Authorize(Roles = "Boss, Worker")]
         public ActionResult Index()
         {
+            return View(GetIndexFiles());
+        }
+
+        private IEnumerable<FileViewModel> GetIndexFiles()
+        {
             FileViewModel fileToAdd = null;
             List<FileViewModel> files = new List<FileViewModel>();
             foreach (UserFile file in repo.GetFilesForUsersManagedDepartments(User.Identity.Name))
@@ -58,7 +63,14 @@ namespace PersonnelManagmentSystemV1.Controllers
                     files.Add(fileToAdd);
                 }
             }
-            return View(files);
+            return files;
+        }
+
+        // GET: Files
+        [Authorize(Roles = "Boss, Worker")]
+        public ActionResult _Index()
+        {
+            return PartialView(GetIndexFiles());
         }
 
         // GET: Files/Details/5

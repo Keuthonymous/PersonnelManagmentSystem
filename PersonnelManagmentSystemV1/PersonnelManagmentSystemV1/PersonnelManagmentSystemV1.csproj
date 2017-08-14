@@ -347,6 +347,7 @@
     <Content Include="Views\Information\_Index.cshtml" />
     <Content Include="Views\Calender\_Events.cshtml" />
     <Content Include="Views\JobOpenings\_Edit.cshtml" />
+    <Content Include="Views\Files\_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
